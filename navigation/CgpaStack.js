@@ -1,17 +1,17 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-import { Attendance } from '../screens/App/Attendance';
+import { Cgpa } from '../screens/App/Cgpa';
 import { HeaderTitle } from '../components';
 import { Typography, Mixins } from '../styles';
 import { useTheme } from '../contexts';
 import { Ionicons } from '@expo/vector-icons';
 
-const AttendanceStack = createStackNavigator();
+const CgpaStack = createStackNavigator();
 
-function AttendanceStackScreen({ navigation }) {
+function CgpaStackScreen({ navigation }) {
   const { theme } = useTheme();
   return (
-    <AttendanceStack.Navigator
+    <CgpaStack.Navigator
       screenOptions={{
         headerTitleAlign: 'center',
         headerStyle: {
@@ -31,7 +31,7 @@ function AttendanceStackScreen({ navigation }) {
         ),
       }}
     >
-      <AttendanceStack.Screen
+      <CgpaStack.Screen
         options={{
           headerTitle: () => <HeaderTitle title='JIIT Companion' />,
           headerRight: () => (
@@ -59,11 +59,11 @@ function AttendanceStackScreen({ navigation }) {
             />
           ),
         }}
-        name='attendance'
-        component={Attendance}
+        name='cgpa'
+        component={Cgpa}
       />
-    </AttendanceStack.Navigator>
+    </CgpaStack.Navigator>
   );
 }
 
-export { AttendanceStackScreen };
+export { CgpaStackScreen };

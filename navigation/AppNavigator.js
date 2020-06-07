@@ -1,28 +1,30 @@
 import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import * as React from 'react';
 import { useTheme } from '../contexts';
 import { Cgpa } from '../screens/App/Cgpa';
 import { AttendanceStackScreen } from './AttendanceStack';
+import { CgpaStackScreen } from './CgpaStack';
 
 const Tab = createBottomTabNavigator();
-const stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
 
-export default function AppNavigator() {
+const TabNavigator = () => {
   const { theme } = useTheme();
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
+          console.log(route.name);
           switch (route.name) {
             case 'attendance':
-              iconName = focused
-                ? 'ios-information-circle'
-                : 'ios-information-circle-outline';
+              iconName = 'ios-calendar';
+              break;
             case 'cgpa':
-              iconName = focused ? 'ios-list-box' : 'ios-list';
+              iconName = 'ios-trending-up';
+              break;
           }
           return <Ionicons name={iconName} size={size} color={color} />;
         },
@@ -36,7 +38,15 @@ export default function AppNavigator() {
       }}
     >
       <Tab.Screen name='attendance' component={AttendanceStackScreen} />
-      <Tab.Screen name='cgpa' component={Cgpa} />
+      <Tab.Screen name='cgpa' component={CgpaStackScreen} />
     </Tab.Navigator>
+  );
+};
+
+export default function AppNavigator() {
+  return (
+    <Drawer.Navigator initialRouteName='home'>
+      <Drawer.Screen name='home' component={TabNavigator} />
+    </Drawer.Navigator>
   );
 }

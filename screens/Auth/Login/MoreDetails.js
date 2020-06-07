@@ -9,12 +9,13 @@ import {
 } from 'react-native';
 
 import { Typography, Mixins } from '../../../styles';
-import { useTheme } from '../../../contexts';
+import { useTheme, useAuth } from '../../../contexts';
 
 const MoreDetails = () => {
   const {
     theme: { colors },
   } = useTheme();
+  const { setisAuthenticated } = useAuth();
 
   //define states
   const [dateOfBirth, setDateOfBirth] = useState(null);
@@ -43,6 +44,7 @@ const MoreDetails = () => {
       <View style={[styles.container, { backgroundColor: colors.black }]}>
         <View style={styles.contentConatiner}>
           <TextInput
+            keyboardAppearance={'dark'}
             placeholderTextColor={colors.border}
             style={[
               styles.input,
@@ -58,6 +60,7 @@ const MoreDetails = () => {
           />
 
           <TextInput
+            keyboardAppearance={'dark'}
             placeholderTextColor={colors.border}
             style={[
               styles.input,
@@ -72,6 +75,7 @@ const MoreDetails = () => {
             value={batch}
           />
           <TextInput
+            keyboardAppearance={'dark'}
             placeholderTextColor={colors.border}
             style={[
               styles.input,
@@ -86,6 +90,7 @@ const MoreDetails = () => {
             value={year}
           />
           <TextInput
+            keyboardAppearance={'dark'}
             placeholderTextColor={colors.border}
             style={[
               styles.input,
@@ -101,7 +106,7 @@ const MoreDetails = () => {
           />
           <TouchableOpacity
             disabled={disabled}
-            onPress={() => navigation.navigate('moredetails')}
+            onPress={() => setisAuthenticated(true)}
             style={[
               styles.logInButton,
               {

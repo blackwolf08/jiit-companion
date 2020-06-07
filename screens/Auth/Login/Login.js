@@ -42,6 +42,7 @@ const Login = ({ navigation }) => {
         </View>
         <View style={styles.contentConatiner}>
           <TextInput
+            keyboardAppearance={'dark'}
             placeholderTextColor={colors.border}
             style={[
               styles.input,
@@ -59,6 +60,7 @@ const Login = ({ navigation }) => {
           />
 
           <TextInput
+            keyboardAppearance={'dark'}
             placeholderTextColor={colors.border}
             style={[
               styles.input,
