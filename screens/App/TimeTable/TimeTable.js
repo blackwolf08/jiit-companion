@@ -1,5 +1,10 @@
 import React from 'react';
-import { ActivityIndicator, ScrollView, StyleSheet } from 'react-native';
+import {
+  ActivityIndicator,
+  ScrollView,
+  StyleSheet,
+  Platform,
+} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import { TimeTableDayContainer } from '../../../components';
 import { useTheme, useUser } from '../../../contexts';
@@ -18,7 +23,7 @@ const TimeTable = () => {
 
   if (!timeTable?.length) return <ActivityIndicator color='white' />;
 
-  renderItem = ({ item, index }) => {
+  const renderItem = ({ item, index }) => {
     return <TimeTableDayContainer item={item} index={index} />;
   };
 
@@ -32,11 +37,10 @@ const TimeTable = () => {
         renderItem={renderItem}
         sliderWidth={Mixins.WINDOW_WIDTH}
         itemWidth={Mixins.WINDOW_WIDTH}
-        layout='stack'
         loop
-        enableMomentum
-        enableSnap
         firstItem={dayInNumber}
+        enableSnap
+        layout={Platform.OS == 'web' ? 'default' : 'stack'}
       />
     </ScrollView>
   );

@@ -1,7 +1,8 @@
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View, Animated } from 'react-native';
 import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { Ionicons } from '@expo/vector-icons';
+import * as Animatable from 'react-native-animatable';
 
 import { useTheme, useUser } from '../../contexts';
 import moment from 'moment';
@@ -15,12 +16,13 @@ import { Mixins, Typography } from '../../styles';
 
 let today = moment().format('dddd').toLowerCase();
 
-const TimeTableClass = ({ classArray, dayName }) => {
+const TimeTableClass = ({ classArray, dayName, delay, index }) => {
   const {
     theme: {
       colors: { background, card, text, primary, black },
     },
   } = useTheme();
+
   let { user } = useUser();
   let attendancePercentage = getAttendance(classArray[3], user.attendance); // get percentage from attendance list
   let className = getCurrClass(classArray[3], user.attendance); // get class name from class code
@@ -31,9 +33,22 @@ const TimeTableClass = ({ classArray, dayName }) => {
     isClassCompleted(classTime) && today == dayName
       ? 'ios-done-all'
       : 'ios-checkmark';
+  let direction = index % 2 == 0 ? 'fadeInRight' : 'fadeInLeft';
 
   return (
-    <View style={[styles.container, { backgroundColor: background }]}>
+    <Animatable.View
+      useNativeDriver
+      animation='fadeInUp'
+      duration={200}
+      easing='linear'
+      delay={1500 + 500 * index}
+      style={[
+        styles.container,
+        {
+          backgroundColor: background,
+        },
+      ]}
+    >
       <View style={styles.timeConatiner}>
         <Ionicons name={isCompleted} color='gray' size={Mixins.scaleSize(24)} />
         <Text style={[styles.className, { color: text }]}>{classTime}</Text>
@@ -66,7 +81,7 @@ const TimeTableClass = ({ classArray, dayName }) => {
           )}
         </AnimatedCircularProgress>
       </View>
-    </View>
+    </Animatable.View>
   );
 };
 

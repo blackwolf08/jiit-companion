@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { AsyncStorage } from 'react-native';
+import { getAttendance, getDateWiseAttendance } from '../api';
 import { useUser } from './user';
-import { BASE_API, getAttendance, getDateWiseAttendance } from '../api';
 
 const AuthContext = React.createContext();
 

@@ -1,7 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
-import { useTheme } from '../../../contexts';
+import { useTheme, useUser } from '../../../contexts';
 import { Mixins, Typography } from '../../../styles';
+import { AttendanceDayConatiner } from '../../../components';
 
 const Attendance = () => {
   const {
@@ -9,9 +10,22 @@ const Attendance = () => {
       colors: { background, card, text, primary, black },
     },
   } = useTheme();
+  const { user } = useUser();
+  let classes = Object.keys(user.attendance);
+
+  if (!classes?.length) return <> </>;
   return (
-    <ScrollView>
-      <Text style={[styles.title, { color: text }]}>Attendance</Text>
+    <ScrollView
+      style={{ ...Mixins.padding(0, 0, 0, 0), backgroundColor: black }}
+    >
+      {classes.map((className, key) => (
+        <AttendanceDayConatiner
+          classDetails={user.attendance[className]}
+          className={className}
+          key={key}
+          index={key + 1}
+        />
+      ))}
     </ScrollView>
   );
 };

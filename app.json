@@ -3,7 +3,7 @@
     "name": "JIIT Companion",
     "slug": "jiit-companion",
     "platforms": ["ios", "android", "web"],
-    "version": "1.0.0",
+    "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -16,7 +16,23 @@
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "infoPlist": {
+        "NSFaceIDUsageDescription": "Requires FaceID To protect your CGPA Info"
+      },
+      "supportsTablet": false,
+      "bundleIdentifier": "com.sunnydhama.jiitcompanion",
+      "buildNumber": "1.1.0",
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-1528058450389133~3396166750"
+      }
+    },
+    "android": {
+      "package": "me.sunnydhama.jiitcompanion",
+      "versionCode": 23,
+      "playStoreUrl": "https://play.google.com/store/apps/details?id=me.sunnydhama.jiitcompanion",
+      "config": {
+        "googleMobileAdsAppId": "ca-app-pub-1528058450389133~3396166750"
+      }
     }
   }
 }
