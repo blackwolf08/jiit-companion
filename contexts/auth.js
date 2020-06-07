@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { AsyncStorage } from 'react-native';
 import { useUser } from './user';
+import { BASE_API, getAttendance, getDateWiseAttendance } from '../api';
 
 const AuthContext = React.createContext();
 
@@ -19,37 +20,7 @@ export const AuthProvider = ({ children }) => {
     college,
   }) => {
     setisLoading(true);
-    let formData = new FormData();
-    formData.append('enrll', String(enrollmentNumber));
-    formData.append('psswd', String(password));
-    formData.append('dob', String(dateOfBirth));
-    formData.append('college', String(college));
-    formData.append('type', 'S');
-    await AsyncStorage.setItem(
-      'user',
-      JSON.stringify({
-        enrollmentNumber,
-        password,
-        dateOfBirth,
-        batch,
-        year,
-        college,
-      })
-    );
     try {
-      let attendance = await axios({
-        method: 'post',
-        url: 'https://webkiosk-server.azurewebsites.net/api/attendance',
-        data: formData,
-        config: { headers: { 'Content-Type': 'multipart/form-data' } },
-      });
-      let datewiseattendance = await axios({
-        method: 'post',
-        url: 'https://webkiosk-server.azurewebsites.net/api/datewiseattendance',
-        data: formData,
-        config: { headers: { 'Content-Type': 'multipart/form-data' } },
-      });
-
       let user = {
         enrollmentNumber,
         password,
@@ -57,11 +28,16 @@ export const AuthProvider = ({ children }) => {
         batch,
         year,
         college,
-        attendance: attendance.data,
-        datewiseattendance: datewiseattendance.data,
-        loggedIn: true,
       };
-
+      let attendance = await getAttendance(user);
+      let datewiseattendance = await getDateWiseAttendance(user);
+      if (!attendance || !datewiseattendance) {
+        setisLoading(false);
+        return;
+      }
+      user.loggedIn = true;
+      user.attendance = attendance;
+      user.datewiseattendance = datewiseattendance;
       await AsyncStorage.setItem('user', JSON.stringify(user));
       setUser(user);
       setisAuthenticated(true);
