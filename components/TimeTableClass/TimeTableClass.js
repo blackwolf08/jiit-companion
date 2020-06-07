@@ -5,7 +5,12 @@ import { Ionicons } from '@expo/vector-icons';
 
 import { useTheme, useUser } from '../../contexts';
 import moment from 'moment';
-import { getAttendance, getCurrClass, isClassCompleted } from '../../utils';
+import {
+  getAttendance,
+  getCurrClass,
+  isClassCompleted,
+  toTitleCase,
+} from '../../utils';
 import { Mixins, Typography } from '../../styles';
 
 let today = moment().format('dddd').toLowerCase();
@@ -34,7 +39,10 @@ const TimeTableClass = ({ classArray, dayName }) => {
         <Text style={[styles.className, { color: text }]}>{classTime}</Text>
       </View>
       <View style={styles.classNameConatiner}>
-        <Text style={[styles.className, { color: text }]}>{className}</Text>
+        <Text style={[styles.className, { color: text }]}>
+          {toTitleCase(className)}
+        </Text>
+        <Text style={[styles.className, { color: text }]}>{classType}</Text>
       </View>
       <View style={styles.roomContainer}>
         <Text style={[styles.className, { color: text }]}>{classRoom}</Text>
@@ -76,10 +84,12 @@ const styles = StyleSheet.create({
   timeConatiner: {
     flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   classNameConatiner: {
     flex: 3,
     ...Mixins.padding(0, 5, 0, 5),
+    justifyContent: 'center',
   },
   className: {
     fontFamily: 'montserrat-md',
@@ -87,6 +97,8 @@ const styles = StyleSheet.create({
   },
   roomContainer: {
     flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   attendanceCircleConatiner: {
     flex: 2,
