@@ -15,19 +15,23 @@ export const UserProvider = ({ children }) => {
 
     // if timtable cached
     let cachedTimeTable = await AsyncStorage.getItem('timetable');
-    if (cachedTimeTable) settimeTable(JSON.parse(cachedTimeTable));
+    cachedTimeTable = JSON.parse(cachedTimeTable);
+    if (cachedTimeTable) {
+      settimeTable(cachedTimeTable);
+      return;
+    }
 
     // if timetable not cached
     let attendance = getSubjectString(user.attendance);
     let res = await getTimeTable(attendance, user.batch, user.year);
-    let timetable = {
-      monday: res['monday'],
-      tuesday: res['tuesday'],
-      wednesday: res['wednesday'],
-      thursday: res['thursday'],
-      friday: res['friday'],
-      saturday: res['saturday'],
-    };
+    let timetable = [
+      { monday: res['monday'] },
+      { tuesday: res['tuesday'] },
+      { wednesday: res['wednesday'] },
+      { thursday: res['thursday'] },
+      { friday: res['friday'] },
+      { saturday: res['saturday'] },
+    ];
     await AsyncStorage.setItem('timetable', JSON.stringify(timetable));
 
     // set timetable
@@ -36,7 +40,7 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     _getTimeTable();
-  }, []);
+  }, [user]);
 
   return (
     <UserContext.Provider

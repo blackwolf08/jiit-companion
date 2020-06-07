@@ -2,6 +2,7 @@ import {
   getSubjectString,
   getCurrClass,
   getAttendance,
+  isClassCompleted,
 } from './utilityFunctions';
 
-export { getSubjectString, getCurrClass, getAttendance };
+export { getSubjectString, getCurrClass, getAttendance, isClassCompleted };

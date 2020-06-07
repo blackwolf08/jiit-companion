@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const getSubjectString = (attendance) => {
   let subject_codes = [];
 
@@ -41,5 +43,18 @@ export const getAttendance = (code, att) => {
       );
     }
   });
+  res = parseInt(res);
   return res;
+};
+
+export const isClassCompleted = (classTime) => {
+  let time = parseInt(classTime.substring(0, classTime.length - 3));
+  if (time < 9) {
+    time = time + 12;
+  }
+  let currTime = moment().format('H');
+
+  if (currTime > time) return true;
+
+  return false;
 };

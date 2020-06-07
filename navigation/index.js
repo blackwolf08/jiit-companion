@@ -35,7 +35,7 @@ export default ({ children, ...restProps }) => {
       }
     })();
   }, []);
-  if (loading) return <AppLoading />;
+  if (loading && !Object.keys(theme)) return <AppLoading />;
   return (
     <NavigationContainer {...restProps} theme={theme}>
       {isAuthenticated ? (

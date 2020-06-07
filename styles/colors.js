@@ -9,3 +9,14 @@ export const dark = {
     black: '#000000',
   },
 };
+export const light = {
+  dark: false,
+  colors: {
+    text: '#1f1f1f',
+    border: '#e3e3e3',
+    background: '#f9f9f9',
+    card: '#f1f1f1',
+    primary: '#458eff',
+    black: '#fff',
+  },
+};
