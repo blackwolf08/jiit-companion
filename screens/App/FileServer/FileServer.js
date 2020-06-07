@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import { useTheme } from '../../../contexts';
 import { Mixins, Typography } from '../../../styles';
-const Cgpa = () => {
+const FileServer = () => {
   const {
     theme: {
       colors: { background, card, text, primary, black },
@@ -10,12 +10,12 @@ const Cgpa = () => {
   } = useTheme();
   return (
     <ScrollView>
-      <Text style={[styles.title, { color: text }]}>CGPA Trends</Text>
+      <Text style={[styles.title, { color: text }]}>FileServer</Text>
     </ScrollView>
   );
 };
 
-export default Cgpa;
+export default FileServer;
 
 const styles = StyleSheet.create({
   title: {
