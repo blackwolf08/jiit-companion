@@ -5,6 +5,7 @@ export const dark = {
     border: '#969696',
     background: '#121212',
     card: '#282828',
-    primary: '#3897F0',
+    primary: '#458eff',
+    black: '#000000',
   },
 };

@@ -11,22 +11,28 @@ import {
 import { Typography, Mixins } from '../../../styles';
 import { useTheme } from '../../../contexts';
 
-const Login = ({ navigation }) => {
+const MoreDetails = () => {
   const {
     theme: { colors },
   } = useTheme();
 
   //define states
-  const [enrollmentNumber, setenrollmentNumber] = useState(null);
-  const [password, setPassword] = useState(null);
+  const [dateOfBirth, setDateOfBirth] = useState(null);
+  const [batch, setBatch] = useState(null);
+  const [year, setYear] = useState(null);
+  const [college, setCollege] = useState(null);
   const [disabled, setdisabled] = useState(true);
 
   useEffect(() => {
-    if (password?.length > 0 && enrollmentNumber?.length > 0)
+    if (
+      dateOfBirth?.length > 0 &&
+      batch?.length > 0 &&
+      year?.length > 0 &&
+      college?.length > 0
+    )
       setdisabled(false);
     else setdisabled(true);
-  }, [password, enrollmentNumber]);
-
+  }, [dateOfBirth, batch, year, college]);
   return (
     <>
       <StatusBar
@@ -35,11 +41,6 @@ const Login = ({ navigation }) => {
         animated
       />
       <View style={[styles.container, { backgroundColor: colors.black }]}>
-        <View style={styles.titleConatiner}>
-          <Text style={[styles.title, { color: colors.text }]}>
-            JIIT Companion
-          </Text>
-        </View>
         <View style={styles.contentConatiner}>
           <TextInput
             placeholderTextColor={colors.border}
@@ -51,11 +52,9 @@ const Login = ({ navigation }) => {
                 color: colors.border,
               },
             ]}
-            placeholder='Your Enrollment number'
-            onChangeText={(enrollmentNumber) =>
-              setenrollmentNumber(enrollmentNumber)
-            }
-            value={enrollmentNumber}
+            placeholder='Your Date of Birth'
+            onChangeText={(dateOfBirth) => setDateOfBirth(dateOfBirth)}
+            value={dateOfBirth}
           />
 
           <TextInput
@@ -68,18 +67,38 @@ const Login = ({ navigation }) => {
                 color: colors.border,
               },
             ]}
-            placeholder='Password'
-            onChangeText={(password) => setPassword(password)}
-            secureTextEntry
-            value={password}
+            placeholder='Batch'
+            onChangeText={(batch) => setBatch(batch)}
+            value={batch}
           />
-          <TouchableOpacity>
-            <Text
-              style={[styles.forgotPasswordText, { color: colors.primary }]}
-            >
-              Forgot Password?
-            </Text>
-          </TouchableOpacity>
+          <TextInput
+            placeholderTextColor={colors.border}
+            style={[
+              styles.input,
+              {
+                backgroundColor: colors.background,
+                borderColor: colors.card,
+                color: colors.border,
+              },
+            ]}
+            placeholder='Year'
+            onChangeText={(year) => setYear(year)}
+            value={year}
+          />
+          <TextInput
+            placeholderTextColor={colors.border}
+            style={[
+              styles.input,
+              {
+                backgroundColor: colors.background,
+                borderColor: colors.card,
+                color: colors.border,
+              },
+            ]}
+            placeholder='College 62, 128, JUET'
+            onChangeText={(college) => setCollege(college)}
+            value={college}
+          />
           <TouchableOpacity
             disabled={disabled}
             onPress={() => navigation.navigate('moredetails')}
@@ -88,7 +107,6 @@ const Login = ({ navigation }) => {
               {
                 backgroundColor: colors.primary,
                 opacity: disabled ? 0.5 : 1,
-                ...Mixins.boxShadow(colors.primary),
               },
             ]}
           >
@@ -111,27 +129,24 @@ export const styles = StyleSheet.create({
     flex: 1,
   },
   titleConatiner: {
-    flex: 3,
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'flex-end',
     justifyContent: 'center',
   },
   contentConatiner: {
-    flex: 6,
+    flex: 9,
     ...Mixins.padding(40, 40, 0, 40),
   },
-  text: {
-    fontFamily: Typography.FONT_FAMILY_REGULAR,
-  },
+  text: {},
   input: {
     height: Mixins.scaleSize(35),
-    marginTop: Mixins.scaleSize(15),
+    marginTop: Mixins.scaleSize(20),
     borderRadius: Mixins.scaleSize(4),
     borderWidth: Mixins.scaleSize(1),
     ...Mixins.padding(5, 0, 5, 10),
-    fontFamily: Typography.FONT_FAMILY_REGULAR,
-    fontSize: Typography.FONT_SIZE_12,
   },
+
   logInButton: {
     ...Mixins.padding(10, 0, 10, 0),
     borderRadius: Mixins.scaleSize(5),
@@ -141,10 +156,6 @@ export const styles = StyleSheet.create({
     fontFamily: Typography.FONT_FAMILY_REGULAR,
     textAlign: 'center',
   },
-  forgotPasswordText: {
-    textAlign: 'right',
-    marginTop: Mixins.scaleSize(15),
-  },
 });
 
-export default Login;
+export default MoreDetails;
