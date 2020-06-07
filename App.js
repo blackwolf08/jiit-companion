@@ -15,8 +15,10 @@ import {
   OleoScript_700Bold,
 } from '@expo-google-fonts/oleo-script';
 
-import { AuthProvider, ThemeProvider } from './contexts';
+import { AuthProvider, ThemeProvider, UserProvider } from './contexts';
 import NavigationConatiner from './navigation';
+
+// init firebase app
 
 export default function App() {
   let [fontsLoaded] = useFonts({
@@ -33,13 +35,15 @@ export default function App() {
     return <AppLoading />;
   }
   return (
-    <AuthProvider>
-      <AppearanceProvider>
-        <ThemeProvider>
-          <NavigationConatiner />
-        </ThemeProvider>
-      </AppearanceProvider>
-    </AuthProvider>
+    <UserProvider>
+      <AuthProvider>
+        <AppearanceProvider>
+          <ThemeProvider>
+            <NavigationConatiner />
+          </ThemeProvider>
+        </AppearanceProvider>
+      </AuthProvider>
+    </UserProvider>
   );
 }
 

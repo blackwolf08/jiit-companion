@@ -6,16 +6,21 @@ import {
   StatusBar,
   TextInput,
   TouchableOpacity,
+  ActivityIndicator,
+  Keyboard,
 } from 'react-native';
 
 import { Typography, Mixins } from '../../../styles';
 import { useTheme, useAuth } from '../../../contexts';
 
-const MoreDetails = () => {
+const MoreDetails = ({ route }) => {
   const {
     theme: { colors },
   } = useTheme();
-  const { setisAuthenticated } = useAuth();
+  const { login, isLoading } = useAuth();
+
+  // params from login screen
+  const { enrollmentNumber, password } = route.params;
 
   //define states
   const [dateOfBirth, setDateOfBirth] = useState(null);
@@ -106,7 +111,17 @@ const MoreDetails = () => {
           />
           <TouchableOpacity
             disabled={disabled}
-            onPress={() => setisAuthenticated(true)}
+            onPress={() => {
+              Keyboard.dismiss();
+              login({
+                enrollmentNumber,
+                password,
+                dateOfBirth,
+                batch,
+                year,
+                college,
+              });
+            }}
             style={[
               styles.logInButton,
               {
@@ -115,9 +130,13 @@ const MoreDetails = () => {
               },
             ]}
           >
-            <Text style={[styles.logInText, { color: colors.text }]}>
-              Continue
-            </Text>
+            {isLoading ? (
+              <ActivityIndicator color='white' />
+            ) : (
+              <Text style={[styles.logInText, { color: colors.text }]}>
+                Continue
+              </Text>
+            )}
           </TouchableOpacity>
         </View>
       </View>

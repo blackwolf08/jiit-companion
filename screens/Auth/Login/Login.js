@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
+  StatusBar,
   StyleSheet,
   Text,
-  View,
-  StatusBar,
   TextInput,
   TouchableOpacity,
+  View,
+  Keyboard,
 } from 'react-native';
-
-import { Typography, Mixins } from '../../../styles';
 import { useTheme } from '../../../contexts';
+import { Mixins, Typography } from '../../../styles';
 
 const Login = ({ navigation }) => {
   const {
@@ -84,7 +84,13 @@ const Login = ({ navigation }) => {
           </TouchableOpacity>
           <TouchableOpacity
             disabled={disabled}
-            onPress={() => navigation.navigate('moredetails')}
+            onPress={() => {
+              Keyboard.dismiss();
+              navigation.navigate('moredetails', {
+                enrollmentNumber,
+                password,
+              });
+            }}
             style={[
               styles.logInButton,
               {

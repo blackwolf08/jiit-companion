@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
-import { useTheme } from '../../../contexts';
+import { useTheme, useUser } from '../../../contexts';
 import { Mixins, Typography } from '../../../styles';
 const TimeTable = () => {
   const {
@@ -8,6 +8,7 @@ const TimeTable = () => {
       colors: { background, card, text, primary, black },
     },
   } = useTheme();
+  let { user } = useUser();
   return (
     <ScrollView>
       <Text style={[styles.title, { color: text }]}>TimeTable</Text>
