@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import { ScrollView, StyleSheet, RefreshControl } from 'react-native';
+import { AttendanceDayConatiner } from '../../../components';
 import { useTheme, useUser } from '../../../contexts';
 import { Mixins, Typography } from '../../../styles';
-import { AttendanceDayConatiner } from '../../../components';
 
 const Attendance = () => {
   const {
@@ -10,13 +10,16 @@ const Attendance = () => {
       colors: { background, card, text, primary, black },
     },
   } = useTheme();
-  const { user } = useUser();
+  const { user, loading, refreshAttendance } = useUser();
   let classes = Object.keys(user.attendance);
 
   if (!classes?.length) return <> </>;
   return (
     <ScrollView
       style={{ ...Mixins.padding(0, 0, 0, 0), backgroundColor: black }}
+      refreshControl={
+        <RefreshControl refreshing={loading} onRefresh={refreshAttendance} />
+      }
     >
       {classes.map((className, key) => (
         <AttendanceDayConatiner

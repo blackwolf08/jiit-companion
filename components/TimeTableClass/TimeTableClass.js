@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Animated } from 'react-native';
-import { AnimatedCircularProgress } from 'react-native-circular-progress';
 import { Ionicons } from '@expo/vector-icons';
-import * as Animatable from 'react-native-animatable';
-
-import { useTheme, useUser } from '../../contexts';
 import moment from 'moment';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import * as Animatable from 'react-native-animatable';
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import { useTheme, useUser } from '../../contexts';
+import { Mixins, Typography } from '../../styles';
 import {
   getAttendance,
   getCurrClass,
   isClassCompleted,
   toTitleCase,
 } from '../../utils';
-import { Mixins, Typography } from '../../styles';
 
 let today = moment().format('dddd').toLowerCase();
 
@@ -33,7 +32,6 @@ const TimeTableClass = ({ classArray, dayName, delay, index }) => {
     isClassCompleted(classTime) && today == dayName
       ? 'ios-done-all'
       : 'ios-checkmark';
-  let direction = index % 2 == 0 ? 'fadeInRight' : 'fadeInLeft';
 
   return (
     <Animatable.View
@@ -41,7 +39,7 @@ const TimeTableClass = ({ classArray, dayName, delay, index }) => {
       animation='fadeInUp'
       duration={200}
       easing='linear'
-      delay={1500 + 500 * index}
+      delay={delay}
       style={[
         styles.container,
         {

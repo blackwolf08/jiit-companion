@@ -60,15 +60,15 @@ const TimeTableClass = ({ classDetails, className, index }) => {
         <View style={styles.attendanceCircleConatiner}>
           <AnimatedCircularProgress
             size={Mixins.scaleSize(60)}
-            width={5}
+            width={Mixins.scaleSize(5)}
             fill={attendancePercentage}
             tintColor={primary}
-            delay={1500 + 500 * index}
+            delay={500 * index}
             backgroundColor='#3d5875'
             lineCap='round'
             backgroundColor={black}
             rotation={0}
-            duration={1000}
+            duration={200}
           >
             {(fill) => (
               <Text style={[styles.attendancePercentage, { color: text }]}>

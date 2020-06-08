@@ -23,7 +23,6 @@ const TimeTableDayContainer = ({ item: dayWiseTimeTableArray, index }) => {
           classArray={classArray}
           dayName={dayName}
           delay={200 * (key + 1)}
-          index={key + 1}
         />
       ))}
     </View>
