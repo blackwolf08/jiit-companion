@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import firebase from 'firebase';
+
 import { useTheme } from '../../../contexts';
 import { Mixins, Typography } from '../../../styles';
 const FileServer = () => {
@@ -8,6 +10,10 @@ const FileServer = () => {
       colors: { background, card, text, primary, black },
     },
   } = useTheme();
+
+  useEffect(() => {
+    firebase.analytics().logEvent('fileserver_page_view');
+  }, []);
   return (
     <ScrollView>
       <Text style={[styles.title, { color: text }]}>FileServer</Text>

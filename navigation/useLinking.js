@@ -26,7 +26,7 @@ export default function (containerRef) {
         },
       },
       Settings: {
-        path: '/settings',
+        path: '/',
       },
     },
   });

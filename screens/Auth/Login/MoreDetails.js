@@ -9,6 +9,7 @@ import {
   ActivityIndicator,
   Keyboard,
 } from 'react-native';
+import firebase from 'firebase';
 
 import { Typography, Mixins } from '../../../styles';
 import { useTheme, useAuth } from '../../../contexts';
@@ -39,6 +40,11 @@ const MoreDetails = ({ route }) => {
       setdisabled(false);
     else setdisabled(true);
   }, [dateOfBirth, batch, year, college]);
+
+  useEffect(() => {
+    firebase.analytics().logEvent('login_more_details_page_view');
+  }, []);
+
   return (
     <>
       <StatusBar

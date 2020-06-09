@@ -15,8 +15,10 @@ import React from 'react';
 import { AppearanceProvider } from 'react-native-appearance';
 import { AuthProvider, ThemeProvider, UserProvider } from './contexts';
 import NavigationConatiner from './navigation';
+import { firebaseInit } from './firebase';
 
 // init firebase app
+firebaseInit();
 
 export default function App() {
   let [fontsLoaded] = useFonts({

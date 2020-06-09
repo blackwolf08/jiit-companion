@@ -1,10 +1,12 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   ScrollView,
   StyleSheet,
   RefreshControl,
   StatusBar,
 } from 'react-native';
+import firebase from 'firebase';
+
 import { AttendanceDayConatiner } from '../../../components';
 import { useTheme, useUser } from '../../../contexts';
 import { Mixins, Typography } from '../../../styles';
@@ -18,6 +20,10 @@ const Attendance = () => {
   } = useTheme();
   const { user, loading, refreshAttendance } = useUser();
   let classes = Object.keys(user.attendance);
+
+  useEffect(() => {
+    firebase.analytics().logEvent('attendance_screen_view');
+  }, []);
 
   if (!classes?.length) return <> </>;
   return (

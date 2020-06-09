@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
+  AsyncStorage,
+  FlatList,
   StyleSheet,
   Text,
-  View,
-  ScrollView,
-  FlatList,
   TouchableOpacity,
-  AsyncStorage,
+  View,
 } from 'react-native';
+import firebase from 'firebase';
+
 import { useTheme, useUser } from '../../../contexts';
-import { Mixins, Typography, Colors } from '../../../styles';
+import { Colors, Mixins, Typography } from '../../../styles';
 
 const ThemeButtons = ({ item, index }) => {
   const {
@@ -18,6 +19,11 @@ const ThemeButtons = ({ item, index }) => {
     },
     setTheme,
   } = useTheme();
+
+  useEffect(() => {
+    firebase.analytics().logEvent('settings_page_view');
+  }, []);
+
   const { setUser } = useUser();
   return (
     <TouchableOpacity

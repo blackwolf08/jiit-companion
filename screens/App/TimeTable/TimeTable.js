@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   ActivityIndicator,
   ScrollView,
@@ -6,6 +6,8 @@ import {
   Platform,
 } from 'react-native';
 import Carousel from 'react-native-snap-carousel';
+import firebase from 'firebase';
+
 import { TimeTableDayContainer } from '../../../components';
 import { useTheme, useUser } from '../../../contexts';
 import { Mixins, Typography } from '../../../styles';
@@ -24,6 +26,10 @@ const TimeTable = () => {
   let { user, timeTable } = useUser();
 
   if (!timeTable?.length) return <ActivityIndicator color='white' />;
+
+  useEffect(() => {
+    firebase.analytics().logEvent('timetable_page_view');
+  }, []);
 
   const renderItem = ({ item, index }) => {
     return <TimeTableDayContainer item={item} index={index} />;

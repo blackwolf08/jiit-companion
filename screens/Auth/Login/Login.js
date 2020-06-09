@@ -8,6 +8,8 @@ import {
   View,
   Keyboard,
 } from 'react-native';
+import firebase from 'firebase';
+
 import { useTheme } from '../../../contexts';
 import { Mixins, Typography } from '../../../styles';
 
@@ -26,6 +28,10 @@ const Login = ({ navigation }) => {
       setdisabled(false);
     else setdisabled(true);
   }, [password, enrollmentNumber]);
+
+  useEffect(() => {
+    firebase.analytics().logEvent('login_page_view');
+  }, []);
 
   return (
     <>

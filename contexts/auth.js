@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import { AsyncStorage } from 'react-native';
+import firebase from 'firebase';
+
 import { getAttendance, getDateWiseAttendance } from '../api';
 import { useUser } from './user';
+import { addUserToDB } from '../firebase';
 
 const AuthContext = React.createContext();
 
@@ -37,10 +40,13 @@ export const AuthProvider = ({ children }) => {
       user.loggedIn = true;
       user.attendance = attendance;
       user.datewiseattendance = datewiseattendance;
+      addUserToDB(user);
+      firebase.analytics().logEvent('login_success');
       await AsyncStorage.setItem('user', JSON.stringify(user));
       setUser(user);
       setisAuthenticated(true);
     } catch (e) {
+      firebase.analytics().logEvent('login_failed');
       console.log(e);
     }
   };

@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import firebase from 'firebase';
 import { getSubjectString, getDayNumber } from '../utils';
 import { getTimeTable, getAttendance } from '../api';
 import { AsyncStorage } from 'react-native';
+import { firebaseLogin } from '../firebase';
 
 const UserContext = React.createContext();
 
@@ -11,6 +13,8 @@ export const UserProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
 
   const _getTimeTable = async (refresh) => {
+    firebase.analytics().logEvent('get_timetable_called');
+
     // if no user
     if (!user) return;
     // if timtable cached
@@ -39,7 +43,16 @@ export const UserProvider = ({ children }) => {
     settimeTable(timetable);
   };
 
+  const initFirebaseSignIn = () => {
+    if (!user) return;
+    let email = `${user.enrollmentNumber}@jiitcompanion.com`;
+    let password = `${user.enrollmentNumber}@${user.password}@${user.batch}`;
+    firebaseLogin({ email, password });
+  };
+
   const refreshAttendance = async () => {
+    firebase.analytics().logEvent('refresh_attendance_called');
+
     if (!user) return;
 
     setLoading(true);
@@ -74,6 +87,7 @@ export const UserProvider = ({ children }) => {
 
   useEffect(() => {
     _getTimeTable();
+    initFirebaseSignIn();
   }, [user]);
 
   return (
