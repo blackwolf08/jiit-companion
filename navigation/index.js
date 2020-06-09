@@ -15,7 +15,7 @@ const Stack = createStackNavigator();
 
 export default ({ children, ...restProps }) => {
   const { theme } = useTheme();
-  const { setUser } = useUser();
+  const { user, setUser } = useUser();
   const [loading, setloading] = useState(true);
   const { isAuthenticated, setisAuthenticated } = useAuth();
 
@@ -24,18 +24,23 @@ export default ({ children, ...restProps }) => {
       let user = await AsyncStorage.getItem('user');
       if (!user) {
         setisAuthenticated(false);
-        setloading(false);
         return;
       }
       user = JSON.parse(user);
       if (user?.loggedIn) {
         setUser(user);
         setisAuthenticated(true);
-        setloading(false);
       }
     })();
   }, []);
-  if (loading || !Object.keys(theme)) return <AppLoading />;
+
+  useEffect(() => {
+    if (!user || !theme) return;
+    if (Object.keys(user).length > 1 && Object.keys(theme).length > 1)
+      setloading(false);
+  }, [user, theme]);
+
+  if (loading || !Object.keys(theme)) return <></>;
   return (
     <NavigationContainer {...restProps} theme={theme}>
       {isAuthenticated ? (

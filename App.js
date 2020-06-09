@@ -1,8 +1,3 @@
-import React from 'react';
-import { StyleSheet } from 'react-native';
-import { AppearanceProvider } from 'react-native-appearance';
-import { AppLoading } from 'expo';
-import { useFonts } from '@use-expo/font';
 import {
   Montserrat_400Regular,
   Montserrat_500Medium,
@@ -14,7 +9,10 @@ import {
   OleoScript_400Regular,
   OleoScript_700Bold,
 } from '@expo-google-fonts/oleo-script';
-
+import { useFonts } from '@use-expo/font';
+import { AppLoading } from 'expo';
+import React from 'react';
+import { AppearanceProvider } from 'react-native-appearance';
 import { AuthProvider, ThemeProvider, UserProvider } from './contexts';
 import NavigationConatiner from './navigation';
 
@@ -46,9 +44,3 @@ export default function App() {
     </UserProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  conatiner: {
-    flex: 1,
-  },
-});

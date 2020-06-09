@@ -13,7 +13,7 @@ import { Mixins, Typography } from '../../../styles';
 
 const Login = ({ navigation }) => {
   const {
-    theme: { colors },
+    theme: { colors, dark },
   } = useTheme();
 
   //define states
@@ -30,7 +30,7 @@ const Login = ({ navigation }) => {
   return (
     <>
       <StatusBar
-        barStyle='light-content'
+        barStyle={dark ? 'light-content' : 'dark-content'}
         backgroundColor={colors.black}
         animated
       />
@@ -132,7 +132,7 @@ export const styles = StyleSheet.create({
     fontFamily: Typography.FONT_FAMILY_REGULAR,
   },
   input: {
-    height: Mixins.scaleSize(35),
+    height: Mixins.scaleSize(50),
     marginTop: Mixins.scaleSize(15),
     borderRadius: Mixins.scaleSize(4),
     borderWidth: Mixins.scaleSize(1),
@@ -141,9 +141,11 @@ export const styles = StyleSheet.create({
     fontSize: Typography.FONT_SIZE_12,
   },
   logInButton: {
-    ...Mixins.padding(10, 0, 10, 0),
+    height: Mixins.scaleSize(50),
     borderRadius: Mixins.scaleSize(5),
     marginTop: Mixins.scaleSize(15),
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   logInText: {
     fontFamily: Typography.FONT_FAMILY_REGULAR,

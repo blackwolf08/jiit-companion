@@ -4,6 +4,7 @@ import {
   getAttendance,
   isClassCompleted,
   toTitleCase,
+  getDayNumber,
 } from './utilityFunctions';
 
 export {
@@ -12,4 +13,5 @@ export {
   getAttendance,
   isClassCompleted,
   toTitleCase,
+  getDayNumber,
 };

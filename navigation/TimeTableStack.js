@@ -15,7 +15,7 @@ function TimeTableStackScreen({ navigation }) {
       screenOptions={{
         headerTitleAlign: 'center',
         headerStyle: {
-          backgroundColor: theme.colors.black,
+          backgroundColor: theme.colors.card,
         },
         headerBackTitleVisible: false,
         headerBackImage: () => (

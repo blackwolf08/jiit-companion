@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
-import { useColorScheme } from 'react-native-appearance';
+import React, { useState, useEffect } from 'react';
 
 import { Colors } from '../styles';
+import { useUser } from './user';
 
 const ThemeContext = React.createContext();
 
 export const ThemeProvider = ({ children }) => {
-  const [theme, setTheme] = useState(Colors.dark);
+  const { user } = useUser();
 
-  let scheme = useColorScheme();
+  const [theme, setTheme] = useState(Colors[user?.theme] || Colors.dark);
+
+  useEffect(() => {
+    setTheme(Colors[user?.theme] || Colors.dark);
+  }, [user]);
 
   return (
     <ThemeContext.Provider

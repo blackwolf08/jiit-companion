@@ -1,17 +1,17 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-import { FileServer } from '../screens/App/FileServer';
 import { HeaderTitle } from '../components';
 import { Typography, Mixins } from '../styles';
 import { useTheme } from '../contexts';
 import { Ionicons } from '@expo/vector-icons';
+import { Settings } from '../screens/App/Settings';
 
-const FileServerStack = createStackNavigator();
+const SettingsStack = createStackNavigator();
 
-function FileServerStackScreen({ navigation }) {
+function SettingsStackScreen({ navigation }) {
   const { theme } = useTheme();
   return (
-    <FileServerStack.Navigator
+    <SettingsStack.Navigator
       screenOptions={{
         headerTitleAlign: 'center',
         headerStyle: {
@@ -31,13 +31,13 @@ function FileServerStackScreen({ navigation }) {
         ),
       }}
     >
-      <FileServerStack.Screen
+      <SettingsStack.Screen
         options={{
-          headerTitle: () => <HeaderTitle title='JIIT Companion' />,
+          headerTitle: () => <HeaderTitle title='Settings' />,
           headerRight: () => (
             <Ionicons
               onPress={() => {}}
-              name='ios-send'
+              name='ios-settings'
               size={Typography.FONT_SIZE_28}
               style={{
                 marginLeft: Mixins.scaleSize(10),
@@ -59,11 +59,11 @@ function FileServerStackScreen({ navigation }) {
             />
           ),
         }}
-        name='fileserver'
-        component={FileServer}
+        name='settings'
+        component={Settings}
       />
-    </FileServerStack.Navigator>
+    </SettingsStack.Navigator>
   );
 }
 
-export { FileServerStackScreen };
+export { SettingsStackScreen };

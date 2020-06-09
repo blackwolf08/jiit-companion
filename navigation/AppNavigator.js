@@ -7,6 +7,9 @@ import { AttendanceStackScreen } from './AttendanceStack';
 import { TimeTableStackScreen } from './TimeTableStack';
 import { FileServerStackScreen } from './FileServerStack';
 import { CgpaStackScreen } from './CgpaStack';
+import { Settings } from '../screens/App/Settings';
+import { SettingsStackScreen } from './SettingsStack';
+import { StatusBar } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -38,7 +41,7 @@ const TabNavigator = () => {
       tabBarOptions={{
         showLabel: false,
         style: {
-          backgroundColor: theme.colors.black,
+          backgroundColor: theme.colors.card,
           borderTopWidth: 0,
         },
       }}
@@ -55,6 +58,7 @@ export default function AppNavigator() {
   return (
     <Drawer.Navigator drawerType='slide' initialRouteName='home'>
       <Drawer.Screen name='Home' component={TabNavigator} />
+      <Drawer.Screen name='Settings' component={SettingsStackScreen} />
     </Drawer.Navigator>
   );
 }

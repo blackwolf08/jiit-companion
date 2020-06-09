@@ -3,10 +3,11 @@ export const dark = {
   colors: {
     text: '#FFFFFF',
     border: '#969696',
-    background: '#121212',
-    card: '#282828',
+    background: '#1f1f1f',
+    card: '#121212',
     primary: '#458eff',
     black: '#000000',
+    backgroundLight: '#282828',
   },
 };
 
@@ -15,9 +16,10 @@ export const light = {
   colors: {
     text: '#1f1f1f',
     border: '#dbdbdb',
-    background: '#FAFAFA',
-    card: '#f9f9f9',
+    background: '#fff',
+    card: '#ecf0f1',
     primary: '#458eff',
+    backgroundLight: '#fff',
     black: '#fff',
   },
 };
@@ -25,11 +27,12 @@ export const light = {
 export const pink = {
   dark: false,
   colors: {
-    text: '#1f1f1f',
+    text: 'rgba(0,0,0,0.7)',
     border: '#cf6a87',
-    background: '#f78fb330',
-    card: '#f9f9f9',
+    background: '#fff',
+    card: '#fcebf1',
     primary: '#f78fb3',
-    black: '#fafafa',
+    black: '#fff',
+    backgroundLight: '#fff',
   },
 };

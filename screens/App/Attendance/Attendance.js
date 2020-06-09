@@ -1,5 +1,10 @@
 import React from 'react';
-import { ScrollView, StyleSheet, RefreshControl } from 'react-native';
+import {
+  ScrollView,
+  StyleSheet,
+  RefreshControl,
+  StatusBar,
+} from 'react-native';
 import { AttendanceDayConatiner } from '../../../components';
 import { useTheme, useUser } from '../../../contexts';
 import { Mixins, Typography } from '../../../styles';
@@ -8,6 +13,7 @@ const Attendance = () => {
   const {
     theme: {
       colors: { background, card, text, primary, black },
+      dark,
     },
   } = useTheme();
   const { user, loading, refreshAttendance } = useUser();
@@ -15,21 +21,32 @@ const Attendance = () => {
 
   if (!classes?.length) return <> </>;
   return (
-    <ScrollView
-      style={{ ...Mixins.padding(0, 0, 0, 0), backgroundColor: black }}
-      refreshControl={
-        <RefreshControl refreshing={loading} onRefresh={refreshAttendance} />
-      }
-    >
-      {classes.map((className, key) => (
-        <AttendanceDayConatiner
-          classDetails={user.attendance[className]}
-          className={className}
-          key={key}
-          index={key + 1}
-        />
-      ))}
-    </ScrollView>
+    <>
+      <StatusBar
+        barStyle={dark ? 'light-content' : 'dark-content'}
+        backgroundColor={black}
+        animated
+      />
+      <ScrollView
+        style={{
+          ...Mixins.padding(0, 0, 0, 0),
+          ...Mixins.margin(0, 0, 0, 0),
+          backgroundColor: background,
+        }}
+        refreshControl={
+          <RefreshControl refreshing={loading} onRefresh={refreshAttendance} />
+        }
+      >
+        {classes.map((className, key) => (
+          <AttendanceDayConatiner
+            classDetails={user.attendance[className]}
+            className={className}
+            key={key}
+            index={key + 1}
+          />
+        ))}
+      </ScrollView>
+    </>
   );
 };
 

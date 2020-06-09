@@ -10,6 +10,7 @@ import { TimeTableDayContainer } from '../../../components';
 import { useTheme, useUser } from '../../../contexts';
 import { Mixins, Typography } from '../../../styles';
 import moment from 'moment';
+import { StatusBar } from 'react-native';
 
 const dayInNumber = parseInt(moment().format('d'));
 
@@ -17,6 +18,7 @@ const TimeTable = () => {
   const {
     theme: {
       colors: { background, card, text, primary, black },
+      dark,
     },
   } = useTheme();
   let { user, timeTable } = useUser();
@@ -28,21 +30,28 @@ const TimeTable = () => {
   };
 
   return (
-    <ScrollView
-      style={{ ...Mixins.padding(20, 0, 0, 0), backgroundColor: black }}
-    >
-      {/* <Text style={[styles.title, { color: text }]}>TimeTable</Text> */}
-      <Carousel
-        data={timeTable}
-        renderItem={renderItem}
-        sliderWidth={Mixins.WINDOW_WIDTH}
-        itemWidth={Mixins.WINDOW_WIDTH}
-        loop
-        firstItem={dayInNumber}
-        enableSnap
-        layout={Platform.OS == 'web' ? 'default' : 'stack'}
+    <>
+      <StatusBar
+        barStyle={dark ? 'light-content' : 'dark-content'}
+        backgroundColor={black}
+        animated
       />
-    </ScrollView>
+      <ScrollView
+        style={{ ...Mixins.padding(20, 0, 0, 0), backgroundColor: black }}
+      >
+        {/* <Text style={[styles.title, { color: text }]}>TimeTable</Text> */}
+        <Carousel
+          data={timeTable}
+          renderItem={renderItem}
+          sliderWidth={Mixins.WINDOW_WIDTH}
+          itemWidth={Mixins.WINDOW_WIDTH}
+          loop
+          firstItem={dayInNumber - 1}
+          enableSnap
+          layout={Platform.OS == 'web' ? 'default' : 'stack'}
+        />
+      </ScrollView>
+    </>
   );
 };
 

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Vibration } from 'react-native';
-import { getSubjectString } from '../utils';
+import { getSubjectString, getDayNumber } from '../utils';
 import { getTimeTable, getAttendance } from '../api';
 import { AsyncStorage } from 'react-native';
 
@@ -20,7 +19,6 @@ export const UserProvider = ({ children }) => {
     // if no refresh request and has cache timetable
     if (cachedTimeTable && !refresh) {
       settimeTable(cachedTimeTable);
-      Vibration.vibrate(100);
       return;
     }
 
@@ -39,7 +37,6 @@ export const UserProvider = ({ children }) => {
 
     // set timetable
     settimeTable(timetable);
-    Vibration.vibrate(100);
   };
 
   const refreshAttendance = async () => {
@@ -63,8 +60,16 @@ export const UserProvider = ({ children }) => {
       ...user,
       attendance,
     });
-    Vibration.vibrate(100);
     setLoading(false);
+  };
+
+  const updateTimeTable = async ({ data, dayName }) => {
+    let newTimeTable = [...timeTable];
+    newTimeTable[getDayNumber(dayName)] = {
+      [dayName]: data,
+    };
+    settimeTable(newTimeTable);
+    await AsyncStorage.setItem('timetable', JSON.stringify(newTimeTable));
   };
 
   useEffect(() => {
@@ -78,6 +83,8 @@ export const UserProvider = ({ children }) => {
         setUser,
         timeTable,
         refreshAttendance,
+        settimeTable,
+        updateTimeTable,
       }}
     >
       {children}

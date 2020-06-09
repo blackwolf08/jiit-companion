@@ -19,13 +19,23 @@ let today = moment().format('dddd').toLowerCase();
 const TimeTableClass = ({ classDetails, className, index }) => {
   const {
     theme: {
-      colors: { background, card, text, primary, black },
+      colors: {
+        background,
+        card,
+        text,
+        primary,
+        black,
+        backgroundLight,
+        border,
+      },
     },
   } = useTheme();
 
   let { user } = useUser();
   let attendancePercentage = parseInt(classDetails[0]?.Total); // get percentage from attendance list
   let classType;
+
+  const cleanAttendanceText = (text) => `${text.split('.')[0]} %`;
 
   switch (classDetails?.length) {
     case 1:
@@ -47,7 +57,7 @@ const TimeTableClass = ({ classDetails, className, index }) => {
       style={[
         styles.container,
         {
-          backgroundColor: background,
+          backgroundColor: card,
         },
       ]}
     >
@@ -79,23 +89,47 @@ const TimeTableClass = ({ classDetails, className, index }) => {
         </View>
       </View>
       <View style={styles.attendanceBoxes}>
-        <View style={[styles.total, { backgroundColor: card }]}>
+        <View style={[styles.total, { backgroundColor: backgroundLight }]}>
           <Text style={[styles.typeAttendance, { color: text }]}>
-            {classDetails[0]?.Total}
+            {cleanAttendanceText(classDetails[0]?.Total)}
           </Text>
+          <View
+            style={[
+              styles.classType,
+              { backgroundColor: backgroundLight, borderColor: border },
+            ]}
+          >
+            <Text style={[styles.classTypeText, { color: text }]}>T</Text>
+          </View>
         </View>
         {classType && (
-          <View style={[styles.total, { backgroundColor: card }]}>
+          <View style={[styles.total, { backgroundColor: backgroundLight }]}>
             <Text style={[styles.typeAttendance, { color: text }]}>
-              {classDetails[1]?.Class}
+              {cleanAttendanceText(classDetails[1]?.Class)}
             </Text>
+            <View
+              style={[
+                styles.classType,
+                { backgroundColor: backgroundLight, borderColor: border },
+              ]}
+            >
+              <Text style={[styles.classTypeText, { color: text }]}>L</Text>
+            </View>
           </View>
         )}
         {classType && (
-          <View style={[styles.total, { backgroundColor: card }]}>
+          <View style={[styles.total, { backgroundColor: backgroundLight }]}>
             <Text style={[styles.typeAttendance, { color: text }]}>
-              {classDetails[2]?.Tutorial}
+              {cleanAttendanceText(classDetails[2]?.Tutorial)}
             </Text>
+            <View
+              style={[
+                styles.classType,
+                { backgroundColor: backgroundLight, borderColor: border },
+              ]}
+            >
+              <Text style={[styles.classTypeText, { color: text }]}>T</Text>
+            </View>
           </View>
         )}
       </View>
@@ -129,15 +163,18 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     ...Mixins.padding(10, 10, 10, 10),
     alignItems: 'center',
+    justifyContent: 'space-around',
+    width: '100%',
   },
   total: {
-    ...Mixins.margin(0, 0, 0, 10),
+    ...Mixins.margin(0, 0, 0, 0),
     ...Mixins.padding(5, 10, 5, 10),
     width: Mixins.scaleSize(60),
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: Mixins.scaleSize(30),
     backgroundColor: '#fff',
+    position: 'relative',
   },
   typeAttendance: {},
   attendancePercentage: {
@@ -147,5 +184,20 @@ const styles = StyleSheet.create({
   className: {
     fontFamily: Typography.FONT_FAMILY_REGULAR,
     fontSize: Typography.FONT_SIZE_14,
+  },
+  classType: {
+    position: 'absolute',
+    top: Mixins.scaleSize(-10),
+    left: Mixins.scaleSize(-10),
+    height: 20,
+    width: 20,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    borderWidth: 1,
+  },
+  classTypeText: {
+    fontFamily: Typography.FONT_FAMILY_BOLD,
+    fontSize: Typography.FONT_SIZE_12,
   },
 });

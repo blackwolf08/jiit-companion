@@ -1,15 +1,16 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { useTheme } from '../../contexts';
-import { Typography, Mixins } from '../../styles';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { useTheme, useUser } from '../../contexts';
+import { Mixins, Typography } from '../../styles';
 import { TimeTableClass } from '../TimeTableClass';
 
-const TimeTableDayContainer = ({ item: dayWiseTimeTableArray, index }) => {
+const TimeTableDayContainer = ({ item: dayWiseTimeTableArray }) => {
   const {
     theme: {
-      colors: { background, card, text, primary, black },
+      colors: { text, black },
     },
   } = useTheme();
+  const { updateTimeTable } = useUser();
   let dayName = Object.keys(dayWiseTimeTableArray)[0];
 
   return (
@@ -17,14 +18,21 @@ const TimeTableDayContainer = ({ item: dayWiseTimeTableArray, index }) => {
       <Text style={[styles.title, { color: text }]}>
         {dayName?.toUpperCase()}
       </Text>
-      {dayWiseTimeTableArray[dayName].map((classArray, key) => (
-        <TimeTableClass
-          key={`class-${key}`}
-          classArray={classArray}
-          dayName={dayName}
-          delay={200 * (key + 1)}
+      <View>
+        <FlatList
+          data={dayWiseTimeTableArray[dayName]}
+          renderItem={({ item, index, drag, isActive }) => (
+            <TimeTableClass
+              dayName={dayName}
+              delay={200}
+              classArray={item}
+              drag={drag}
+            />
+          )}
+          keyExtractor={(item, index) => `draggable-item-${index}`}
+          onDragEnd={async ({ data }) => updateTimeTable({ data, dayName })}
         />
-      ))}
+      </View>
     </View>
   );
 };
@@ -37,6 +45,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   conatiner: {
-    minHeight: Mixins.WINDOW_HEIGHT - Mixins.scaleSize(120),
+    minHeight: Mixins.WINDOW_HEIGHT + Mixins.scaleSize(120),
   },
 });

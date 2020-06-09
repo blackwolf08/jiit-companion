@@ -164,17 +164,21 @@ export const styles = StyleSheet.create({
   },
   text: {},
   input: {
-    height: Mixins.scaleSize(35),
-    marginTop: Mixins.scaleSize(20),
+    height: Mixins.scaleSize(50),
+    marginTop: Mixins.scaleSize(15),
     borderRadius: Mixins.scaleSize(4),
     borderWidth: Mixins.scaleSize(1),
     ...Mixins.padding(5, 0, 5, 10),
+    fontFamily: Typography.FONT_FAMILY_REGULAR,
+    fontSize: Typography.FONT_SIZE_12,
   },
 
   logInButton: {
-    ...Mixins.padding(10, 0, 10, 0),
+    height: Mixins.scaleSize(50),
     borderRadius: Mixins.scaleSize(5),
     marginTop: Mixins.scaleSize(15),
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   logInText: {
     fontFamily: Typography.FONT_FAMILY_REGULAR,
