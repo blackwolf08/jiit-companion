@@ -7,31 +7,25 @@ import { TimeTableClass } from '../TimeTableClass';
 const TimeTableDayContainer = ({ item: dayWiseTimeTableArray }) => {
   const {
     theme: {
-      colors: { text, black },
+      colors: { text, background },
     },
   } = useTheme();
   const { updateTimeTable } = useUser();
   let dayName = Object.keys(dayWiseTimeTableArray)[0];
 
   return (
-    <View style={[styles.conatiner, { backgroundColor: black }]}>
+    <View style={[styles.conatiner, { backgroundColor: background }]}>
       <Text style={[styles.title, { color: text }]}>
         {dayName?.toUpperCase()}
       </Text>
       <View>
-        <FlatList
-          data={dayWiseTimeTableArray[dayName]}
-          renderItem={({ item, index, drag, isActive }) => (
-            <TimeTableClass
-              dayName={dayName}
-              delay={200}
-              classArray={item}
-              drag={drag}
-            />
-          )}
-          keyExtractor={(item, index) => `draggable-item-${index}`}
-          onDragEnd={async ({ data }) => updateTimeTable({ data, dayName })}
-        />
+        {dayWiseTimeTableArray[dayName].map((item, key) => (
+          <TimeTableClass
+            dayName={dayName}
+            classArray={item}
+            key={`draggable-item-${key}`}
+          />
+        ))}
       </View>
     </View>
   );

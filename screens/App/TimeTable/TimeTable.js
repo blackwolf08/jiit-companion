@@ -38,7 +38,7 @@ const TimeTable = () => {
       />
       <ScrollView
         showsVerticalScrollIndicator={false}
-        style={{ ...Mixins.padding(20, 0, 0, 0), backgroundColor: black }}
+        style={{ ...Mixins.padding(20, 0, 0, 0), backgroundColor: background }}
       >
         {/* <Text style={[styles.title, { color: text }]}>TimeTable</Text> */}
         <Carousel

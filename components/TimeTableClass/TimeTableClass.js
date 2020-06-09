@@ -15,7 +15,7 @@ import {
 
 let today = moment().format('dddd').toLowerCase();
 
-const TimeTableClass = ({ classArray, dayName, delay, index, drag }) => {
+const TimeTableClass = ({ classArray, dayName }) => {
   const {
     theme: {
       colors: { background, card, text, primary, black },
@@ -33,61 +33,53 @@ const TimeTableClass = ({ classArray, dayName, delay, index, drag }) => {
     isClassCompleted(classTime) && today == dayName
       ? 'ios-done-all'
       : 'ios-checkmark';
-
   return (
-    <TouchableWithoutFeedback onLongPress={drag}>
-      <Animatable.View
-        useNativeDriver
-        animation='fadeInUp'
-        duration={200}
-        easing='linear'
-        delay={delay}
-        style={[
-          styles.container,
-          {
-            backgroundColor: card,
-            ...Mixins.boxShadow(dark ? 'gray' : 'black'),
-          },
-        ]}
-      >
-        <View style={styles.timeConatiner}>
-          <Ionicons
-            name={isCompleted}
-            color='gray'
-            size={Mixins.scaleSize(24)}
-          />
-          <Text style={[styles.className, { color: text }]}>{classTime}</Text>
-        </View>
-        <View style={styles.classNameConatiner}>
-          <Text style={[styles.className, { color: text }]}>
-            {toTitleCase(className)}
-          </Text>
-          <Text style={[styles.className, { color: text }]}>{classType}</Text>
-        </View>
-        <View style={styles.roomContainer}>
-          <Text style={[styles.className, { color: text }]}>{classRoom}</Text>
-        </View>
-        <View style={styles.attendanceCircleConatiner}>
-          <AnimatedCircularProgress
-            size={Mixins.scaleSize(60)}
-            width={5}
-            fill={attendancePercentage}
-            tintColor={primary}
-            backgroundColor='#3d5875'
-            lineCap='round'
-            backgroundColor={black}
-            rotation={0}
-            duration={1000}
-          >
-            {(fill) => (
-              <Text style={[styles.attendancePercentage, { color: text }]}>
-                {parseInt(fill)} %
-              </Text>
-            )}
-          </AnimatedCircularProgress>
-        </View>
-      </Animatable.View>
-    </TouchableWithoutFeedback>
+    <Animatable.View
+      useNativeDriver
+      animation='fadeInUp'
+      duration={200}
+      easing='linear'
+      style={[
+        styles.container,
+        {
+          backgroundColor: card,
+          ...Mixins.boxShadow(dark ? 'gray' : 'black'),
+        },
+      ]}
+    >
+      <View style={styles.timeConatiner}>
+        <Ionicons name={isCompleted} color='gray' size={Mixins.scaleSize(24)} />
+        <Text style={[styles.className, { color: text }]}>{classTime}</Text>
+      </View>
+      <View style={styles.classNameConatiner}>
+        <Text style={[styles.className, { color: text }]}>
+          {toTitleCase(className)}
+        </Text>
+        <Text style={[styles.className, { color: text }]}>{classType}</Text>
+      </View>
+      <View style={styles.roomContainer}>
+        <Text style={[styles.className, { color: text }]}>{classRoom}</Text>
+      </View>
+      <View style={styles.attendanceCircleConatiner}>
+        <AnimatedCircularProgress
+          size={Mixins.scaleSize(60)}
+          width={5}
+          fill={attendancePercentage}
+          tintColor={primary}
+          backgroundColor='#3d5875'
+          lineCap='round'
+          backgroundColor={black}
+          rotation={0}
+          duration={1000}
+        >
+          {(fill) => (
+            <Text style={[styles.attendancePercentage, { color: text }]}>
+              {parseInt(fill)} %
+            </Text>
+          )}
+        </AnimatedCircularProgress>
+      </View>
+    </Animatable.View>
   );
 };
 
@@ -95,7 +87,7 @@ export default TimeTableClass;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0.1,
+    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     ...Mixins.padding(20, 10, 20, 10),

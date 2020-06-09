@@ -85,6 +85,7 @@ export const UserProvider = ({ children }) => {
         refreshAttendance,
         settimeTable,
         updateTimeTable,
+        loading,
       }}
     >
       {children}

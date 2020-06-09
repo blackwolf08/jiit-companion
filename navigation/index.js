@@ -1,14 +1,14 @@
 import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { AsyncStorage } from 'react-native';
 import { HeaderTitle } from '../components';
 import { useAuth, useTheme, useUser } from '../contexts';
 import { Login, MoreDetails } from '../screens/Auth/Login';
 import { Mixins, Typography } from '../styles';
 import AppNavigator from './AppNavigator';
-
+import useLinking from './useLinking';
 const Stack = createStackNavigator();
 
 export default ({ children, ...restProps }) => {
@@ -16,6 +16,10 @@ export default ({ children, ...restProps }) => {
   const { user, setUser } = useUser();
   const [loading, setloading] = useState(true);
   const { isAuthenticated, setisAuthenticated } = useAuth();
+
+  const [initialNavigationState, setInitialNavigationState] = useState();
+  const containerRef = useRef();
+  const { getInitialState } = useLinking(containerRef);
 
   useEffect(() => {
     (async () => {
@@ -36,7 +40,12 @@ export default ({ children, ...restProps }) => {
 
   if (loading) return <></>;
   return (
-    <NavigationContainer {...restProps} theme={theme}>
+    <NavigationContainer
+      ref={containerRef}
+      initialState={initialNavigationState}
+      {...restProps}
+      theme={theme}
+    >
       {isAuthenticated ? (
         <AppNavigator />
       ) : (

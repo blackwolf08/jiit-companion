@@ -50,13 +50,13 @@ const MoreDetails = ({ route }) => {
         <View style={styles.contentConatiner}>
           <TextInput
             keyboardAppearance={'dark'}
-            placeholderTextColor={colors.border}
+            placeholderTextColor={colors.text}
             style={[
               styles.input,
               {
                 backgroundColor: colors.background,
                 borderColor: colors.card,
-                color: colors.border,
+                color: colors.text,
               },
             ]}
             placeholder='Your Date of Birth'
@@ -66,13 +66,13 @@ const MoreDetails = ({ route }) => {
 
           <TextInput
             keyboardAppearance={'dark'}
-            placeholderTextColor={colors.border}
+            placeholderTextColor={colors.text}
             style={[
               styles.input,
               {
                 backgroundColor: colors.background,
                 borderColor: colors.card,
-                color: colors.border,
+                color: colors.text,
               },
             ]}
             placeholder='Batch'
@@ -81,13 +81,13 @@ const MoreDetails = ({ route }) => {
           />
           <TextInput
             keyboardAppearance={'dark'}
-            placeholderTextColor={colors.border}
+            placeholderTextColor={colors.text}
             style={[
               styles.input,
               {
                 backgroundColor: colors.background,
                 borderColor: colors.card,
-                color: colors.border,
+                color: colors.text,
               },
             ]}
             placeholder='Year'
@@ -96,13 +96,13 @@ const MoreDetails = ({ route }) => {
           />
           <TextInput
             keyboardAppearance={'dark'}
-            placeholderTextColor={colors.border}
+            placeholderTextColor={colors.text}
             style={[
               styles.input,
               {
                 backgroundColor: colors.background,
                 borderColor: colors.card,
-                color: colors.border,
+                color: colors.text,
               },
             ]}
             placeholder='College 62, 128, JUET'

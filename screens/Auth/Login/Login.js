@@ -43,13 +43,13 @@ const Login = ({ navigation }) => {
         <View style={styles.contentConatiner}>
           <TextInput
             keyboardAppearance={'dark'}
-            placeholderTextColor={colors.border}
+            placeholderTextColor={colors.text}
             style={[
               styles.input,
               {
                 backgroundColor: colors.background,
                 borderColor: colors.card,
-                color: colors.border,
+                color: colors.text,
               },
             ]}
             placeholder='Your Enrollment number'
@@ -61,13 +61,13 @@ const Login = ({ navigation }) => {
 
           <TextInput
             keyboardAppearance={'dark'}
-            placeholderTextColor={colors.border}
+            placeholderTextColor={colors.text}
             style={[
               styles.input,
               {
                 backgroundColor: colors.background,
                 borderColor: colors.card,
-                color: colors.border,
+                color: colors.text,
               },
             ]}
             placeholder='Password'

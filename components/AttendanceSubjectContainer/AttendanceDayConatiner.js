@@ -47,7 +47,6 @@ const TimeTableClass = ({ classDetails, className, index }) => {
       animation='fadeInUp'
       duration={200}
       easing='linear'
-      delay={500}
       style={[
         styles.container,
         {
