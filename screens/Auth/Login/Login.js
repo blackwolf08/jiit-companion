@@ -17,8 +17,8 @@ const Login = ({ navigation }) => {
   } = useTheme();
 
   //define states
-  const [enrollmentNumber, setenrollmentNumber] = useState(null);
-  const [password, setPassword] = useState(null);
+  const [enrollmentNumber, setenrollmentNumber] = useState('');
+  const [password, setPassword] = useState('');
   const [disabled, setdisabled] = useState(true);
 
   useEffect(() => {
@@ -146,6 +146,7 @@ export const styles = StyleSheet.create({
     marginTop: Mixins.scaleSize(15),
     justifyContent: 'center',
     alignItems: 'center',
+    maxHeight: 50,
   },
   logInText: {
     fontFamily: Typography.FONT_FAMILY_REGULAR,

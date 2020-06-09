@@ -2,7 +2,7 @@ export const dark = {
   dark: true,
   colors: {
     text: '#FFFFFF',
-    border: '#969696',
+    border: '#000000',
     background: '#1f1f1f',
     card: '#121212',
     primary: '#458eff',

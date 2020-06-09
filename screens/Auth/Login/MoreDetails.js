@@ -23,10 +23,10 @@ const MoreDetails = ({ route }) => {
   const { enrollmentNumber, password } = route.params;
 
   //define states
-  const [dateOfBirth, setDateOfBirth] = useState(null);
-  const [batch, setBatch] = useState(null);
-  const [year, setYear] = useState(null);
-  const [college, setCollege] = useState(null);
+  const [dateOfBirth, setDateOfBirth] = useState('');
+  const [batch, setBatch] = useState('');
+  const [year, setYear] = useState('');
+  const [college, setCollege] = useState('');
   const [disabled, setdisabled] = useState(true);
 
   useEffect(() => {

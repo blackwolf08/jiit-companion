@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { useTheme, useAuth, useUser } from '../contexts';
-import { createStackNavigator } from '@react-navigation/stack';
-import { Login, MoreDetails } from '../screens/Auth/Login';
 import { Ionicons } from '@expo/vector-icons';
-import { Typography, Mixins } from '../styles';
-
-import { HeaderTitle } from '../components';
-import AppNavigator from './AppNavigator';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import React, { useEffect, useState } from 'react';
 import { AsyncStorage } from 'react-native';
-import { AppLoading } from 'expo';
+import { HeaderTitle } from '../components';
+import { useAuth, useTheme, useUser } from '../contexts';
+import { Login, MoreDetails } from '../screens/Auth/Login';
+import { Mixins, Typography } from '../styles';
+import AppNavigator from './AppNavigator';
 
 const Stack = createStackNavigator();
 
@@ -24,23 +22,19 @@ export default ({ children, ...restProps }) => {
       let user = await AsyncStorage.getItem('user');
       if (!user) {
         setisAuthenticated(false);
+        setloading(false);
         return;
       }
       user = JSON.parse(user);
       if (user?.loggedIn) {
         setUser(user);
         setisAuthenticated(true);
+        setloading(false);
       }
     })();
   }, []);
 
-  useEffect(() => {
-    if (!user || !theme) return;
-    if (Object.keys(user).length > 1 && Object.keys(theme).length > 1)
-      setloading(false);
-  }, [user, theme]);
-
-  if (loading || !Object.keys(theme)) return <></>;
+  if (loading) return <></>;
   return (
     <NavigationContainer {...restProps} theme={theme}>
       {isAuthenticated ? (

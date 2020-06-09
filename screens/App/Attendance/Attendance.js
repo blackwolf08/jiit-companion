@@ -33,6 +33,7 @@ const Attendance = () => {
           ...Mixins.margin(0, 0, 0, 0),
           backgroundColor: background,
         }}
+        showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl refreshing={loading} onRefresh={refreshAttendance} />
         }

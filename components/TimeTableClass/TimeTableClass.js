@@ -19,6 +19,7 @@ const TimeTableClass = ({ classArray, dayName, delay, index, drag }) => {
   const {
     theme: {
       colors: { background, card, text, primary, black },
+      dark,
     },
   } = useTheme();
 
@@ -45,6 +46,7 @@ const TimeTableClass = ({ classArray, dayName, delay, index, drag }) => {
           styles.container,
           {
             backgroundColor: card,
+            ...Mixins.boxShadow(dark ? 'gray' : 'black'),
           },
         ]}
       >

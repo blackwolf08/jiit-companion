@@ -1,18 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Animated } from 'react-native';
-import { AnimatedCircularProgress } from 'react-native-circular-progress';
-import { Ionicons } from '@expo/vector-icons';
-import * as Animatable from 'react-native-animatable';
-
-import { useTheme, useUser } from '../../contexts';
 import moment from 'moment';
-import {
-  getAttendance,
-  getCurrClass,
-  isClassCompleted,
-  toTitleCase,
-} from '../../utils';
+import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import * as Animatable from 'react-native-animatable';
+import { AnimatedCircularProgress } from 'react-native-circular-progress';
+import { useTheme, useUser } from '../../contexts';
 import { Mixins, Typography } from '../../styles';
+import { toTitleCase } from '../../utils';
 
 let today = moment().format('dddd').toLowerCase();
 
@@ -28,6 +21,7 @@ const TimeTableClass = ({ classDetails, className, index }) => {
         backgroundLight,
         border,
       },
+      dark,
     },
   } = useTheme();
 
@@ -58,6 +52,7 @@ const TimeTableClass = ({ classDetails, className, index }) => {
         styles.container,
         {
           backgroundColor: card,
+          ...Mixins.boxShadow(dark ? 'gray' : 'black'),
         },
       ]}
     >
@@ -141,7 +136,7 @@ export default TimeTableClass;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0.1,
+    flex: 1,
     alignItems: 'center',
     ...Mixins.padding(10, 10, 10, 10),
     ...Mixins.margin(10, 10, 0, 10),
@@ -149,6 +144,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flexDirection: 'row',
+    width: '100%',
   },
   classNameConatiner: {
     flex: 8,
@@ -169,7 +165,6 @@ const styles = StyleSheet.create({
   total: {
     ...Mixins.margin(0, 0, 0, 0),
     ...Mixins.padding(5, 10, 5, 10),
-    width: Mixins.scaleSize(60),
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: Mixins.scaleSize(30),
@@ -197,7 +192,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   classTypeText: {
-    fontFamily: Typography.FONT_FAMILY_BOLD,
+    fontFamily: Typography.FONT_FAMILY_REGULAR,
     fontSize: Typography.FONT_SIZE_12,
   },
 });

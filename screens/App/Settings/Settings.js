@@ -48,6 +48,7 @@ const Settings = () => {
     <View style={[styles.container, { backgroundColor: black }]}>
       <Text style={[styles.title, { color: text }]}>Theme</Text>
       <FlatList
+        showsVerticalScrollIndicator={false}
         data={['dark', 'light', 'pink']}
         style={styles.flatList}
         renderItem={({ item, index }) => (
