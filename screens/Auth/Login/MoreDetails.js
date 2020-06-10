@@ -1,18 +1,19 @@
-import React, { useState, useEffect } from "react";
+import * as Analytics from "expo-firebase-analytics";
+import React, { useEffect, useState } from "react";
 import {
-  StyleSheet,
-  Text,
-  View,
-  StatusBar,
-  TextInput,
-  TouchableOpacity,
   ActivityIndicator,
   Keyboard,
+  StatusBar,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import * as Analytics from "expo-firebase-analytics";
-
-import { Typography, Mixins } from "../../../styles";
-import { useTheme, useAuth } from "../../../contexts";
+import { Calendar } from "react-native-calendars";
+import Modal from "react-native-modal";
+import { useAuth, useTheme } from "../../../contexts";
+import { Mixins, Typography } from "../../../styles";
 
 const MoreDetails = ({ route }) => {
   const {
@@ -24,11 +25,12 @@ const MoreDetails = ({ route }) => {
   const { enrollmentNumber, password } = route.params;
 
   //define states
-  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [dateOfBirth, setDateOfBirth] = useState("Date of birth");
   const [batch, setBatch] = useState("");
-  const [year, setYear] = useState("");
-  const [college, setCollege] = useState("");
+  const [year, setYear] = useState("Academic year");
+  const [college, setCollege] = useState("College");
   const [disabled, setdisabled] = useState(true);
+  const [modalVisible, setmodalVisible] = useState(undefined);
 
   useEffect(() => {
     if (
@@ -54,21 +56,41 @@ const MoreDetails = ({ route }) => {
       />
       <View style={[styles.container, { backgroundColor: colors.black }]}>
         <View style={styles.contentConatiner}>
-          <TextInput
-            keyboardAppearance={"dark"}
-            placeholderTextColor={colors.text}
+          <TouchableOpacity
+            onPress={() => setmodalVisible({ dob: true })}
             style={[
-              styles.input,
+              styles.text,
               {
                 backgroundColor: colors.background,
                 borderColor: colors.card,
                 color: colors.text,
               },
             ]}
-            placeholder="Your Date of Birth"
-            onChangeText={(dateOfBirth) => setDateOfBirth(dateOfBirth)}
-            value={dateOfBirth}
-          />
+          >
+            <Text
+              style={{
+                color: colors.text,
+                fontFamily: Typography.FONT_FAMILY_REGULAR,
+              }}
+            >
+              {dateOfBirth}
+            </Text>
+          </TouchableOpacity>
+          <Modal
+            onBackdropPress={() => setmodalVisible(false)}
+            isVisible={Boolean(modalVisible?.dob)}
+          >
+            <Calendar
+              disableMonthChange={false}
+              current={"1998-08-01"}
+              style={{ borderColor: colors.border }}
+              onDayPress={({ dateString }) => {
+                setDateOfBirth(dateString.split("-").reverse().join("-"));
+                setmodalVisible(false);
+              }}
+              theme={getCalandarTheme(colors)}
+            />
+          </Modal>
 
           <TextInput
             keyboardAppearance={"dark"}
@@ -85,36 +107,235 @@ const MoreDetails = ({ route }) => {
             onChangeText={(batch) => setBatch(batch)}
             value={batch}
           />
-          <TextInput
-            keyboardAppearance={"dark"}
-            placeholderTextColor={colors.text}
+
+          <TouchableOpacity
+            onPress={() => setmodalVisible({ year: true })}
             style={[
-              styles.input,
+              styles.text,
               {
                 backgroundColor: colors.background,
                 borderColor: colors.card,
-                color: colors.text,
               },
             ]}
-            placeholder="Year"
-            onChangeText={(year) => setYear(year)}
-            value={year}
-          />
-          <TextInput
-            keyboardAppearance={"dark"}
-            placeholderTextColor={colors.text}
+          >
+            <Text
+              style={{
+                color: colors.text,
+                fontFamily: Typography.FONT_FAMILY_REGULAR,
+              }}
+            >
+              {year}
+            </Text>
+          </TouchableOpacity>
+          <Modal
+            style={styles.modal}
+            onBackdropPress={() => setmodalVisible(false)}
+            isVisible={Boolean(modalVisible?.year)}
+          >
+            <View>
+              <TouchableOpacity
+                style={[
+                  styles.option,
+                  {
+                    backgroundColor: colors.card,
+                    borderColor: colors.border,
+                  },
+                ]}
+                onPress={() => {
+                  setmodalVisible(false);
+                  setYear("1");
+                }}
+              >
+                <Text
+                  style={{
+                    color: colors.text,
+                    fontFamily: Typography.FONT_FAMILY_REGULAR,
+                  }}
+                >
+                  1
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  styles.option,
+                  {
+                    backgroundColor: colors.card,
+                    borderColor: colors.border,
+                  },
+                ]}
+                onPress={() => {
+                  setmodalVisible(false);
+                  setYear("2");
+                }}
+              >
+                <Text
+                  style={{
+                    color: colors.text,
+                    fontFamily: Typography.FONT_FAMILY_REGULAR,
+                  }}
+                >
+                  2
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  styles.option,
+                  {
+                    backgroundColor: colors.card,
+                    borderColor: colors.border,
+                  },
+                ]}
+                onPress={() => {
+                  setmodalVisible(false);
+                  setYear("3");
+                }}
+              >
+                <Text
+                  style={{
+                    color: colors.text,
+                    fontFamily: Typography.FONT_FAMILY_REGULAR,
+                  }}
+                >
+                  3
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  styles.option,
+                  {
+                    backgroundColor: colors.card,
+                    borderColor: colors.border,
+                  },
+                ]}
+                onPress={() => {
+                  setmodalVisible(false);
+                  setYear("4");
+                }}
+              >
+                <Text
+                  style={{
+                    color: colors.text,
+                    fontFamily: Typography.FONT_FAMILY_REGULAR,
+                  }}
+                >
+                  4
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[
+                  styles.option,
+                  {
+                    backgroundColor: colors.card,
+                    borderColor: colors.border,
+                  },
+                ]}
+                onPress={() => {
+                  setmodalVisible(false);
+                  setYear("5");
+                }}
+              >
+                <Text
+                  style={{
+                    color: colors.text,
+                    fontFamily: Typography.FONT_FAMILY_REGULAR,
+                  }}
+                >
+                  5
+                </Text>
+              </TouchableOpacity>
+            </View>
+          </Modal>
+          <TouchableOpacity
+            onPress={() => setmodalVisible({ college: true })}
             style={[
-              styles.input,
+              styles.text,
               {
                 backgroundColor: colors.background,
                 borderColor: colors.card,
-                color: colors.text,
               },
             ]}
-            placeholder="College 62, 128, JUET"
-            onChangeText={(college) => setCollege(college)}
-            value={college}
-          />
+          >
+            <Text
+              style={{
+                color: colors.text,
+                fontFamily: Typography.FONT_FAMILY_REGULAR,
+              }}
+            >
+              {college}
+            </Text>
+          </TouchableOpacity>
+          <Modal
+            style={styles.modal}
+            onBackdropPress={() => setmodalVisible(false)}
+            isVisible={Boolean(modalVisible?.college)}
+          >
+            <TouchableOpacity
+              style={[
+                styles.option,
+                {
+                  backgroundColor: colors.card,
+                  borderColor: colors.border,
+                },
+              ]}
+              onPress={() => {
+                setmodalVisible(false);
+                setcC("62");
+              }}
+            >
+              <Text
+                style={{
+                  color: colors.text,
+                  fontFamily: Typography.FONT_FAMILY_REGULAR,
+                }}
+              >
+                JIIT - Sector 62
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.option,
+                {
+                  backgroundColor: colors.card,
+                  borderColor: colors.border,
+                },
+              ]}
+              onPress={() => {
+                setmodalVisible(false);
+                setcC("128");
+              }}
+            >
+              <Text
+                style={{
+                  color: colors.text,
+                  fontFamily: Typography.FONT_FAMILY_REGULAR,
+                }}
+              >
+                JIIT - Sector 128
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.option,
+                {
+                  backgroundColor: colors.card,
+                  borderColor: colors.border,
+                },
+              ]}
+              onPress={() => {
+                setmodalVisible(false);
+                setcC("JUET");
+              }}
+            >
+              <Text
+                style={{
+                  color: colors.text,
+                  fontFamily: Typography.FONT_FAMILY_REGULAR,
+                }}
+              >
+                JUET - Guna
+              </Text>
+            </TouchableOpacity>
+          </Modal>
           <TouchableOpacity
             disabled={disabled}
             onPress={() => {
@@ -150,6 +371,26 @@ const MoreDetails = ({ route }) => {
   );
 };
 
+const getCalandarTheme = (colors) => ({
+  backgroundColor: colors.background,
+  calendarBackground: colors.background,
+  textSectionTitleColor: colors.text,
+  selectedDayBackgroundColor: colors.card,
+  selectedDayTextColor: colors.primary,
+  todayTextColor: colors.primary,
+  dayTextColor: colors.text,
+  textDisabledColor: colors.text,
+  dotColor: colors.text,
+  selectedDotColor: colors.card,
+  arrowColor: colors.primary,
+  disabledArrowColor: colors.text,
+  monthTextColor: colors.text,
+  indicatorColor: colors.text,
+  textDayFontFamily: Typography.FONT_FAMILY_REGULAR,
+  textMonthFontFamily: Typography.FONT_FAMILY_REGULAR,
+  textDayHeaderFontFamily: Typography.FONT_FAMILY_REGULAR,
+});
+
 export const styles = StyleSheet.create({
   title: {
     fontFamily: Typography.HEADER_FONT_FAMILY_REGULAR,
@@ -168,7 +409,16 @@ export const styles = StyleSheet.create({
     flex: 9,
     ...Mixins.padding(40, 40, 0, 40),
   },
-  text: {},
+  text: {
+    height: Mixins.scaleSize(50),
+    marginTop: Mixins.scaleSize(15),
+    borderRadius: Mixins.scaleSize(4),
+    borderWidth: Mixins.scaleSize(1),
+    fontFamily: Typography.FONT_FAMILY_REGULAR,
+    fontSize: Typography.FONT_SIZE_12,
+    justifyContent: "center",
+    ...Mixins.padding(5, 0, 5, 10),
+  },
   input: {
     height: Mixins.scaleSize(50),
     marginTop: Mixins.scaleSize(15),
@@ -189,6 +439,18 @@ export const styles = StyleSheet.create({
   logInText: {
     fontFamily: Typography.FONT_FAMILY_REGULAR,
     textAlign: "center",
+  },
+  option: {
+    ...Mixins.padding(20, 10, 20, 10),
+    borderBottomWidth: 1,
+    width: Mixins.WINDOW_WIDTH - Mixins.scaleSize(20),
+    margin: "auto",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modal: {
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

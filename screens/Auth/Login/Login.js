@@ -81,6 +81,9 @@ const Login = ({ navigation }) => {
             secureTextEntry
             value={password}
           />
+          <Text style={[styles.muted, { fontSize: Typography.FONT_SIZE_14 }]}>
+            Webkiosk password
+          </Text>
           <TouchableOpacity>
             <Text
               style={[styles.forgotPasswordText, { color: colors.primary }]}
@@ -161,6 +164,10 @@ export const styles = StyleSheet.create({
   forgotPasswordText: {
     textAlign: "right",
     marginTop: Mixins.scaleSize(15),
+  },
+  muted: {
+    color: "gray",
+    ...Mixins.padding(10, 0, 0, 0),
   },
 });
 

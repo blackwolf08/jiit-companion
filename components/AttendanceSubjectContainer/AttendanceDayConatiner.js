@@ -1,13 +1,10 @@
-import moment from 'moment';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import * as Animatable from 'react-native-animatable';
-import { AnimatedCircularProgress } from 'react-native-circular-progress';
-import { useTheme, useUser } from '../../contexts';
-import { Mixins, Typography } from '../../styles';
-import { toTitleCase } from '../../utils';
-
-let today = moment().format('dddd').toLowerCase();
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+import * as Animatable from "react-native-animatable";
+import { AnimatedCircularProgress } from "react-native-circular-progress";
+import { useTheme, useUser } from "../../contexts";
+import { Mixins, Typography } from "../../styles";
+import { toTitleCase } from "../../utils";
 
 const TimeTableClass = ({ classDetails, className, index }) => {
   const {
@@ -25,11 +22,10 @@ const TimeTableClass = ({ classDetails, className, index }) => {
     },
   } = useTheme();
 
-  let { user } = useUser();
   let attendancePercentage = parseInt(classDetails[0]?.Total); // get percentage from attendance list
   let classType;
 
-  const cleanAttendanceText = (text) => `${text.split('.')[0]} %`;
+  const cleanAttendanceText = (text) => `${text.split(".")[0]} %`;
 
   switch (classDetails?.length) {
     case 1:
@@ -44,14 +40,14 @@ const TimeTableClass = ({ classDetails, className, index }) => {
   return (
     <Animatable.View
       useNativeDriver
-      animation='fadeInUp'
+      animation="fadeInUp"
       duration={200}
-      easing='linear'
+      easing="linear"
       style={[
         styles.container,
         {
           backgroundColor: card,
-          ...Mixins.boxShadow(dark ? 'gray' : 'black'),
+          ...Mixins.boxShadow(dark ? "gray" : "rgba(0,0,0,0.9)"),
         },
       ]}
     >
@@ -68,8 +64,8 @@ const TimeTableClass = ({ classDetails, className, index }) => {
             fill={attendancePercentage}
             tintColor={primary}
             delay={500 * index}
-            backgroundColor='#3d5875'
-            lineCap='round'
+            backgroundColor="#3d5875"
+            lineCap="round"
             backgroundColor={black}
             rotation={0}
             duration={200}
@@ -136,39 +132,39 @@ export default TimeTableClass;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: "center",
     ...Mixins.padding(10, 10, 10, 10),
-    ...Mixins.margin(10, 10, 0, 10),
+    ...Mixins.margin(10, 10, 20, 10),
     borderRadius: 4,
   },
   content: {
-    flexDirection: 'row',
-    width: '100%',
+    flexDirection: "row",
+    width: "100%",
   },
   classNameConatiner: {
     flex: 8,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   attendanceCircleConatiner: {
     flex: 2,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   attendanceBoxes: {
-    flexDirection: 'row',
+    flexDirection: "row",
     ...Mixins.padding(10, 10, 10, 10),
-    alignItems: 'center',
-    justifyContent: 'space-around',
-    width: '100%',
+    alignItems: "center",
+    justifyContent: "space-around",
+    width: "100%",
   },
   total: {
     ...Mixins.margin(0, 0, 0, 0),
     ...Mixins.padding(5, 10, 5, 10),
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: Mixins.scaleSize(30),
-    backgroundColor: '#fff',
-    position: 'relative',
+    backgroundColor: "#fff",
+    position: "relative",
   },
   typeAttendance: {},
   attendancePercentage: {
@@ -180,13 +176,13 @@ const styles = StyleSheet.create({
     fontSize: Typography.FONT_SIZE_14,
   },
   classType: {
-    position: 'absolute',
+    position: "absolute",
     top: Mixins.scaleSize(-10),
     left: Mixins.scaleSize(-10),
     height: 20,
     width: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     borderRadius: 10,
     borderWidth: 1,
   },

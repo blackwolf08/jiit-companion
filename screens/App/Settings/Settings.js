@@ -1,18 +1,16 @@
+import * as Analytics from "expo-firebase-analytics";
 import React, { useEffect } from "react";
 import {
   AsyncStorage,
-  FlatList,
+  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  View,
 } from "react-native";
-import * as Analytics from "expo-firebase-analytics";
-
-import { useTheme, useUser } from "../../../contexts";
+import { useAuth, useTheme, useUser } from "../../../contexts";
 import { Colors, Mixins, Typography } from "../../../styles";
 
-const ThemeButtons = ({ item, index }) => {
+const ThemeButtons = ({ item }) => {
   const {
     theme: {
       colors: { background, card, text, primary, black },
@@ -50,20 +48,28 @@ const Settings = () => {
       colors: { background, card, text, primary, black },
     },
   } = useTheme();
+  const { setisAuthenticated } = useAuth();
+
   return (
-    <View style={[styles.container, { backgroundColor: black }]}>
-      <Text style={[styles.title, { color: text }]}>Theme</Text>
-      <FlatList
-        showsVerticalScrollIndicator={false}
-        data={["dark", "light", "pink"]}
-        style={styles.flatList}
-        renderItem={({ item, index }) => (
-          <ThemeButtons item={item} index={index} />
-        )}
-        keyExtractor={() => `${Math.floor(Math.random() * 100000)}`}
-        horizontal
-      />
-    </View>
+    <>
+      <ScrollView style={[styles.container, { backgroundColor: black }]}>
+        <Text style={[styles.title, { color: text }]}>Theme</Text>
+
+        {["dark", "light", "pink"].map((item, index) => (
+          <ThemeButtons key={`key-button-${index}`} item={item} index={index} />
+        ))}
+      </ScrollView>
+      <TouchableOpacity
+        onPress={async () => {
+          await AsyncStorage.clear();
+          setisAuthenticated(false);
+          // setTheme(Colors[item])
+        }}
+        style={[styles.logoutButton]}
+      >
+        <Text style={[styles.buttonText, { color: "#fff" }]}>Logout</Text>
+      </TouchableOpacity>
+    </>
   );
 };
 
@@ -83,12 +89,23 @@ const styles = StyleSheet.create({
     fontFamily: Typography.FONT_FAMILY_REGULAR,
   },
   button: {
-    ...Mixins.padding(10, 20, 10, 20),
+    ...Mixins.padding(20, 20, 20, 20),
     justifyContent: "center",
     alignItems: "center",
-    marginLeft: 10,
+    marginTop: Mixins.scaleSize(10),
     borderRadius: 2,
-    height: Mixins.scaleSize(40),
   },
-  flatList: {},
+  flatList: {
+    height: Mixins.scaleSize(60),
+  },
+  logoutButton: {
+    backgroundColor: "#eb4d4b",
+    ...Mixins.padding(30, 0, 30, 0),
+    alignItems: "center",
+    marginTop: Mixins.scaleSize(30),
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    right: 0,
+  },
 });

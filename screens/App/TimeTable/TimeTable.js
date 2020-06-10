@@ -24,12 +24,11 @@ const TimeTable = () => {
     },
   } = useTheme();
   let { user, timeTable } = useUser();
-
-  if (!timeTable?.length) return <ActivityIndicator color="white" />;
-
   useEffect(() => {
     Analytics.logEvent("timetable_page_view");
   }, []);
+
+  if (!timeTable?.length) return <ActivityIndicator color="white" />;
 
   const renderItem = ({ item, index }) => {
     return <TimeTableDayContainer item={item} index={index} />;

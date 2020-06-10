@@ -1,19 +1,19 @@
-import { Ionicons } from '@expo/vector-icons';
-import moment from 'moment';
-import React from 'react';
-import { StyleSheet, Text, View, TouchableWithoutFeedback } from 'react-native';
-import * as Animatable from 'react-native-animatable';
-import { AnimatedCircularProgress } from 'react-native-circular-progress';
-import { useTheme, useUser } from '../../contexts';
-import { Mixins, Typography } from '../../styles';
+import { Ionicons } from "@expo/vector-icons";
+import moment from "moment";
+import React from "react";
+import { StyleSheet, Text, View, TouchableWithoutFeedback } from "react-native";
+import * as Animatable from "react-native-animatable";
+import { AnimatedCircularProgress } from "react-native-circular-progress";
+import { useTheme, useUser } from "../../contexts";
+import { Mixins, Typography } from "../../styles";
 import {
   getAttendance,
   getCurrClass,
   isClassCompleted,
   toTitleCase,
-} from '../../utils';
+} from "../../utils";
 
-let today = moment().format('dddd').toLowerCase();
+let today = moment().format("dddd").toLowerCase();
 
 const TimeTableClass = ({ classArray, dayName }) => {
   const {
@@ -31,24 +31,24 @@ const TimeTableClass = ({ classArray, dayName }) => {
   let classRoom = classArray[4]?.substr(1, classArray[4]?.length); // remove "-" from classname eg -G4 to G4
   let isCompleted =
     isClassCompleted(classTime) && today == dayName
-      ? 'ios-done-all'
-      : 'ios-checkmark';
+      ? "ios-done-all"
+      : "ios-checkmark";
   return (
     <Animatable.View
       useNativeDriver
-      animation='fadeInUp'
+      animation="fadeInUp"
       duration={200}
-      easing='linear'
+      easing="linear"
       style={[
         styles.container,
         {
           backgroundColor: card,
-          ...Mixins.boxShadow(dark ? 'gray' : 'black'),
+          ...Mixins.boxShadow(dark ? "gray" : "rgba(0,0,0,0.9)"),
         },
       ]}
     >
       <View style={styles.timeConatiner}>
-        <Ionicons name={isCompleted} color='gray' size={Mixins.scaleSize(24)} />
+        <Ionicons name={isCompleted} color="gray" size={Mixins.scaleSize(24)} />
         <Text style={[styles.className, { color: text }]}>{classTime}</Text>
       </View>
       <View style={styles.classNameConatiner}>
@@ -66,8 +66,8 @@ const TimeTableClass = ({ classArray, dayName }) => {
           width={5}
           fill={attendancePercentage}
           tintColor={primary}
-          backgroundColor='#3d5875'
-          lineCap='round'
+          backgroundColor="#3d5875"
+          lineCap="round"
           backgroundColor={black}
           rotation={0}
           duration={1000}
@@ -88,34 +88,34 @@ export default TimeTableClass;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     ...Mixins.padding(20, 10, 20, 10),
-    ...Mixins.margin(10, 10, 0, 10),
+    ...Mixins.margin(10, 10, 20, 10),
     borderRadius: 4,
   },
   timeConatiner: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   classNameConatiner: {
     flex: 3,
     ...Mixins.padding(0, 5, 0, 5),
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   className: {
-    fontFamily: 'montserrat-md',
+    fontFamily: "montserrat-md",
     fontSize: Typography.FONT_SIZE_12,
   },
   roomContainer: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   attendanceCircleConatiner: {
     flex: 2,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
