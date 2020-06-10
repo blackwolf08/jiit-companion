@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
-import { StyleSheet, Text, View, ScrollView } from 'react-native';
-import firebase from 'firebase';
+import React, { useEffect } from "react";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
+import * as Analytics from "expo-firebase-analytics";
 
-import { useTheme } from '../../../contexts';
-import { Mixins, Typography } from '../../../styles';
+import { useTheme } from "../../../contexts";
+import { Mixins, Typography } from "../../../styles";
 const FileServer = () => {
   const {
     theme: {
@@ -12,7 +12,7 @@ const FileServer = () => {
   } = useTheme();
 
   useEffect(() => {
-    firebase.analytics().logEvent('fileserver_page_view');
+    Analytics.logEvent("fileserver_page_view");
   }, []);
   return (
     <ScrollView>

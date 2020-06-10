@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import {
   AsyncStorage,
   FlatList,
@@ -6,11 +6,11 @@ import {
   Text,
   TouchableOpacity,
   View,
-} from 'react-native';
-import firebase from 'firebase';
+} from "react-native";
+import * as Analytics from "expo-firebase-analytics";
 
-import { useTheme, useUser } from '../../../contexts';
-import { Colors, Mixins, Typography } from '../../../styles';
+import { useTheme, useUser } from "../../../contexts";
+import { Colors, Mixins, Typography } from "../../../styles";
 
 const ThemeButtons = ({ item, index }) => {
   const {
@@ -21,17 +21,17 @@ const ThemeButtons = ({ item, index }) => {
   } = useTheme();
 
   useEffect(() => {
-    firebase.analytics().logEvent('settings_page_view');
+    Analytics.logEvent("settings_page_view");
   }, []);
 
   const { setUser } = useUser();
   return (
     <TouchableOpacity
       onPress={async () => {
-        let user = await AsyncStorage.getItem('user');
+        let user = await AsyncStorage.getItem("user");
         user = JSON.parse(user);
         user.theme = item;
-        await AsyncStorage.setItem('user', JSON.stringify(user));
+        await AsyncStorage.setItem("user", JSON.stringify(user));
         setUser(user);
         // setTheme(Colors[item])
       }}
@@ -55,7 +55,7 @@ const Settings = () => {
       <Text style={[styles.title, { color: text }]}>Theme</Text>
       <FlatList
         showsVerticalScrollIndicator={false}
-        data={['dark', 'light', 'pink']}
+        data={["dark", "light", "pink"]}
         style={styles.flatList}
         renderItem={({ item, index }) => (
           <ThemeButtons item={item} index={index} />
@@ -84,8 +84,8 @@ const styles = StyleSheet.create({
   },
   button: {
     ...Mixins.padding(10, 20, 10, 20),
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginLeft: 10,
     borderRadius: 2,
     height: Mixins.scaleSize(40),

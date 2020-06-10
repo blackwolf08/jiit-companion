@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -8,11 +8,11 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Keyboard,
-} from 'react-native';
-import firebase from 'firebase';
+} from "react-native";
+import * as Analytics from "expo-firebase-analytics";
 
-import { Typography, Mixins } from '../../../styles';
-import { useTheme, useAuth } from '../../../contexts';
+import { Typography, Mixins } from "../../../styles";
+import { useTheme, useAuth } from "../../../contexts";
 
 const MoreDetails = ({ route }) => {
   const {
@@ -24,10 +24,10 @@ const MoreDetails = ({ route }) => {
   const { enrollmentNumber, password } = route.params;
 
   //define states
-  const [dateOfBirth, setDateOfBirth] = useState('');
-  const [batch, setBatch] = useState('');
-  const [year, setYear] = useState('');
-  const [college, setCollege] = useState('');
+  const [dateOfBirth, setDateOfBirth] = useState("");
+  const [batch, setBatch] = useState("");
+  const [year, setYear] = useState("");
+  const [college, setCollege] = useState("");
   const [disabled, setdisabled] = useState(true);
 
   useEffect(() => {
@@ -42,20 +42,20 @@ const MoreDetails = ({ route }) => {
   }, [dateOfBirth, batch, year, college]);
 
   useEffect(() => {
-    firebase.analytics().logEvent('login_more_details_page_view');
+    Analytics.logEvent("login_more_details_page_view");
   }, []);
 
   return (
     <>
       <StatusBar
-        barStyle='light-content'
+        barStyle="light-content"
         backgroundColor={colors.black}
         animated
       />
       <View style={[styles.container, { backgroundColor: colors.black }]}>
         <View style={styles.contentConatiner}>
           <TextInput
-            keyboardAppearance={'dark'}
+            keyboardAppearance={"dark"}
             placeholderTextColor={colors.text}
             style={[
               styles.input,
@@ -65,13 +65,13 @@ const MoreDetails = ({ route }) => {
                 color: colors.text,
               },
             ]}
-            placeholder='Your Date of Birth'
+            placeholder="Your Date of Birth"
             onChangeText={(dateOfBirth) => setDateOfBirth(dateOfBirth)}
             value={dateOfBirth}
           />
 
           <TextInput
-            keyboardAppearance={'dark'}
+            keyboardAppearance={"dark"}
             placeholderTextColor={colors.text}
             style={[
               styles.input,
@@ -81,12 +81,12 @@ const MoreDetails = ({ route }) => {
                 color: colors.text,
               },
             ]}
-            placeholder='Batch'
+            placeholder="Batch"
             onChangeText={(batch) => setBatch(batch)}
             value={batch}
           />
           <TextInput
-            keyboardAppearance={'dark'}
+            keyboardAppearance={"dark"}
             placeholderTextColor={colors.text}
             style={[
               styles.input,
@@ -96,12 +96,12 @@ const MoreDetails = ({ route }) => {
                 color: colors.text,
               },
             ]}
-            placeholder='Year'
+            placeholder="Year"
             onChangeText={(year) => setYear(year)}
             value={year}
           />
           <TextInput
-            keyboardAppearance={'dark'}
+            keyboardAppearance={"dark"}
             placeholderTextColor={colors.text}
             style={[
               styles.input,
@@ -111,7 +111,7 @@ const MoreDetails = ({ route }) => {
                 color: colors.text,
               },
             ]}
-            placeholder='College 62, 128, JUET'
+            placeholder="College 62, 128, JUET"
             onChangeText={(college) => setCollege(college)}
             value={college}
           />
@@ -137,7 +137,7 @@ const MoreDetails = ({ route }) => {
             ]}
           >
             {isLoading ? (
-              <ActivityIndicator color='white' />
+              <ActivityIndicator color="white" />
             ) : (
               <Text style={[styles.logInText, { color: colors.text }]}>
                 Continue
@@ -160,9 +160,9 @@ export const styles = StyleSheet.create({
   },
   titleConatiner: {
     flex: 1,
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "flex-end",
+    justifyContent: "center",
   },
   contentConatiner: {
     flex: 9,
@@ -183,12 +183,12 @@ export const styles = StyleSheet.create({
     height: Mixins.scaleSize(50),
     borderRadius: Mixins.scaleSize(5),
     marginTop: Mixins.scaleSize(15),
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
   },
   logInText: {
     fontFamily: Typography.FONT_FAMILY_REGULAR,
-    textAlign: 'center',
+    textAlign: "center",
   },
 });
 

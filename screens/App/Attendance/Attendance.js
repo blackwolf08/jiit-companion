@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import {
   ScrollView,
   StyleSheet,
   RefreshControl,
   StatusBar,
-} from 'react-native';
-import firebase from 'firebase';
+} from "react-native";
+import * as Analytics from "expo-firebase-analytics";
 
-import { AttendanceDayConatiner } from '../../../components';
-import { useTheme, useUser } from '../../../contexts';
-import { Mixins, Typography } from '../../../styles';
+import { AttendanceDayConatiner } from "../../../components";
+import { useTheme, useUser } from "../../../contexts";
+import { Mixins, Typography } from "../../../styles";
 
 const Attendance = () => {
   const {
@@ -22,14 +22,14 @@ const Attendance = () => {
   let classes = Object.keys(user.attendance);
 
   useEffect(() => {
-    firebase.analytics().logEvent('attendance_screen_view');
+    Analytics.logEvent("attendance_screen_view");
   }, []);
 
   if (!classes?.length) return <> </>;
   return (
     <>
       <StatusBar
-        barStyle={dark ? 'light-content' : 'dark-content'}
+        barStyle={dark ? "light-content" : "dark-content"}
         backgroundColor={black}
         animated
       />

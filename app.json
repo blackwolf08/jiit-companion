@@ -1,20 +1,35 @@
 {
   "expo": {
     "name": "JIIT Companion",
-    "slug": "jiit-companion",
+    "slug": "jiit-linked",
     "platforms": ["ios", "android", "web"],
     "version": "2.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
+    "scheme": "jiitcompanion",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#ffffff"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": ["**/*"],
+    "web": {
+      "config": {
+        "firebase": {
+          "apiKey": "AIzaSyCGfQbubv4Hrq9E_TQXyth2VCmPFdTY-J8",
+          "authDomain": "jiitcompanion-new-4c6fb.firebaseapp.com",
+          "databaseURL": "https://jiitcompanion-new-4c6fb.firebaseio.com",
+          "projectId": "jiitcompanion-new-4c6fb",
+          "storageBucket": "jiitcompanion-new-4c6fb.appspot.com",
+          "messagingSenderId": "1075874025858",
+          "appId": "1:1075874025858:web:b9d6d5961e5895786f3f9b",
+          "measurementId": "G-88F2CV0EVL"
+        }
+      }
+    },
     "ios": {
       "infoPlist": {
         "NSFaceIDUsageDescription": "Requires FaceID To protect your CGPA Info"
@@ -22,11 +37,13 @@
       "supportsTablet": false,
       "bundleIdentifier": "com.sunnydhama.jiitcompanion",
       "buildNumber": "1.1.0",
+      "googleServicesFile": "./firebase/GoogleService-Info.plist",
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-1528058450389133~3396166750"
       }
     },
     "android": {
+      "googleServicesFile": "./firebase/google-services.json",
       "package": "me.sunnydhama.jiitcompanion",
       "versionCode": 23,
       "playStoreUrl": "https://play.google.com/store/apps/details?id=me.sunnydhama.jiitcompanion",

@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { AsyncStorage } from 'react-native';
-import firebase from 'firebase';
+import React, { useState } from "react";
+import { AsyncStorage } from "react-native";
+import * as Analytics from "expo-firebase-analytics";
 
-import { getAttendance, getDateWiseAttendance } from '../api';
-import { useUser } from './user';
-import { addUserToDB } from '../firebase';
+import { getAttendance, getDateWiseAttendance } from "../api";
+import { useUser } from "./user";
+import { addUserToDB } from "../firebase";
 
 const AuthContext = React.createContext();
 
@@ -41,12 +41,12 @@ export const AuthProvider = ({ children }) => {
       user.attendance = attendance;
       user.datewiseattendance = datewiseattendance;
       addUserToDB(user);
-      firebase.analytics().logEvent('login_success');
-      await AsyncStorage.setItem('user', JSON.stringify(user));
+      Analytics.logEvent("login_success");
+      await AsyncStorage.setItem("user", JSON.stringify(user));
       setUser(user);
       setisAuthenticated(true);
     } catch (e) {
-      firebase.analytics().logEvent('login_failed');
+      Analytics.logEvent("login_failed");
       console.log(e);
     }
   };

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   StatusBar,
   StyleSheet,
@@ -7,11 +7,11 @@ import {
   TouchableOpacity,
   View,
   Keyboard,
-} from 'react-native';
-import firebase from 'firebase';
+} from "react-native";
+import * as Analytics from "expo-firebase-analytics";
 
-import { useTheme } from '../../../contexts';
-import { Mixins, Typography } from '../../../styles';
+import { useTheme } from "../../../contexts";
+import { Mixins, Typography } from "../../../styles";
 
 const Login = ({ navigation }) => {
   const {
@@ -19,8 +19,8 @@ const Login = ({ navigation }) => {
   } = useTheme();
 
   //define states
-  const [enrollmentNumber, setenrollmentNumber] = useState('');
-  const [password, setPassword] = useState('');
+  const [enrollmentNumber, setenrollmentNumber] = useState("");
+  const [password, setPassword] = useState("");
   const [disabled, setdisabled] = useState(true);
 
   useEffect(() => {
@@ -30,13 +30,13 @@ const Login = ({ navigation }) => {
   }, [password, enrollmentNumber]);
 
   useEffect(() => {
-    firebase.analytics().logEvent('login_page_view');
+    Analytics.logEvent("login_page_view");
   }, []);
 
   return (
     <>
       <StatusBar
-        barStyle={dark ? 'light-content' : 'dark-content'}
+        barStyle={dark ? "light-content" : "dark-content"}
         backgroundColor={colors.black}
         animated
       />
@@ -48,7 +48,7 @@ const Login = ({ navigation }) => {
         </View>
         <View style={styles.contentConatiner}>
           <TextInput
-            keyboardAppearance={'dark'}
+            keyboardAppearance={"dark"}
             placeholderTextColor={colors.text}
             style={[
               styles.input,
@@ -58,7 +58,7 @@ const Login = ({ navigation }) => {
                 color: colors.text,
               },
             ]}
-            placeholder='Your Enrollment number'
+            placeholder="Your Enrollment number"
             onChangeText={(enrollmentNumber) =>
               setenrollmentNumber(enrollmentNumber)
             }
@@ -66,7 +66,7 @@ const Login = ({ navigation }) => {
           />
 
           <TextInput
-            keyboardAppearance={'dark'}
+            keyboardAppearance={"dark"}
             placeholderTextColor={colors.text}
             style={[
               styles.input,
@@ -76,7 +76,7 @@ const Login = ({ navigation }) => {
                 color: colors.text,
               },
             ]}
-            placeholder='Password'
+            placeholder="Password"
             onChangeText={(password) => setPassword(password)}
             secureTextEntry
             value={password}
@@ -92,7 +92,7 @@ const Login = ({ navigation }) => {
             disabled={disabled}
             onPress={() => {
               Keyboard.dismiss();
-              navigation.navigate('moredetails', {
+              navigation.navigate("moredetails", {
                 enrollmentNumber,
                 password,
               });
@@ -119,16 +119,16 @@ const Login = ({ navigation }) => {
 export const styles = StyleSheet.create({
   title: {
     fontFamily: Typography.HEADER_FONT_FAMILY_REGULAR,
-    fontSize: Typography.FONT_SIZE_28,
+    fontSize: Mixins.scaleSize(42),
   },
   container: {
     flex: 1,
   },
   titleConatiner: {
     flex: 3,
-    flexDirection: 'row',
-    alignItems: 'flex-end',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "flex-end",
+    justifyContent: "center",
   },
   contentConatiner: {
     flex: 6,
@@ -150,16 +150,16 @@ export const styles = StyleSheet.create({
     height: Mixins.scaleSize(50),
     borderRadius: Mixins.scaleSize(5),
     marginTop: Mixins.scaleSize(15),
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     maxHeight: 50,
   },
   logInText: {
     fontFamily: Typography.FONT_FAMILY_REGULAR,
-    textAlign: 'center',
+    textAlign: "center",
   },
   forgotPasswordText: {
-    textAlign: 'right',
+    textAlign: "right",
     marginTop: Mixins.scaleSize(15),
   },
 });

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1075874025858-9f4trp9rosj313js3esdib5d6r5i2jdj.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1075874025858-9f4trp9rosj313js3esdib5d6r5i2jdj</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDUv5INJWbs43WHJCfptbcvLxS69U5wadE</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1075874025858</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.sunnydhama.jiitcompanion</string>
+	<key>PROJECT_ID</key>
+	<string>jiitcompanion-new-4c6fb</string>
+	<key>STORAGE_BUCKET</key>
+	<string>jiitcompanion-new-4c6fb.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1075874025858:ios:1d1e10f2eca516596f3f9b</string>
+	<key>DATABASE_URL</key>
+	<string>https://jiitcompanion-new-4c6fb.firebaseio.com</string>
+</dict>
+</plist>

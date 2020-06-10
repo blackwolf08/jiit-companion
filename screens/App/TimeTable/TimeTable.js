@@ -1,20 +1,20 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import {
   ActivityIndicator,
   ScrollView,
   StyleSheet,
   Platform,
-} from 'react-native';
-import Carousel from 'react-native-snap-carousel';
-import firebase from 'firebase';
+} from "react-native";
+import Carousel from "react-native-snap-carousel";
+import * as Analytics from "expo-firebase-analytics";
 
-import { TimeTableDayContainer } from '../../../components';
-import { useTheme, useUser } from '../../../contexts';
-import { Mixins, Typography } from '../../../styles';
-import moment from 'moment';
-import { StatusBar } from 'react-native';
+import { TimeTableDayContainer } from "../../../components";
+import { useTheme, useUser } from "../../../contexts";
+import { Mixins, Typography } from "../../../styles";
+import moment from "moment";
+import { StatusBar } from "react-native";
 
-const dayInNumber = parseInt(moment().format('d'));
+const dayInNumber = parseInt(moment().format("d"));
 
 const TimeTable = () => {
   const {
@@ -25,10 +25,10 @@ const TimeTable = () => {
   } = useTheme();
   let { user, timeTable } = useUser();
 
-  if (!timeTable?.length) return <ActivityIndicator color='white' />;
+  if (!timeTable?.length) return <ActivityIndicator color="white" />;
 
   useEffect(() => {
-    firebase.analytics().logEvent('timetable_page_view');
+    Analytics.logEvent("timetable_page_view");
   }, []);
 
   const renderItem = ({ item, index }) => {
@@ -38,7 +38,7 @@ const TimeTable = () => {
   return (
     <>
       <StatusBar
-        barStyle={dark ? 'light-content' : 'dark-content'}
+        barStyle={dark ? "light-content" : "dark-content"}
         backgroundColor={black}
         animated
       />
@@ -55,7 +55,7 @@ const TimeTable = () => {
           loop
           firstItem={dayInNumber - 1}
           enableSnap
-          layout={Platform.OS == 'web' ? 'default' : 'stack'}
+          layout={Platform.OS == "web" ? "default" : "stack"}
         />
       </ScrollView>
     </>
