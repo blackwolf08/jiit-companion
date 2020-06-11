@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BASE_API } from "./constants";
+import { BASE_API, JIIT_SOCIAL_BASE_API } from "./constants";
 
 export const getAttendance = async ({
   enrollmentNumber,
@@ -68,5 +68,45 @@ export const getTimeTable = async (subString, batch, year) => {
   } catch (error) {
     console.log(error);
     return false;
+  }
+};
+
+export const addUserToJIITSocialDB = async (enrollment_number) => {
+  try {
+    let formData = new FormData();
+    formData.append("enrollment_number", enrollment_number);
+    let res = await axios({
+      method: "post",
+      url: `${JIIT_SOCIAL_BASE_API}/registerUser`,
+      data: formData,
+      config: { headers: { "Content-Type": "multipart/form-data" } },
+    });
+    console.log("JIIT Social user registration successful", res.data);
+    return true;
+  } catch (err) {
+    console.log("JIIT Social register user failed");
+    return false;
+  }
+};
+
+export const addPostToDB = async (enrollment_number, image_string) => {
+  let formData = new FormData();
+  formData.append("enrollment_number", enrollment_number);
+  formData.append("image_string", image_string);
+  try {
+    await axios({
+      method: "post",
+      url: `${JIIT_SOCIAL_BASE_API}/post/new`,
+      data: formData,
+      config: { headers: { "Content-Type": "multipart/form-data" } },
+    });
+    return {
+      message: "success",
+    };
+  } catch (err) {
+    return {
+      message: "error",
+      error: err,
+    };
   }
 };

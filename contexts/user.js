@@ -85,6 +85,8 @@ export const UserProvider = ({ children }) => {
     await AsyncStorage.setItem("timetable", JSON.stringify(newTimeTable));
   };
 
+  addPost = () => {};
+
   useEffect(() => {
     _getTimeTable();
     initFirebaseSignIn();
@@ -100,6 +102,7 @@ export const UserProvider = ({ children }) => {
         settimeTable,
         updateTimeTable,
         loading,
+        addPost,
       }}
     >
       {children}

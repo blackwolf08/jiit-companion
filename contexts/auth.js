@@ -6,6 +6,7 @@ import { getAttendance, getDateWiseAttendance } from "../api";
 import { useUser } from "./user";
 import { useDropDown } from "./dropdown";
 import { addUserToDB } from "../firebase";
+import { addUserToJIITSocialDB } from "../api/requests";
 
 const AuthContext = React.createContext();
 
@@ -35,7 +36,10 @@ export const AuthProvider = ({ children }) => {
       };
       let attendance = await getAttendance(user);
       let datewiseattendance = await getDateWiseAttendance(user);
-      if (!attendance || !datewiseattendance) {
+      let isUserAddedToJIITSocial = await addUserToJIITSocialDB(
+        enrollmentNumber
+      );
+      if (!attendance || !datewiseattendance || !isUserAddedToJIITSocial) {
         setisLoading(false);
         ref.current.alertWithType(
           "error",

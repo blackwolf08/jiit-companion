@@ -31,8 +31,6 @@ const TimeTable = () => {
 
   useEffect(() => {
     Analytics.logEvent("timetable_page_view");
-
-    ref.current.alertWithType("success", "Log in successfull.", "asdasd");
   }, []);
 
   if (!timeTable?.length) return <ActivityIndicator color="white" />;

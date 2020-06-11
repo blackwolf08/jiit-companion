@@ -3,6 +3,7 @@ import { TimeTableDayContainer } from "./TimeTableDayContainer";
 import { TimeTableClass } from "./TimeTableClass";
 import { AttendanceDayConatiner } from "./AttendanceSubjectContainer";
 import { ModalContainer } from "./Modal";
+import { Card } from "./Card";
 
 export {
   HeaderTitle,
@@ -10,4 +11,5 @@ export {
   TimeTableClass,
   AttendanceDayConatiner,
   ModalContainer,
+  Card,
 };
