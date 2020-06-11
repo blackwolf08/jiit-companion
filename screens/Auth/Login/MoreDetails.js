@@ -279,7 +279,7 @@ const MoreDetails = ({ route }) => {
               ]}
               onPress={() => {
                 setmodalVisible(false);
-                setcC("62");
+                setCollege("62");
               }}
             >
               <Text
@@ -301,7 +301,7 @@ const MoreDetails = ({ route }) => {
               ]}
               onPress={() => {
                 setmodalVisible(false);
-                setcC("128");
+                setCollege("128");
               }}
             >
               <Text
@@ -323,7 +323,7 @@ const MoreDetails = ({ route }) => {
               ]}
               onPress={() => {
                 setmodalVisible(false);
-                setcC("JUET");
+                setCollege("JUET");
               }}
             >
               <Text

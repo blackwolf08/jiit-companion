@@ -15,12 +15,12 @@ import React from "react";
 import { AppearanceProvider } from "react-native-appearance";
 import {
   AuthProvider,
+  DropDownComponentProvider,
   ThemeProvider,
   UserProvider,
-  DropDownComponentProvider,
 } from "./contexts";
-import NavigationConatiner from "./navigation";
 import { firebaseInit } from "./firebase";
+import NavigationConatiner from "./navigation";
 
 // init firebase app
 firebaseInit();

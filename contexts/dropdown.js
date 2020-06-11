@@ -11,9 +11,8 @@ export const DropDownComponentProvider = ({ children }) => {
         ref,
       }}
     >
-      <DropdownAlert ref={ref} />
-
       {children}
+      <DropdownAlert ref={ref} />
     </DropDownContext.Provider>
   );
 };

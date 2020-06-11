@@ -134,7 +134,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     ...Mixins.padding(10, 10, 10, 10),
-    ...Mixins.margin(10, 10, 20, 10),
+    ...Mixins.margin(10, 10, 10, 10),
     borderRadius: 4,
   },
   content: {

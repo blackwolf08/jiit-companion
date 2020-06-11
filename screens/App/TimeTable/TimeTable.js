@@ -9,10 +9,11 @@ import Carousel from "react-native-snap-carousel";
 import * as Analytics from "expo-firebase-analytics";
 
 import { TimeTableDayContainer } from "../../../components";
-import { useTheme, useUser } from "../../../contexts";
+import { useTheme, useUser, useDropDown } from "../../../contexts";
 import { Mixins, Typography } from "../../../styles";
 import moment from "moment";
 import { StatusBar } from "react-native";
+import DropdownAlert from "react-native-dropdownalert";
 
 const dayInNumber = parseInt(moment().format("d"));
 
@@ -23,9 +24,15 @@ const TimeTable = () => {
       dark,
     },
   } = useTheme();
+
   let { user, timeTable } = useUser();
+
+  let { ref } = useDropDown();
+
   useEffect(() => {
     Analytics.logEvent("timetable_page_view");
+
+    ref.current.alertWithType("success", "Log in successfull.", "asdasd");
   }, []);
 
   if (!timeTable?.length) return <ActivityIndicator color="white" />;

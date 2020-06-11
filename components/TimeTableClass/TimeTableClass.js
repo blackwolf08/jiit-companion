@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     ...Mixins.padding(20, 10, 20, 10),
-    ...Mixins.margin(10, 10, 20, 10),
+    ...Mixins.margin(10, 10, 10, 10),
     borderRadius: 4,
   },
   timeConatiner: {
