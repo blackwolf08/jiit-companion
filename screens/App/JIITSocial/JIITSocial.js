@@ -60,7 +60,6 @@ const JIITSocial = ({ navigation }) => {
         showsVerticalScrollIndicator={false}
         refreshControl={
           <RefreshControl
-            colors={text}
             tintColor={text}
             refreshing={refreshing}
             onRefresh={getPosts}
