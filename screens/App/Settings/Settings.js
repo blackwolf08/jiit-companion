@@ -6,8 +6,10 @@ import {
   StyleSheet,
   Text,
   TouchableOpacity,
+  View,
 } from "react-native";
 import { useAuth, useTheme, useUser } from "../../../contexts";
+import { Avatar } from "../../../components";
 import { Colors, Mixins, Typography } from "../../../styles";
 
 const ThemeButtons = ({ item }) => {
@@ -49,10 +51,17 @@ const Settings = () => {
     },
   } = useTheme();
   const { setisAuthenticated } = useAuth();
+  const { user } = useUser();
 
   return (
     <>
       <ScrollView style={[styles.container, { backgroundColor: black }]}>
+        <View style={styles.userDetailsContainer}>
+          <Avatar />
+          <Text style={[styles.title, { color: text }]}>
+            Hello {user?.enrollmentNumber}
+          </Text>
+        </View>
         <Text style={[styles.title, { color: text }]}>Theme</Text>
 
         {["dark", "light", "pink"].map((item, index) => (
@@ -107,5 +116,14 @@ const styles = StyleSheet.create({
     bottom: 0,
     left: 0,
     right: 0,
+  },
+  userDetailsContainer: {
+    flexDirection: "row",
+    marginTop: Mixins.scaleSize(20),
+    alignItems: "center",
+  },
+  avatar: {
+    height: Mixins.scaleSize(80),
+    width: Mixins.scaleSize(80),
   },
 });

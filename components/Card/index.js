@@ -16,6 +16,7 @@ import { Mixins, Typography } from "../../styles";
 import { useTheme, useUser } from "../../contexts";
 import { JIIT_SOCIAL_BASE_API } from "../../api/constants";
 import heartLottie from "../../assets/lottieFiles/heart.json";
+import { Avatar } from "../Avatar";
 
 export const Card = ({ item, navigation }) => {
   const {
@@ -42,6 +43,12 @@ export const Card = ({ item, navigation }) => {
   }, []);
 
   const increaseLike = async () => {
+    setHeartDisplay("flex");
+    heartRef.current.play();
+    setTimeout(() => {
+      setHeartDisplay("none");
+    }, 1000);
+
     try {
       setisLiked(true);
       let newLikesLength = likesLength + 1;
@@ -66,7 +73,20 @@ export const Card = ({ item, navigation }) => {
   };
 
   const decreaseLike = async () => {
-    heartRef.current.play();
+    try {
+      setisLiked(false);
+      let newLikesLength = likesLength - 1;
+
+      if (newLikesLength < 0) newLikesLength = 0;
+      setlikesLength(newLikesLength);
+
+      await axios.get(
+        `${JIIT_SOCIAL_BASE_API}/post/${item?._id}/unlike?enrollment_number=${user.enrollmentNumber}`
+      );
+    } catch (err) {
+      console.log("unlike failed");
+      console.log(err);
+    }
   };
 
   const handleDoubleTap = () => {
@@ -77,25 +97,20 @@ export const Card = ({ item, navigation }) => {
 
     //if not double tap
     if (delta > 300) return;
-
-    increaseLike();
+    console.log(isLiked);
+    if (!isLiked) {
+      increaseLike();
+    } else {
+      decreaseLike();
+    }
 
     //heart animation
-    setHeartDisplay("flex");
-    heartRef.current.play();
-    setTimeout(() => {
-      setHeartDisplay("none");
-    }, 1000);
   };
-
   return (
     <View style={styles.container}>
       <View style={[styles.header, { backgroundColor: black }]}>
         <View style={styles.headerLeft}>
-          <Image
-            style={styles.avatar}
-            source={{ uri: "https://picsum.photos/100" }}
-          />
+          <Avatar />
           <Text style={[styles.userName, { color: text }]}>
             {item?.author?.enrollment_number}
           </Text>
@@ -116,7 +131,10 @@ export const Card = ({ item, navigation }) => {
               style={[styles.heartLottie, { display: heartDisplay }]}
             />
           </View>
-          <Image source={{ uri: item?.image_string }} style={styles.image} />
+          <Image
+            source={{ uri: JIIT_SOCIAL_BASE_API + item?.image_path }}
+            style={styles.image}
+          />
         </View>
       </TouchableWithoutFeedback>
       <View style={[styles.actionConatiner, { backgroundColor: black }]}>
@@ -177,7 +195,22 @@ export const Card = ({ item, navigation }) => {
           )}
         </View>
       </TouchableWithoutFeedback>
-
+      {item?.caption && (
+        <View style={{ backgroundColor: black }}>
+          <Text
+            style={[
+              styles.likes,
+              { color: text, marginTop: Mixins.scaleSize(5) },
+            ]}
+          >
+            <Text style={{ fontFamily: Typography.FONT_FAMILY_BOLD }}>
+              {item?.author?.enrollment_number}
+            </Text>
+            {"  "}
+            {item?.caption}
+          </Text>
+        </View>
+      )}
       {item?.comments[0] && (
         <Text style={[styles.likes, { color: "gray", backgroundColor: black }]}>
           {item?.comments[0]?.author?.enrollment_number}

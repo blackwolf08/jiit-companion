@@ -1,27 +1,21 @@
+import { useHeaderHeight } from "@react-navigation/stack";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
 import {
-  StyleSheet,
+  ActivityIndicator,
   KeyboardAvoidingView,
-  View,
+  Platform,
+  StyleSheet,
   Text,
   TextInput,
-  Platform,
-  Button,
-  Image,
-  ActivityIndicator,
   Vibration,
+  View,
 } from "react-native";
-import axios from "axios";
-
-import { useTheme, useUser } from "../../../contexts";
-import { useHeaderHeight } from "@react-navigation/stack";
-import {
-  ScrollView,
-  TouchableOpacity,
-  FlatList,
-} from "react-native-gesture-handler";
-import { Mixins, Typography } from "../../../styles";
+import { FlatList, TouchableOpacity } from "react-native-gesture-handler";
 import { JIIT_SOCIAL_BASE_API } from "../../../api/constants";
+import { Avatar } from "../../../components/Avatar";
+import { useTheme, useUser } from "../../../contexts";
+import { Mixins, Typography } from "../../../styles";
 
 const Comment = ({ item, navigation, route }) => {
   const {
@@ -87,10 +81,7 @@ const Comment = ({ item, navigation, route }) => {
           data={commentsArray}
           renderItem={({ item }) => (
             <View style={styles.commentContainer}>
-              <Image
-                style={styles.avatar}
-                source={{ uri: "https://picsum.photos/100" }}
-              />
+              <Avatar />
               <Text style={[styles.commentText, { color: text }]}>
                 <Text style={{ fontFamily: Typography.FONT_FAMILY_BOLD }}>
                   {item?.author?.username}
@@ -153,5 +144,6 @@ const styles = StyleSheet.create({
   },
   commentText: {
     flex: 8,
+    marginLeft: Mixins.scaleSize(20),
   },
 });

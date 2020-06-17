@@ -60,7 +60,7 @@ export const AddPost = ({ navigation }) => {
     });
     if (!result.cancelled) {
       setDisabled(false);
-      setImage("data:image/jpeg;base64," + result.base64);
+      setImage(result.base64);
       Vibration.vibrate(100);
     }
   };
@@ -68,7 +68,7 @@ export const AddPost = ({ navigation }) => {
   const uploadImage = async () => {
     Keyboard.dismiss();
     setisLoading(true);
-    let res = await addPostToDB(user.enrollmentNumber, image);
+    let res = await addPostToDB(user.enrollmentNumber, image, caption);
     if (res.message == "success")
       ref.current.alertWithType("success", "Image uploaded successfully", "");
     if (res.message == "error")
@@ -94,7 +94,7 @@ export const AddPost = ({ navigation }) => {
             {image ? (
               <Image
                 source={{
-                  uri: image,
+                  uri: "data:image/jpeg;base64," + image,
                 }}
                 style={styles.image}
               />
@@ -165,6 +165,7 @@ const styles = StyleSheet.create({
     ...Mixins.padding(10, 10, 10, 10),
     color: "gray",
     fontFamily: Typography.FONT_FAMILY_REGULAR,
+    width: Mixins.WINDOW_WIDTH - 30,
   },
   logInButton: {
     height: Mixins.scaleSize(50),

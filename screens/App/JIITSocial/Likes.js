@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { Image, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
+import { Avatar } from "../../../components/Avatar";
 import { useTheme } from "../../../contexts";
 import { Mixins, Typography } from "../../../styles";
 
@@ -22,10 +23,7 @@ const Likes = ({ route }) => {
     <ScrollView>
       {likesArray?.map((item, key) => (
         <View key={`comment-${key}`} style={styles.commentContainer}>
-          <Image
-            style={styles.avatar}
-            source={{ uri: "https://picsum.photos/100" }}
-          />
+          <Avatar />
           <Text style={[styles.commentText, { color: text }]}>
             <Text style={{ fontFamily: Typography.FONT_FAMILY_BOLD }}>
               {item?.enrollment_number}
@@ -54,5 +52,6 @@ const styles = StyleSheet.create({
   },
   commentText: {
     flex: 8,
+    marginLeft: Mixins.scaleSize(20),
   },
 });
