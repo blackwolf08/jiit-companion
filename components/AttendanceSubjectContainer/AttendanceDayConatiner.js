@@ -1,8 +1,8 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
-import { useTheme, useUser } from "../../contexts";
+import { useBottomModal, useTheme } from "../../contexts";
 import { Mixins, Typography } from "../../styles";
 import { toTitleCase } from "../../utils";
 
@@ -22,6 +22,8 @@ const TimeTableClass = ({ classDetails, className, index }) => {
     },
   } = useTheme();
 
+  const { setisVisible } = useBottomModal();
+
   let attendancePercentage = parseInt(classDetails[0]?.Total); // get percentage from attendance list
   let classType;
 
@@ -38,81 +40,53 @@ const TimeTableClass = ({ classDetails, className, index }) => {
   }
 
   return (
-    <Animatable.View
-      useNativeDriver
-      animation="fadeInUp"
-      duration={200}
-      easing="linear"
-      style={[
-        styles.container,
-        {
-          backgroundColor: card,
-          ...Mixins.boxShadow(
-            dark ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.9)"
-          ),
-        },
-      ]}
-    >
-      <View style={styles.content}>
-        <View style={styles.classNameConatiner}>
-          <Text style={[styles.className, { color: text }]}>
-            {toTitleCase(className)}
-          </Text>
-        </View>
-        <View style={styles.attendanceCircleConatiner}>
-          <AnimatedCircularProgress
-            size={Mixins.scaleSize(60)}
-            width={Mixins.scaleSize(5)}
-            fill={attendancePercentage}
-            tintColor={primary}
-            delay={500 * index}
-            backgroundColor="#3d5875"
-            lineCap="round"
-            backgroundColor={black}
-            rotation={0}
-            duration={200}
-          >
-            {(fill) => (
-              <Text style={[styles.attendancePercentage, { color: text }]}>
-                {parseInt(fill)} %
-              </Text>
-            )}
-          </AnimatedCircularProgress>
-        </View>
-      </View>
-      <View style={styles.attendanceBoxes}>
-        <View style={[styles.total, { backgroundColor: backgroundLight }]}>
-          <Text style={[styles.typeAttendance, { color: text }]}>
-            {cleanAttendanceText(classDetails[0]?.Total)}
-          </Text>
-          <View
-            style={[
-              styles.classType,
-              { backgroundColor: backgroundLight, borderColor: border },
-            ]}
-          >
-            <Text style={[styles.classTypeText, { color: text }]}>T</Text>
-          </View>
-        </View>
-        {classType && (
-          <View style={[styles.total, { backgroundColor: backgroundLight }]}>
-            <Text style={[styles.typeAttendance, { color: text }]}>
-              {cleanAttendanceText(classDetails[1]?.Class)}
+    <TouchableOpacity onPress={() => setisVisible(true)}>
+      <Animatable.View
+        useNativeDriver
+        animation="fadeInUp"
+        duration={200}
+        easing="linear"
+        style={[
+          styles.container,
+          {
+            backgroundColor: card,
+            ...Mixins.boxShadow(
+              dark ? "rgba(255,255,255,0.2)" : "rgba(0,0,0,0.9)"
+            ),
+          },
+        ]}
+      >
+        <View style={styles.content}>
+          <View style={styles.classNameConatiner}>
+            <Text style={[styles.className, { color: text }]}>
+              {toTitleCase(className)}
             </Text>
-            <View
-              style={[
-                styles.classType,
-                { backgroundColor: backgroundLight, borderColor: border },
-              ]}
-            >
-              <Text style={[styles.classTypeText, { color: text }]}>L</Text>
-            </View>
           </View>
-        )}
-        {classType && (
+          <View style={styles.attendanceCircleConatiner}>
+            <AnimatedCircularProgress
+              size={Mixins.scaleSize(60)}
+              width={Mixins.scaleSize(5)}
+              fill={attendancePercentage}
+              tintColor={primary}
+              delay={500 * index}
+              backgroundColor="#3d5875"
+              lineCap="round"
+              backgroundColor={black}
+              rotation={0}
+              duration={200}
+            >
+              {(fill) => (
+                <Text style={[styles.attendancePercentage, { color: text }]}>
+                  {parseInt(fill)} %
+                </Text>
+              )}
+            </AnimatedCircularProgress>
+          </View>
+        </View>
+        <View style={styles.attendanceBoxes}>
           <View style={[styles.total, { backgroundColor: backgroundLight }]}>
             <Text style={[styles.typeAttendance, { color: text }]}>
-              {cleanAttendanceText(classDetails[2]?.Tutorial)}
+              {cleanAttendanceText(classDetails[0]?.Total)}
             </Text>
             <View
               style={[
@@ -123,9 +97,39 @@ const TimeTableClass = ({ classDetails, className, index }) => {
               <Text style={[styles.classTypeText, { color: text }]}>T</Text>
             </View>
           </View>
-        )}
-      </View>
-    </Animatable.View>
+          {classType && (
+            <View style={[styles.total, { backgroundColor: backgroundLight }]}>
+              <Text style={[styles.typeAttendance, { color: text }]}>
+                {cleanAttendanceText(classDetails[1]?.Class)}
+              </Text>
+              <View
+                style={[
+                  styles.classType,
+                  { backgroundColor: backgroundLight, borderColor: border },
+                ]}
+              >
+                <Text style={[styles.classTypeText, { color: text }]}>L</Text>
+              </View>
+            </View>
+          )}
+          {classType && (
+            <View style={[styles.total, { backgroundColor: backgroundLight }]}>
+              <Text style={[styles.typeAttendance, { color: text }]}>
+                {cleanAttendanceText(classDetails[2]?.Tutorial)}
+              </Text>
+              <View
+                style={[
+                  styles.classType,
+                  { backgroundColor: backgroundLight, borderColor: border },
+                ]}
+              >
+                <Text style={[styles.classTypeText, { color: text }]}>T</Text>
+              </View>
+            </View>
+          )}
+        </View>
+      </Animatable.View>
+    </TouchableOpacity>
   );
 };
 

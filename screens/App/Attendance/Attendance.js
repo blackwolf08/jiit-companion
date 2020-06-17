@@ -11,6 +11,7 @@ import * as Analytics from "expo-firebase-analytics";
 import { AttendanceDayConatiner } from "../../../components";
 import { useTheme, useUser } from "../../../contexts";
 import { Mixins, Typography } from "../../../styles";
+import BottomModal from "../../../components/BottomModal";
 
 const Attendance = () => {
   const {
@@ -55,6 +56,7 @@ const Attendance = () => {
           />
         ))}
       </ScrollView>
+      <BottomModal />
     </>
   );
 };

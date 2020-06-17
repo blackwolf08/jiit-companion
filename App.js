@@ -21,6 +21,7 @@ import {
 } from "./contexts";
 import { firebaseInit } from "./firebase";
 import NavigationConatiner from "./navigation";
+import { BottomDrawerProvider } from "./contexts";
 
 // init firebase app
 firebaseInit();
@@ -45,7 +46,9 @@ export default function App() {
         <AuthProvider>
           <AppearanceProvider>
             <ThemeProvider>
-              <NavigationConatiner />
+              <BottomDrawerProvider>
+                <NavigationConatiner />
+              </BottomDrawerProvider>
             </ThemeProvider>
           </AppearanceProvider>
         </AuthProvider>
