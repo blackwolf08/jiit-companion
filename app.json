@@ -34,7 +34,7 @@
       "infoPlist": {
         "NSFaceIDUsageDescription": "Requires FaceID To protect your CGPA Info"
       },
-      "supportsTablet": false,
+      "supportsTablet": true,
       "bundleIdentifier": "com.sunnydhama.jiitcompanion",
       "buildNumber": "1.1.0",
       "googleServicesFile": "./firebase/GoogleService-Info.plist",

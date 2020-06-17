@@ -14,6 +14,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
+  Vibration,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { addPostToDB } from "../../../api/requests";
@@ -60,6 +61,7 @@ export const AddPost = ({ navigation }) => {
     if (!result.cancelled) {
       setDisabled(false);
       setImage("data:image/jpeg;base64," + result.base64);
+      Vibration.vibrate(100);
     }
   };
 
@@ -71,6 +73,8 @@ export const AddPost = ({ navigation }) => {
       ref.current.alertWithType("success", "Image uploaded successfully", "");
     if (res.message == "error")
       ref.current.alertWithType("error", "Image upload error", "");
+
+    Vibration.vibrate(100);
     setisLoading(false);
     navigation.goBack();
   };

@@ -1,19 +1,18 @@
+import * as Analytics from "expo-firebase-analytics";
+import moment from "moment";
 import React, { useEffect } from "react";
 import {
   ActivityIndicator,
-  ScrollView,
-  StyleSheet,
   Platform,
+  ScrollView,
+  StatusBar,
+  StyleSheet,
+  Vibration,
 } from "react-native";
 import Carousel from "react-native-snap-carousel";
-import * as Analytics from "expo-firebase-analytics";
-
 import { TimeTableDayContainer } from "../../../components";
-import { useTheme, useUser, useDropDown } from "../../../contexts";
+import { useDropDown, useTheme, useUser } from "../../../contexts";
 import { Mixins, Typography } from "../../../styles";
-import moment from "moment";
-import { StatusBar } from "react-native";
-import DropdownAlert from "react-native-dropdownalert";
 
 const dayInNumber = parseInt(moment().format("d"));
 
@@ -31,6 +30,7 @@ const TimeTable = () => {
 
   useEffect(() => {
     Analytics.logEvent("timetable_page_view");
+    Vibration.vibrate(100);
   }, []);
 
   if (!timeTable?.length) return <ActivityIndicator color="white" />;

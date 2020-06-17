@@ -1,21 +1,33 @@
+import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import {
-  StyleSheet,
-  View,
+  ActivityIndicator,
   FlatList,
   RefreshControl,
-  ActivityIndicator,
+  StyleSheet,
+  View,
+  Vibration,
 } from "react-native";
-
+import { useFocusEffect } from "@react-navigation/native";
+import { JIIT_SOCIAL_BASE_API } from "../../../api/constants";
 import { Card } from "../../../components";
 import { useTheme } from "../../../contexts";
-import Axios from "axios";
-import { JIIT_SOCIAL_BASE_API } from "../../../api/constants";
 
 const JIITSocial = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
   const [refreshing, setrefreshing] = useState();
+
+  // onFocus refresh hook
+  useEffect(() => {
+    const unsubscribe = navigation.addListener("focus", () => {
+      // The screen is focused
+      getPosts();
+    });
+
+    // Return the function to unsubscribe from the event so it gets removed on unmount
+    return unsubscribe;
+  }, [navigation]);
 
   const {
     theme: {
@@ -29,6 +41,7 @@ const JIITSocial = ({ navigation }) => {
       let res = await Axios.get(`${JIIT_SOCIAL_BASE_API}/posts`);
       let posts = res?.data?.posts?.reverse();
       setData(posts);
+      Vibration.vibrate(100);
       setrefreshing(false);
     } catch (err) {
       setData([]);
@@ -42,6 +55,7 @@ const JIITSocial = ({ navigation }) => {
     (async () => {
       setLoading(true);
       await getPosts();
+      Vibration.vibrate(100);
       setLoading(false);
     })();
   }, []);

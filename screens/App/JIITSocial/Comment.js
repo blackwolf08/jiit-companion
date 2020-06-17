@@ -9,6 +9,7 @@ import {
   Button,
   Image,
   ActivityIndicator,
+  Vibration,
 } from "react-native";
 import axios from "axios";
 
@@ -67,6 +68,7 @@ const Comment = ({ item, navigation, route }) => {
       };
       let newCommentsArray = [...commentsArray, newComment];
       setcommentsArray(newCommentsArray);
+      Vibration.vibrate(100);
       setloading(false);
     } catch (err) {
       console.log("adding comment error");

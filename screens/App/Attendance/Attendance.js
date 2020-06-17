@@ -4,6 +4,7 @@ import {
   StyleSheet,
   RefreshControl,
   StatusBar,
+  Vibration,
 } from "react-native";
 import * as Analytics from "expo-firebase-analytics";
 
@@ -23,6 +24,7 @@ const Attendance = () => {
 
   useEffect(() => {
     Analytics.logEvent("attendance_screen_view");
+    Vibration.vibrate(100);
   }, []);
 
   if (!classes?.length) return <> </>;

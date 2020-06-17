@@ -7,6 +7,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { JIITSocial } from "../screens/App/JIITSocial";
 import { AddPost } from "../screens/App/JIITSocial/AddPost";
 import Comment from "../screens/App/JIITSocial/Comment";
+import Likes from "../screens/App/JIITSocial/Likes";
 
 const JIITSocialStack = createStackNavigator();
 
@@ -76,6 +77,11 @@ function JIITSocialScreenStack({ navigation }) {
         options={{ headerTitle: "Comments" }}
         name="comments"
         component={Comment}
+      />
+      <JIITSocialStack.Screen
+        options={{ headerTitle: "Likes" }}
+        name="likes"
+        component={Likes}
       />
     </JIITSocialStack.Navigator>
   );
