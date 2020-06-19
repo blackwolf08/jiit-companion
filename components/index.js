@@ -5,6 +5,7 @@ import { AttendanceDayConatiner } from "./AttendanceSubjectContainer";
 import { ModalContainer } from "./Modal";
 import { Card } from "./Card";
 import { Avatar } from "./Avatar";
+import { NotificationsComponent } from "./Notifications";
 
 export {
   HeaderTitle,
@@ -14,4 +15,5 @@ export {
   ModalContainer,
   Card,
   Avatar,
+  NotificationsComponent,
 };

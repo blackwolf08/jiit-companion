@@ -56,3 +56,22 @@ export const addUserToDB = async ({
     console.log(err);
   }
 };
+
+export const setNotificationToken = async (token, enrollmentNumber) => {
+  try {
+    let individualRef = firebase
+      .database()
+      .ref(`notification/individual/${enrollmentNumber}`);
+    individualRef.set({
+      token,
+    });
+
+    let notificationAllRef = firebase.database().ref(`notification/all/`);
+
+    let notificationAllDataSnapShot = await notificationAllRef.once("value");
+    let notificationAllData = notificationAllDataSnapShot.val();
+    if (notificationAllData == null) notificationAllData = {};
+    notificationAllData[enrollmentNumber] = token;
+    notificationAllRef.set(notificationAllData);
+  } catch (e) {}
+};

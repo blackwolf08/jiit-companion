@@ -55,7 +55,7 @@ export const AddPost = ({ navigation }) => {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
       aspect: [1, 1],
-      quality: 1,
+      quality: 0.4,
       base64: true,
     });
     if (!result.cancelled) {
@@ -76,7 +76,7 @@ export const AddPost = ({ navigation }) => {
 
     Vibration.vibrate(100);
     setisLoading(false);
-    navigation.goBack();
+    navigation.navigate("jiitsocial");
   };
 
   return (

@@ -14,7 +14,13 @@ export const Avatar = ({ item, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <LottieView source={avatar5} autoPlay loop style={styles.lottieStyles} />
+      <LottieView
+        hardwareAccelerationAndroid
+        source={avatar5}
+        autoPlay
+        loop
+        style={styles.lottieStyles}
+      />
     </View>
   );
 };

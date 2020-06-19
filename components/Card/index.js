@@ -119,7 +119,6 @@ export const Card = ({ item, navigation }) => {
           <Ionicons name="ios-more" color={text} size={Mixins.scaleSize(20)} />
         </View>
       </View>
-
       <TouchableWithoutFeedback onPress={handleDoubleTap}>
         <View style={{ position: "relative" }}>
           <View style={styles.lottieView}>
@@ -130,6 +129,25 @@ export const Card = ({ item, navigation }) => {
               ref={heartRef}
               style={[styles.heartLottie, { display: heartDisplay }]}
             />
+          </View>
+          <View style={styles.views}>
+            <Text
+              style={[
+                styles.likes,
+                {
+                  color: "white",
+                  backgroundColor: "#00000070",
+                  fontSize: Mixins.scaleSize(16),
+                },
+              ]}
+            >
+              {item?.views}{" "}
+              <Ionicons
+                name="ios-eye"
+                size={Mixins.scaleSize(16)}
+                color="white"
+              />
+            </Text>
           </View>
           <Image
             source={{ uri: JIIT_SOCIAL_BASE_API + item?.image_path }}
@@ -195,7 +213,7 @@ export const Card = ({ item, navigation }) => {
           )}
         </View>
       </TouchableWithoutFeedback>
-      {item?.caption && (
+      {item?.caption !== undefined && (
         <View style={{ backgroundColor: black }}>
           <Text
             style={[
@@ -205,8 +223,7 @@ export const Card = ({ item, navigation }) => {
           >
             <Text style={{ fontFamily: Typography.FONT_FAMILY_BOLD }}>
               {item?.author?.enrollment_number}
-            </Text>
-            {"  "}
+            </Text>{" "}
             {item?.caption}
           </Text>
         </View>
@@ -295,5 +312,12 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
+  },
+  views: {
+    position: "absolute",
+    backgroundColor: "transparent",
+    zIndex: 10,
+    bottom: 0,
+    right: 0,
   },
 });

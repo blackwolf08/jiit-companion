@@ -10,7 +10,10 @@ import {
   Vibration,
 } from "react-native";
 import Carousel from "react-native-snap-carousel";
-import { TimeTableDayContainer } from "../../../components";
+import {
+  TimeTableDayContainer,
+  NotificationsComponent,
+} from "../../../components";
 import { useDropDown, useTheme, useUser } from "../../../contexts";
 import { Mixins, Typography } from "../../../styles";
 
@@ -41,6 +44,7 @@ const TimeTable = () => {
 
   return (
     <>
+      <NotificationsComponent />
       <StatusBar
         barStyle={dark ? "light-content" : "dark-content"}
         backgroundColor={black}

@@ -1,6 +1,7 @@
 import { useHeaderHeight } from "@react-navigation/stack";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Ionicons } from "@expo/vector-icons";
 import {
   ActivityIndicator,
   KeyboardAvoidingView,
@@ -28,12 +29,25 @@ const Comment = ({ item, navigation, route }) => {
   const [comment, setComment] = useState("");
   const [commentsArray, setcommentsArray] = useState([]);
   const [loading, setloading] = useState(false);
+  const [isdeleteing, setIsdeleteing] = useState(false);
   const headerHeight = useHeaderHeight();
 
   const { _id, comments } = route.params;
   useEffect(() => {
     setcommentsArray(comments);
   }, []);
+
+  const deleteComment = async (id) => {
+    setIsdeleteing(true);
+    await new axios({
+      method: "post",
+      url: `${JIIT_SOCIAL_BASE_API}/post/${_id}/comment/${id}/delete`,
+      config: { headers: { "Content-Type": "multipart/form-data" } },
+    });
+    setIsdeleteing(false);
+    navigation.navigate("jiitsocial");
+    Vibration.vibrate(100);
+  };
 
   const postComment = async () => {
     setComment("");
@@ -51,17 +65,7 @@ const Comment = ({ item, navigation, route }) => {
         data: formData,
         config: { headers: { "Content-Type": "multipart/form-data" } },
       });
-      let newComment = {
-        _id: `5ee215e${Math.floor(Math.random() * 1000000)}`,
-        author: {
-          id: user.enrollmentNumber,
-          username: user.enrollmentNumber,
-        },
-        body: comment,
-        created_at: Date.now(),
-      };
-      let newCommentsArray = [...commentsArray, newComment];
-      setcommentsArray(newCommentsArray);
+      navigation.navigate("jiitsocial");
       Vibration.vibrate(100);
       setloading(false);
     } catch (err) {
@@ -89,6 +93,22 @@ const Comment = ({ item, navigation, route }) => {
                 {"  "}
                 {item?.body}
               </Text>
+              {item?.author?.username == user?.enrollmentNumber && (
+                <TouchableOpacity
+                  onPress={() => deleteComment(item?._id)}
+                  style={styles.deleteButton}
+                >
+                  {isdeleteing ? (
+                    <ActivityIndicator size="small" color="#fff" />
+                  ) : (
+                    <Ionicons
+                      size={Mixins.scaleSize(20)}
+                      name="ios-trash"
+                      color="#fff"
+                    />
+                  )}
+                </TouchableOpacity>
+              )}
             </View>
           )}
           keyExtractor={(item) => item._id}
@@ -145,5 +165,12 @@ const styles = StyleSheet.create({
   commentText: {
     flex: 8,
     marginLeft: Mixins.scaleSize(20),
+  },
+  deleteButton: {
+    flex: 1,
+    backgroundColor: "#eb4d4b",
+    paddingHorizontal: Mixins.scaleSize(20),
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

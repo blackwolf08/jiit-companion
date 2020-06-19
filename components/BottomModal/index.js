@@ -39,7 +39,23 @@ const BottomModal = () => {
           ref={scrollViewRef}
           onScroll={handleOnScroll}
           scrollEventThrottle={16}
-        ></ScrollView>
+        >
+          <View style={styles.scrollableModalContent1}>
+            <Text style={styles.scrollableModalText1}>
+              You can scroll me up! 👆
+            </Text>
+          </View>
+          <View style={styles.scrollableModalContent1}>
+            <Text style={styles.scrollableModalText1}>
+              You can scroll me up! 👆
+            </Text>
+          </View>
+          <View style={styles.scrollableModalContent2}>
+            <Text style={styles.scrollableModalText2}>
+              Same here as well! ☝
+            </Text>
+          </View>
+        </ScrollView>
       </View>
     </Modal>
   );
@@ -54,5 +70,25 @@ const styles = StyleSheet.create({
   },
   scrollableModal: {
     height: Mixins.WINDOW_HEIGHT * 0.6,
+  },
+  scrollableModalContent1: {
+    height: 200,
+    backgroundColor: "#87BBE0",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  scrollableModalText1: {
+    fontSize: 20,
+    color: "white",
+  },
+  scrollableModalContent2: {
+    height: 200,
+    backgroundColor: "#A9DCD3",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  scrollableModalText2: {
+    fontSize: 20,
+    color: "white",
   },
 });
