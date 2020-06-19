@@ -1,26 +1,39 @@
-import { createStackNavigator } from '@react-navigation/stack';
-import * as React from 'react';
-import { Attendance } from '../screens/App/Attendance';
-import { HeaderTitle } from '../components';
-import { Typography, Mixins } from '../styles';
-import { useTheme } from '../contexts';
-import { Ionicons } from '@expo/vector-icons';
+import { createStackNavigator } from "@react-navigation/stack";
+import * as React from "react";
+import { Attendance } from "../screens/App/Attendance";
+import { HeaderTitle } from "../components";
+import { Typography, Mixins } from "../styles";
+import { useTheme } from "../contexts";
+import { Ionicons } from "@expo/vector-icons";
+import LottieView from "lottie-react-native";
 
 const AttendanceStack = createStackNavigator();
+
+export const CookingLottie = () => (
+  <LottieView
+    source={require("../assets/lottieFiles/cooking.json")}
+    autoPlay
+    loop
+    style={{
+      width: Mixins.scaleSize(40),
+      height: Mixins.scaleSize(40),
+    }}
+  />
+);
 
 function AttendanceStackScreen({ navigation }) {
   const { theme } = useTheme();
   return (
     <AttendanceStack.Navigator
       screenOptions={{
-        headerTitleAlign: 'center',
+        headerTitleAlign: "center",
         headerStyle: {
           backgroundColor: theme.colors.card,
         },
         headerBackTitleVisible: false,
         headerBackImage: () => (
           <Ionicons
-            name='ios-arrow-back'
+            name="ios-arrow-back"
             size={Typography.FONT_SIZE_28}
             style={{
               marginLeft: Mixins.scaleSize(10),
@@ -33,23 +46,13 @@ function AttendanceStackScreen({ navigation }) {
     >
       <AttendanceStack.Screen
         options={{
-          headerTitle: () => <HeaderTitle title='JIIT Companion' />,
-          headerRight: () => (
-            <Ionicons
-              onPress={() => {}}
-              name='ios-send'
-              size={Typography.FONT_SIZE_28}
-              style={{
-                marginLeft: Mixins.scaleSize(10),
-                width: Mixins.scaleSize(40),
-              }}
-              color={theme.colors.text}
-            />
-          ),
+          headerTitle: () => <HeaderTitle title="JIIT Companion" />,
+          headerRight: CookingLottie,
+
           headerLeft: () => (
             <Ionicons
               onPress={() => navigation.toggleDrawer()}
-              name='ios-more'
+              name="ios-more"
               size={Typography.FONT_SIZE_28}
               style={{
                 marginLeft: Mixins.scaleSize(10),
@@ -59,7 +62,7 @@ function AttendanceStackScreen({ navigation }) {
             />
           ),
         }}
-        name='attendance'
+        name="attendance"
         component={Attendance}
       />
     </AttendanceStack.Navigator>

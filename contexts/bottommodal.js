@@ -3,12 +3,15 @@ import React, { useState } from "react";
 const BottomDrawerContext = React.createContext();
 
 export const BottomDrawerProvider = ({ children }) => {
-  const [isVisible, setisVisible] = useState(false);
+  const [modalData, setModalData] = useState({
+    className: null,
+    isVisible: false,
+  });
   return (
     <BottomDrawerContext.Provider
       value={{
-        isVisible,
-        setisVisible,
+        modalData,
+        setModalData,
       }}
     >
       {children}

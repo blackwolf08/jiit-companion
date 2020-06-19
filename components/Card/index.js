@@ -1,21 +1,20 @@
-import React, { useEffect, useState, useRef } from "react";
+import { EvilIcons, Ionicons } from "@expo/vector-icons";
+import axios from "axios";
+import LottieView from "lottie-react-native";
+import React, { useEffect, useRef, useState } from "react";
 import {
+  Image,
   StyleSheet,
   Text,
-  View,
-  Image,
   TouchableOpacity,
   TouchableWithoutFeedback,
   Vibration,
+  View,
 } from "react-native";
-import { Ionicons, EvilIcons } from "@expo/vector-icons";
-import axios from "axios";
-import LottieView from "lottie-react-native";
-
-import { Mixins, Typography } from "../../styles";
-import { useTheme, useUser } from "../../contexts";
 import { JIIT_SOCIAL_BASE_API } from "../../api/constants";
 import heartLottie from "../../assets/lottieFiles/heart.json";
+import { useTheme, useUser } from "../../contexts";
+import { Mixins, Typography } from "../../styles";
 import { Avatar } from "../Avatar";
 
 export const Card = ({ item, navigation }) => {
@@ -150,6 +149,7 @@ export const Card = ({ item, navigation }) => {
             </Text>
           </View>
           <Image
+            enableHorizontalBounce={true}
             source={{ uri: JIIT_SOCIAL_BASE_API + item?.image_path }}
             style={styles.image}
           />

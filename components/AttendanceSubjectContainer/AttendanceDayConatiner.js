@@ -22,12 +22,12 @@ const TimeTableClass = ({ classDetails, className, index }) => {
     },
   } = useTheme();
 
-  const { setisVisible } = useBottomModal();
+  const { setModalData } = useBottomModal();
 
   let attendancePercentage = parseInt(classDetails[0]?.Total); // get percentage from attendance list
   let classType;
 
-  const cleanAttendanceText = (text) => `${text.split(".")[0]} %`;
+  const cleanAttendanceText = (text) => `${text?.split(".")[0]} %`;
 
   switch (classDetails?.length) {
     case 1:
@@ -40,7 +40,19 @@ const TimeTableClass = ({ classDetails, className, index }) => {
   }
 
   return (
-    <TouchableOpacity onPress={() => setisVisible(true)}>
+    <TouchableOpacity
+      onPress={() =>
+        setModalData({
+          className,
+          isVisible: true,
+          attendancePercentage,
+          classType,
+          total: cleanAttendanceText(classDetails[0]?.Total),
+          lecture: cleanAttendanceText(classDetails[1]?.Class),
+          tutorial: cleanAttendanceText(classDetails[2]?.Tutorial),
+        })
+      }
+    >
       <Animatable.View
         useNativeDriver
         animation="fadeInUp"

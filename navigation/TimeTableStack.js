@@ -5,6 +5,7 @@ import { HeaderTitle } from "../components";
 import { Typography, Mixins } from "../styles";
 import { useTheme } from "../contexts";
 import { Ionicons } from "@expo/vector-icons";
+import { CookingLottie } from "./AttendanceStack";
 
 const TimeTableStack = createStackNavigator();
 
@@ -34,18 +35,7 @@ function TimeTableStackScreen({ navigation }) {
       <TimeTableStack.Screen
         options={{
           headerTitle: () => <HeaderTitle title="JIIT Companion" />,
-          headerRight: () => (
-            <Ionicons
-              onPress={() => {}}
-              name="ios-send"
-              size={Typography.FONT_SIZE_28}
-              style={{
-                marginLeft: Mixins.scaleSize(10),
-                width: Mixins.scaleSize(40),
-              }}
-              color={theme.colors.text}
-            />
-          ),
+          headerRight: CookingLottie,
           headerLeft: () => (
             <Ionicons
               onPress={() => navigation.toggleDrawer()}

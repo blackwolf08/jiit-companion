@@ -46,6 +46,7 @@
     "react-native-draggable-flatlist": "^2.3.3",
     "react-native-dropdownalert": "^4.2.1",
     "react-native-gesture-handler": "~1.6.0",
+    "react-native-image-pan-zoom": "^2.1.12",
     "react-native-modal": "^11.5.6",
     "react-native-reanimated": "~1.7.0",
     "react-native-safe-area-context": "0.7.3",

@@ -59,6 +59,32 @@ export const getDateWiseAttendance = async ({
   }
 };
 
+export const getSubjectAttendance = async (
+  { enrollmentNumber, password, dateOfBirth, college, datewiseattendance },
+  className
+) => {
+  console.log("called");
+  let formData = new FormData();
+  formData.append("enrll", String(enrollmentNumber));
+  formData.append("psswd", String(password));
+  formData.append("dob", String(dateOfBirth));
+  formData.append("college", String(college));
+  formData.append("type", "S");
+  formData.append("url", datewiseattendance[className]);
+  try {
+    let res = await axios({
+      method: "post",
+      url: `${BASE_API}/getsubjectattendance`,
+      data: formData,
+      config: { headers: { "Content-Type": "multipart/form-data" } },
+    });
+    return res.data;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
 export const getTimeTable = async (subString, batch, year) => {
   try {
     let res = await axios.post(

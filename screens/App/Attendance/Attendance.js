@@ -33,7 +33,7 @@ const Attendance = () => {
     <>
       <StatusBar
         barStyle={dark ? "light-content" : "dark-content"}
-        backgroundColor={black}
+        backgroundColor={card}
         animated
       />
       <ScrollView
