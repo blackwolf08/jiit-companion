@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text } from 'react-native';
-import { useTheme } from '../../contexts';
-import { Typography } from '../../styles';
+import React, { useEffect, useState } from "react";
+import { StyleSheet, Text } from "react-native";
+import { useTheme } from "../../contexts";
+import { Typography } from "../../styles";
 
 const HeaderTitle = ({ title }) => {
   const {
@@ -28,8 +28,8 @@ const HeaderTitle = ({ title }) => {
 
 export const styles = StyleSheet.create({
   title: {
-    fontFamily: Typography.HEADER_FONT_FAMILY_REGULAR,
-    fontSize: Typography.FONT_SIZE_24,
+    fontFamily: Typography.FONT_FAMILY_REGULAR,
+    fontSize: Typography.FONT_SIZE_22,
   },
 });
 

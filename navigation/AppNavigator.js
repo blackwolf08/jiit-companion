@@ -11,6 +11,7 @@ import { TimeTableStackScreen } from "./TimeTableStack";
 import { JIITSocialScreenStack } from "./JIITSocialScreenStack";
 import { WebkioskWebviewScreen } from "./WebkioskWebviewStack";
 import { PreviousYearPapersScreen } from "./PreviousYearPapersStack";
+import { AcademicCalendarScreen } from "./AcademicCalendarStack";
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -63,6 +64,10 @@ export default function AppNavigator() {
       <Drawer.Screen
         name="Previous Year Papers"
         component={PreviousYearPapersScreen}
+      />
+      <Drawer.Screen
+        name="Academic Calendar"
+        component={AcademicCalendarScreen}
       />
       <Drawer.Screen
         name="Webkiosk Webview"

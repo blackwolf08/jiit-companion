@@ -45,10 +45,8 @@ const Cgpa = () => {
     let newExamMarks = await getExamMarks(user);
     user.cgpa = newCgpa;
     user.examMarks = newExamMarks;
-    console.log(newCgpa);
     await AsyncStorage.setItem("user", JSON.stringify(user));
     setUser(user);
-    console.log(cachedExamMarks);
     setLoading(false);
   };
 
@@ -184,7 +182,14 @@ const Cgpa = () => {
                 key={`marks-${index}`}
               >
                 <Text
-                  style={[styles.rowHeader, { color: text, textAlign: "left" }]}
+                  style={[
+                    styles.rowHeader,
+                    {
+                      color: text,
+                      textAlign: "center",
+                      marginBottom: Mixins.scaleSize(10),
+                    },
+                  ]}
                 >
                   {toTitleCase(name)}
                 </Text>
@@ -193,7 +198,7 @@ const Cgpa = () => {
                     <Text
                       style={[
                         styles.rowHeader,
-                        { color: text, textAlign: "left" },
+                        { color: text, textAlign: "center" },
                       ]}
                     >
                       <Text style={{ ...Typography.FONT_BOLD }}>T1 {"  "}</Text>
@@ -204,7 +209,7 @@ const Cgpa = () => {
                     <Text
                       style={[
                         styles.rowHeader,
-                        { color: text, textAlign: "left" },
+                        { color: text, textAlign: "center" },
                       ]}
                     >
                       <Text style={{ ...Typography.FONT_BOLD }}>T2 {"  "}</Text>
@@ -215,7 +220,7 @@ const Cgpa = () => {
                     <Text
                       style={[
                         styles.rowHeader,
-                        { color: text, textAlign: "left" },
+                        { color: text, textAlign: "center" },
                       ]}
                     >
                       <Text style={{ ...Typography.FONT_BOLD }}>T3 {"  "}</Text>

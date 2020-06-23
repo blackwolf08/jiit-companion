@@ -2,14 +2,15 @@ import * as Analytics from "expo-firebase-analytics";
 import React, { useEffect } from "react";
 import { StyleSheet } from "react-native";
 import { WebView } from "react-native-webview";
-import { useTheme } from "../../../contexts";
+import { useTheme, useUser } from "../../../contexts";
 
-const FileServer = () => {
+const AcademicCalendar = () => {
   const {
     theme: {
       colors: { background, card, text, primary, black },
     },
   } = useTheme();
+  const { user } = useUser();
 
   useEffect(() => {
     Analytics.logEvent("fileserver_page_view");
@@ -18,7 +19,9 @@ const FileServer = () => {
     <WebView
       source={{
         uri:
-          "https://drive.google.com/drive/folders/1WS7-34f0NxpIDRMzVjX9gOq8QYogl6HC?usp=sharing",
+          user?.college == "JUET"
+            ? "https://drive.google.com/viewerng/viewer?embedded=true&url=https://www.juet.ac.in/Download/JUET-ES19-20.pdf"
+            : "https://drive.google.com/viewerng/viewer?embedded=true&url=http://www.jiit.ac.in/sites/default/files/AC%202019-20_200120.pdf",
       }}
       thirdPartyCookiesEnabled={true}
       cacheEnabled
@@ -34,7 +37,7 @@ const FileServer = () => {
   );
 };
 
-export default FileServer;
+export default AcademicCalendar;
 
 const styles = StyleSheet.create({
   scrollView: {
