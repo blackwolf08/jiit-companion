@@ -1,10 +1,9 @@
 import * as Analytics from "expo-firebase-analytics";
 import React, { useEffect } from "react";
-import { StyleSheet } from "react-native";
 import { WebView } from "react-native-webview";
 import { useTheme } from "../../../contexts";
 
-const FileServer = () => {
+const PreviousYearPapers = () => {
   const {
     theme: {
       colors: { background, card, text, primary, black },
@@ -18,7 +17,7 @@ const FileServer = () => {
     <WebView
       source={{
         uri:
-          "https://drive.google.com/drive/folders/1WS7-34f0NxpIDRMzVjX9gOq8QYogl6HC?usp=sharing",
+          "https://drive.google.com/drive/folders/1tMsxOY1l_OgjaiU4i8jfOX8FVN10Aknl?usp=sharing",
       }}
       thirdPartyCookiesEnabled={true}
       mixedContentMode={"compatibility"}
@@ -32,10 +31,4 @@ const FileServer = () => {
   );
 };
 
-export default FileServer;
-
-const styles = StyleSheet.create({
-  scrollView: {
-    flex: 1,
-  },
-});
+export default PreviousYearPapers;
