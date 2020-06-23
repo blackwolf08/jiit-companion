@@ -5,6 +5,7 @@ import { AttendanceDayConatiner } from "./AttendanceSubjectContainer";
 import { ModalContainer } from "./Modal";
 import { Card } from "./Card";
 import { Avatar } from "./Avatar";
+import Chart from "./Chart";
 import { NotificationsComponent } from "./Notifications";
 
 export {
@@ -16,4 +17,5 @@ export {
   Card,
   Avatar,
   NotificationsComponent,
+  Chart,
 };

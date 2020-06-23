@@ -63,7 +63,6 @@ export const getSubjectAttendance = async (
   { enrollmentNumber, password, dateOfBirth, college, datewiseattendance },
   className
 ) => {
-  console.log("called");
   let formData = new FormData();
   formData.append("enrll", String(enrollmentNumber));
   formData.append("psswd", String(password));
@@ -79,6 +78,58 @@ export const getSubjectAttendance = async (
       config: { headers: { "Content-Type": "multipart/form-data" } },
     });
     return res.data;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+export const getCGPA = async ({
+  enrollmentNumber,
+  password,
+  dateOfBirth,
+  college,
+}) => {
+  let formData = new FormData();
+  formData.append("enrll", String(enrollmentNumber));
+  formData.append("psswd", String(password));
+  formData.append("dob", String(dateOfBirth));
+  formData.append("college", String(college));
+  formData.append("type", "S");
+  try {
+    let { data, status } = await axios({
+      method: "post",
+      url: `${BASE_API}/cgpa`,
+      data: formData,
+      config: { headers: { "Content-Type": "multipart/form-data" } },
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
+export const getExamMarks = async ({
+  enrollmentNumber,
+  password,
+  dateOfBirth,
+  college,
+}) => {
+  let formData = new FormData();
+  formData.append("enrll", String(enrollmentNumber));
+  formData.append("psswd", String(password));
+  formData.append("dob", String(dateOfBirth));
+  formData.append("college", String(college));
+  formData.append("type", "S");
+  try {
+    let { data, status } = await axios({
+      method: "post",
+      url: `${BASE_API}/exam-marks`,
+      data: formData,
+      config: { headers: { "Content-Type": "multipart/form-data" } },
+    });
+    return data;
   } catch (error) {
     console.log(error);
     return false;
