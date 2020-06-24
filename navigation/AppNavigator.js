@@ -12,6 +12,7 @@ import { JIITSocialScreenStack } from "./JIITSocialScreenStack";
 import { WebkioskWebviewScreen } from "./WebkioskWebviewStack";
 import { PreviousYearPapersScreen } from "./PreviousYearPapersStack";
 import { AcademicCalendarScreen } from "./AcademicCalendarStack";
+import { CGPACalculatorScreen } from "./CGPACalculatorStack";
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -58,9 +59,10 @@ const TabNavigator = () => {
 
 export default function AppNavigator() {
   return (
-    <Drawer.Navigator drawerType="slide" initialRouteName="home">
+    <Drawer.Navigator drawerType="slide">
       <Drawer.Screen name="Home" component={TabNavigator} />
       <Drawer.Screen name="JIIT Social" component={JIITSocialScreenStack} />
+      <Drawer.Screen name="CGPA Calculator" component={CGPACalculatorScreen} />
       <Drawer.Screen
         name="Previous Year Papers"
         component={PreviousYearPapersScreen}

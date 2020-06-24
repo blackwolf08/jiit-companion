@@ -31,7 +31,6 @@ const Comment = ({ item, navigation, route }) => {
   const [loading, setloading] = useState(false);
   const [isdeleteing, setIsdeleteing] = useState(false);
   const headerHeight = useHeaderHeight();
-
   const { _id, comments } = route.params;
   useEffect(() => {
     setcommentsArray(comments);
@@ -39,11 +38,12 @@ const Comment = ({ item, navigation, route }) => {
 
   const deleteComment = async (id) => {
     setIsdeleteing(true);
-    await new axios({
+    let { data } = await new axios({
       method: "post",
       url: `${JIIT_SOCIAL_BASE_API}/post/${_id}/comment/${id}/delete`,
       config: { headers: { "Content-Type": "multipart/form-data" } },
     });
+    console.log(data);
     setIsdeleteing(false);
     navigation.navigate("jiitsocial");
     Vibration.vibrate(100);
@@ -59,17 +59,18 @@ const Comment = ({ item, navigation, route }) => {
       formData.append("enrollment_number", user.enrollmentNumber);
       formData.append("username", user.enrollmentNumber);
 
-      await new axios({
+      let newComments = await new axios({
         method: "post",
         url: `${JIIT_SOCIAL_BASE_API}/post/${_id}/comment/new`,
         data: formData,
         config: { headers: { "Content-Type": "multipart/form-data" } },
       });
-      navigation.navigate("jiitsocial");
+      setcommentsArray(newComments?.data?.comments);
       Vibration.vibrate(100);
       setloading(false);
     } catch (err) {
       console.log("adding comment error");
+      setcommentsArray([]);
       setloading(false);
     }
   };
@@ -93,7 +94,7 @@ const Comment = ({ item, navigation, route }) => {
                 {"  "}
                 {item?.body}
               </Text>
-              {item?.author?.username == user?.enrollmentNumber && (
+              {item?.author?.enrollment_number == user?.enrollmentNumber && (
                 <TouchableOpacity
                   onPress={() => deleteComment(item?._id)}
                   style={styles.deleteButton}

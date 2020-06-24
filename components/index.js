@@ -6,6 +6,7 @@ import { ModalContainer } from "./Modal";
 import { Card } from "./Card";
 import { Avatar } from "./Avatar";
 import Chart from "./Chart";
+import SubjectPicker from "./SubjectPicker";
 import { NotificationsComponent } from "./Notifications";
 
 export {
@@ -18,4 +19,5 @@ export {
   Avatar,
   NotificationsComponent,
   Chart,
+  SubjectPicker,
 };

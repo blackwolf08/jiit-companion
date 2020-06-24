@@ -136,6 +136,32 @@ export const getExamMarks = async ({
   }
 };
 
+export const getSubjects = async ({
+  enrollmentNumber,
+  password,
+  dateOfBirth,
+  college,
+}) => {
+  let formData = new FormData();
+  formData.append("enrll", String(enrollmentNumber));
+  formData.append("psswd", String(password));
+  formData.append("dob", String(dateOfBirth));
+  formData.append("college", String(college));
+  formData.append("type", "S");
+  try {
+    let { data, status } = await axios({
+      method: "post",
+      url: `${BASE_API}/subjects`,
+      data: formData,
+      config: { headers: { "Content-Type": "multipart/form-data" } },
+    });
+    return data;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
 export const getTimeTable = async (subString, batch, year) => {
   try {
     let res = await axios.post(

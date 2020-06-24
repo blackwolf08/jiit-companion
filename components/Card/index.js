@@ -111,7 +111,7 @@ export const Card = ({ item, navigation }) => {
         <View style={styles.headerLeft}>
           <Avatar />
           <Text style={[styles.userName, { color: text }]}>
-            {item?.author?.enrollment_number}
+            {item?.author?.username}
           </Text>
         </View>
         <View style={styles.headerRight}>
@@ -222,7 +222,7 @@ export const Card = ({ item, navigation }) => {
             ]}
           >
             <Text style={{ fontFamily: Typography.FONT_FAMILY_BOLD }}>
-              {item?.author?.enrollment_number}
+              {item?.author?.username}
             </Text>{" "}
             {item?.caption}
           </Text>
@@ -230,7 +230,7 @@ export const Card = ({ item, navigation }) => {
       )}
       {item?.comments[0] && (
         <Text style={[styles.likes, { color: "gray", backgroundColor: black }]}>
-          {item?.comments[0]?.author?.enrollment_number}
+          {item?.comments[0]?.author?.username}
         </Text>
       )}
       <TouchableWithoutFeedback

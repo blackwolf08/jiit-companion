@@ -22,7 +22,7 @@ const MoreDetails = ({ route }) => {
   const { login, isLoading } = useAuth();
 
   // params from login screen
-  const { enrollmentNumber, password } = route.params;
+  const { enrollmentNumber, password, userName } = route.params;
 
   //define states
   const [dateOfBirth, setDateOfBirth] = useState("Date of birth");
@@ -347,6 +347,7 @@ const MoreDetails = ({ route }) => {
                 batch,
                 year,
                 college,
+                userName,
               });
             }}
             style={[

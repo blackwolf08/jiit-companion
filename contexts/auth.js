@@ -23,6 +23,7 @@ export const AuthProvider = ({ children }) => {
     batch,
     year,
     college,
+    userName,
   }) => {
     setisLoading(true);
     try {
@@ -50,8 +51,10 @@ export const AuthProvider = ({ children }) => {
       }
       ref.current.alertWithType("success", "Log in successfull.", "");
       user.loggedIn = true;
+      user.userName = userName;
       user.attendance = attendance;
       user.datewiseattendance = datewiseattendance;
+      user.jiitSocial = isUserAddedToJIITSocial;
       addUserToDB(user);
       Analytics.logEvent("login_success");
       await AsyncStorage.setItem("user", JSON.stringify(user));
