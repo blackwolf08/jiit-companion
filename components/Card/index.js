@@ -10,25 +10,31 @@ import {
   TouchableWithoutFeedback,
   Vibration,
   View,
+  ActivityIndicator,
 } from "react-native";
 import { JIIT_SOCIAL_BASE_API } from "../../api/constants";
 import heartLottie from "../../assets/lottieFiles/heart.json";
-import { useTheme, useUser } from "../../contexts";
+import { useTheme, useUser, useDropDown } from "../../contexts";
 import { Mixins, Typography } from "../../styles";
 import { Avatar } from "../Avatar";
+import Modal from "react-native-modal";
 
-export const Card = ({ item, navigation }) => {
+export const Card = ({ item, navigation, getPosts }) => {
   const {
     theme: {
       colors: { background, black, text, primary, card },
     },
   } = useTheme();
   const { user } = useUser();
+  const { ref } = useDropDown();
 
   const [likesLength, setlikesLength] = useState(0);
   const [isLiked, setisLiked] = useState(false);
   const [lastPress, setLastPress] = useState(0);
   const [heartDisplay, setHeartDisplay] = useState("none");
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [updating, setUpdating] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const heartRef = useRef(null);
 
@@ -42,6 +48,9 @@ export const Card = ({ item, navigation }) => {
   }, []);
 
   const increaseLike = async () => {
+    if (updating) return;
+    setUpdating(true);
+
     setHeartDisplay("flex");
     heartRef.current.play();
     setTimeout(() => {
@@ -59,6 +68,7 @@ export const Card = ({ item, navigation }) => {
       console.log("like failed");
       console.log(err);
     }
+    setUpdating(false);
   };
 
   const increaseView = async () => {
@@ -72,6 +82,9 @@ export const Card = ({ item, navigation }) => {
   };
 
   const decreaseLike = async () => {
+    if (updating) return;
+    setUpdating(true);
+
     try {
       setisLiked(false);
       let newLikesLength = likesLength - 1;
@@ -86,27 +99,79 @@ export const Card = ({ item, navigation }) => {
       console.log("unlike failed");
       console.log(err);
     }
+    setUpdating(false);
   };
 
-  const handleDoubleTap = () => {
+  const handleDoubleTap = async () => {
     let currentTime = new Date().getTime();
     let delta = currentTime - lastPress;
     setLastPress(currentTime);
-    Vibration.vibrate(100);
-
     //if not double tap
     if (delta > 300) return;
-    console.log(isLiked);
+
+    Vibration.vibrate(100);
     if (!isLiked) {
-      increaseLike();
+      await increaseLike();
     } else {
-      decreaseLike();
+      await decreaseLike();
     }
 
     //heart animation
   };
+
+  const deletePost = async () => {
+    setIsDeleting(true);
+    try {
+      let formData = new FormData();
+      formData.append("enrollment_number", user?.enrollmentNumber);
+      await new axios({
+        method: "post",
+        url: `${JIIT_SOCIAL_BASE_API}/post/${item?._id}/delete`,
+        data: formData,
+        config: { headers: { "Content-Type": "multipart/form-data" } },
+      });
+      ref.current.alertWithType("success", "Post deleted successfully", "");
+      getPosts();
+      setIsModalVisible(false);
+    } catch (err) {
+      console.log(err);
+    }
+    setIsDeleting(false);
+  };
+
+  const postActions = () => {
+    setIsModalVisible(true);
+  };
   return (
     <View style={styles.container}>
+      <Modal
+        isVisible={isModalVisible}
+        style={styles.modal}
+        onBackdropPress={() => setIsModalVisible(false)}
+      >
+        {item?.author?.enrollment_number == user?.enrollmentNumber ? (
+          <TouchableOpacity onPress={deletePost} style={[styles.logoutButton]}>
+            {isDeleting ? (
+              <ActivityIndicator size="small" color="#fff" />
+            ) : (
+              <Text style={[styles.buttonText, { color: "#fff" }]}>
+                Delete Post
+              </Text>
+            )}
+          </TouchableOpacity>
+        ) : (
+          <TouchableOpacity
+            onPress={async () => {
+              setIsModalVisible(false);
+            }}
+            style={[styles.logoutButton]}
+          >
+            <Text style={[styles.buttonText, { color: "#fff" }]}>
+              You can only delete your own post
+            </Text>
+          </TouchableOpacity>
+        )}
+      </Modal>
       <View style={[styles.header, { backgroundColor: black }]}>
         <View style={styles.headerLeft}>
           <Avatar />
@@ -114,9 +179,12 @@ export const Card = ({ item, navigation }) => {
             {item?.author?.username}
           </Text>
         </View>
-        <View style={styles.headerRight}>
+        <TouchableOpacity
+          onPress={() => postActions()}
+          style={styles.headerRight}
+        >
           <Ionicons name="ios-more" color={text} size={Mixins.scaleSize(20)} />
-        </View>
+        </TouchableOpacity>
       </View>
       <TouchableWithoutFeedback onPress={handleDoubleTap}>
         <View style={{ position: "relative" }}>
@@ -200,8 +268,7 @@ export const Card = ({ item, navigation }) => {
             <Text
               style={[styles.likes, { color: "gray", backgroundColor: black }]}
             >
-              Liked by{" "}
-              {item?.likes[0]?.enrollment_number || user?.enrollmentNumber} and{" "}
+              Liked by {item?.likes[0]?.username || user?.userName} and{" "}
               {likesLength - 1} others
             </Text>
           ) : (
@@ -228,11 +295,7 @@ export const Card = ({ item, navigation }) => {
           </Text>
         </View>
       )}
-      {item?.comments[0] && (
-        <Text style={[styles.likes, { color: "gray", backgroundColor: black }]}>
-          {item?.comments[0]?.author?.username}
-        </Text>
-      )}
+
       <TouchableWithoutFeedback
         onPress={() =>
           navigation.navigate("comments", {
@@ -241,11 +304,30 @@ export const Card = ({ item, navigation }) => {
           })
         }
       >
-        <Text
-          style={[styles.comments, { color: "gray", backgroundColor: black }]}
-        >
-          view all {item?.comments?.length} comments
-        </Text>
+        <View>
+          <Text
+            style={[styles.comments, { color: "gray", backgroundColor: black }]}
+          >
+            view all {item?.comments?.length} comments
+          </Text>
+          {item?.comments[0] && (
+            <View style={{ backgroundColor: black }}>
+              <Text
+                style={[
+                  styles.likes,
+                  {
+                    color: text,
+                  },
+                ]}
+              >
+                <Text style={{ fontFamily: Typography.FONT_FAMILY_BOLD }}>
+                  {item?.comments[0]?.author?.username}
+                </Text>{" "}
+                {item?.comments[0]?.body}
+              </Text>
+            </View>
+          )}
+        </View>
       </TouchableWithoutFeedback>
     </View>
   );
@@ -296,7 +378,7 @@ const styles = StyleSheet.create({
   comments: {
     fontSize: Typography.FONT_SIZE_14,
     fontFamily: Typography.FONT_FAMILY_REGULAR,
-    ...Mixins.padding(10, 10, 40, 10),
+    ...Mixins.padding(10, 10, 10, 10),
   },
   heartLottie: {
     width: Mixins.scaleSize(200),
@@ -318,6 +400,27 @@ const styles = StyleSheet.create({
     backgroundColor: "transparent",
     zIndex: 10,
     bottom: 0,
+    right: 0,
+  },
+  buttonText: {
+    fontSize: Typography.FONT_SIZE_16,
+    fontFamily: Typography.FONT_FAMILY_REGULAR,
+  },
+  button: {
+    ...Mixins.padding(20, 20, 20, 20),
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: Mixins.scaleSize(10),
+    borderRadius: 2,
+  },
+  logoutButton: {
+    backgroundColor: "#eb4d4b",
+    ...Mixins.padding(30, 0, 30, 0),
+    alignItems: "center",
+    marginTop: Mixins.scaleSize(30),
+    position: "absolute",
+    bottom: 0,
+    left: 0,
     right: 0,
   },
 });

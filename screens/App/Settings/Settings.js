@@ -91,7 +91,11 @@ const Settings = () => {
             <Text
               style={[
                 styles.muted,
-                { fontSize: Typography.FONT_SIZE_14, color: "red" },
+                {
+                  fontSize: Typography.FONT_SIZE_14,
+                  color: "red",
+                  backgroundColor: background,
+                },
               ]}
             >
               Username already taken
@@ -104,12 +108,22 @@ const Settings = () => {
               let formData = new FormData();
               formData.append("enrollment_number", user?.enrollmentNumber);
               formData.append("username", userName);
-              let res = await new axios({
-                method: "post",
-                url: `${JIIT_SOCIAL_BASE_API}/changeUsername`,
-                data: formData,
-                config: { headers: { "Content-Type": "multipart/form-data" } },
-              });
+              let res;
+              try {
+                res = await new axios({
+                  method: "post",
+                  url: `${JIIT_SOCIAL_BASE_API}/changeUsername`,
+                  data: formData,
+                  config: {
+                    headers: { "Content-Type": "multipart/form-data" },
+                  },
+                });
+              } catch (err) {
+                setError(true);
+                setLoading(false);
+                return;
+              }
+              setError(false);
               setLoading(false);
               let message = res.data.message;
               console.log(message);
@@ -220,6 +234,6 @@ const styles = StyleSheet.create({
   },
   muted: {
     color: "gray",
-    ...Mixins.padding(10, 0, 0, 0),
+    ...Mixins.padding(10, 10, 10, 10),
   },
 });

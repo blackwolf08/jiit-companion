@@ -58,16 +58,7 @@ const Cgpa = () => {
   };
 
   return (
-    <ScrollView
-      refreshControl={
-        <RefreshControl
-          tintColor={text}
-          refreshing={loading}
-          onRefresh={getUserCGPAExamMarks}
-        />
-      }
-      style={styles.scrollView}
-    >
+    <ScrollView style={styles.scrollView}>
       {loading && (
         <View style={[styles.loadingContainer]}>
           <ActivityIndicator size="small" color="gray" />

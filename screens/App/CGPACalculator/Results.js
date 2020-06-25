@@ -1,17 +1,7 @@
-import React, { useEffect, useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
-  ActivityIndicator,
-  AsyncStorage,
-  TouchableOpacity,
-} from "react-native";
-import { useTheme, useUser, useDropDown } from "../../../contexts";
-import { getSubjects } from "../../../api/requests";
+import React from "react";
+import { StyleSheet, Text, View } from "react-native";
+import { useDropDown, useTheme, useUser } from "../../../contexts";
 import { Mixins, Typography } from "../../../styles";
-import { SubjectPicker } from "../../../components";
 
 const Results = ({ naigation, route }) => {
   const { calculatedSGPA, prevCGPA, calculatedCGPA } = route.params;
@@ -53,5 +43,8 @@ const styles = StyleSheet.create({
     fontSize: Typography.FONT_SIZE_22,
     textAlign: "center",
     marginTop: Mixins.scaleSize(20),
+  },
+  lottie: {
+    height: Mixins.WINDOW_HEIGHT * 0.3,
   },
 });

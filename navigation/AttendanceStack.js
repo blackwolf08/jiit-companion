@@ -17,6 +17,8 @@ export const CookingLottie = () => (
     style={{
       width: Mixins.scaleSize(40),
       height: Mixins.scaleSize(40),
+      marginLeft: -Mixins.scaleSize(10),
+      marginTop: -Mixins.scaleSize(2),
     }}
   />
 );

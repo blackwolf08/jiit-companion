@@ -165,7 +165,7 @@ const Login = ({ navigation }) => {
             {loading ? (
               <ActivityIndicator size="small" color="#fff" />
             ) : (
-              <Text style={[styles.logInText, { color: colors.text }]}>
+              <Text style={[styles.logInText, { color: "#fff" }]}>
                 Continue
               </Text>
             )}

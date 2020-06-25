@@ -8,6 +8,7 @@ import { JIITSocial } from "../screens/App/JIITSocial";
 import { AddPost } from "../screens/App/JIITSocial/AddPost";
 import Comment from "../screens/App/JIITSocial/Comment";
 import Likes from "../screens/App/JIITSocial/Likes";
+import ViewPost from "../screens/App/JIITSocial/ViewPost";
 
 const JIITSocialStack = createStackNavigator();
 
@@ -82,6 +83,11 @@ function JIITSocialScreenStack({ navigation }) {
         options={{ headerTitle: "Likes" }}
         name="likes"
         component={Likes}
+      />
+      <JIITSocialStack.Screen
+        options={{ headerTitle: "Post" }}
+        name="viewpost"
+        component={ViewPost}
       />
     </JIITSocialStack.Navigator>
   );

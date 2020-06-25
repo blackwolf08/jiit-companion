@@ -12,6 +12,7 @@ import { useFocusEffect } from "@react-navigation/native";
 import { JIIT_SOCIAL_BASE_API } from "../../../api/constants";
 import { Card } from "../../../components";
 import { useTheme } from "../../../contexts";
+import { Mixins } from "../../../styles";
 
 const JIITSocial = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
@@ -80,7 +81,9 @@ const JIITSocial = ({ navigation }) => {
           />
         }
         data={data}
-        renderItem={({ item }) => <Card navigation={navigation} item={item} />}
+        renderItem={({ item }) => (
+          <Card getPosts={getPosts} navigation={navigation} item={item} />
+        )}
         keyExtractor={(item) => item?._id}
       />
     </View>

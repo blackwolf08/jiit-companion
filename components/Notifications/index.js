@@ -52,9 +52,9 @@ export const NotificationsComponent = () => {
 
   const _handleNotification = (_notification) => {
     Vibration.vibrate();
-    console.log(_notification);
-    let { drawer, screen } = _notification.data.navigation;
-    navigation.navigate(drawer, { screen });
+    let { drawer, screen, postId } = _notification.data.navigation;
+    if (postId) navigation.navigate(drawer, { screen, params: { postId } });
+    else navigation.navigate(drawer, { screen });
     setNotification(_notification);
   };
 

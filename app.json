@@ -15,6 +15,10 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
+    "notification": {
+      "icon": "./assets/icon.png",
+      "iosDisplayInForeground": true
+    },
     "assetBundlePatterns": ["**/*"],
     "web": {
       "config": {
@@ -35,6 +39,7 @@
         "NSFaceIDUsageDescription": "Requires FaceID To protect your CGPA Info"
       },
       "supportsTablet": true,
+      "requireFullScreen": false,
       "bundleIdentifier": "com.sunnydhama.jiitcompanion",
       "buildNumber": "1.1.0",
       "googleServicesFile": "./firebase/GoogleService-Info.plist",

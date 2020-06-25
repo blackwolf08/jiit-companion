@@ -361,7 +361,7 @@ const MoreDetails = ({ route }) => {
             {isLoading ? (
               <ActivityIndicator color="white" />
             ) : (
-              <Text style={[styles.logInText, { color: colors.text }]}>
+              <Text style={[styles.logInText, { color: "#fff" }]}>
                 Continue
               </Text>
             )}

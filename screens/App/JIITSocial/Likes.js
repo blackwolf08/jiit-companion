@@ -26,7 +26,7 @@ const Likes = ({ route }) => {
           <Avatar />
           <Text style={[styles.commentText, { color: text }]}>
             <Text style={{ fontFamily: Typography.FONT_FAMILY_BOLD }}>
-              {item?.enrollment_number}
+              {item?.username}
             </Text>
           </Text>
         </View>
