@@ -1,20 +1,19 @@
-import React, { useState, useRef, useEffect } from "react";
+import moment from "moment";
+import React, { useEffect, useRef, useState } from "react";
 import {
+  ActivityIndicator,
+  AsyncStorage,
+  ScrollView,
   StyleSheet,
   Text,
   View,
-  ScrollView,
-  AsyncStorage,
-  ActivityIndicator,
-  FlatList,
 } from "react-native";
+import { AnimatedCircularProgress } from "react-native-circular-progress";
 import Modal from "react-native-modal";
+import { getSubjectAttendance } from "../../api/requests";
 import { useBottomModal, useTheme, useUser } from "../../contexts";
 import { Mixins, Typography } from "../../styles";
-import { getSubjectAttendance } from "../../api/requests";
-import { AnimatedCircularProgress } from "react-native-circular-progress";
 import { toTitleCase } from "../../utils";
-import moment from "moment";
 
 const BottomModal = () => {
   const { modalData, setModalData } = useBottomModal();

@@ -1,8 +1,10 @@
 import { EvilIcons, Ionicons } from "@expo/vector-icons";
 import axios from "axios";
+import * as firebase from "firebase";
 import LottieView from "lottie-react-native";
 import React, { useEffect, useRef, useState } from "react";
 import {
+  ActivityIndicator,
   Image,
   StyleSheet,
   Text,
@@ -10,14 +12,13 @@ import {
   TouchableWithoutFeedback,
   Vibration,
   View,
-  ActivityIndicator,
 } from "react-native";
+import Modal from "react-native-modal";
 import { JIIT_SOCIAL_BASE_API } from "../../api/constants";
 import heartLottie from "../../assets/lottieFiles/heart.json";
-import { useTheme, useUser, useDropDown } from "../../contexts";
+import { useDropDown, useTheme, useUser } from "../../contexts";
 import { Mixins, Typography } from "../../styles";
 import { Avatar } from "../Avatar";
-import Modal from "react-native-modal";
 
 export const Card = ({ item, navigation, getPosts }) => {
   const {
@@ -35,6 +36,7 @@ export const Card = ({ item, navigation, getPosts }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [updating, setUpdating] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [avatar, setAvatar] = useState(undefined);
 
   const heartRef = useRef(null);
 
@@ -73,6 +75,12 @@ export const Card = ({ item, navigation, getPosts }) => {
 
   const increaseView = async () => {
     try {
+      let res = await firebase
+        .database()
+        .ref("avatars/" + item?.author?.enrollment_number)
+        .once("value");
+      res = JSON.parse(JSON.stringify(res));
+      setAvatar(res?.avatar);
       await axios.get(`${JIIT_SOCIAL_BASE_API}/post/${item?._id}/view`);
       heartRef.current.play();
     } catch (err) {
@@ -174,7 +182,7 @@ export const Card = ({ item, navigation, getPosts }) => {
       </Modal>
       <View style={[styles.header, { backgroundColor: black }]}>
         <View style={styles.headerLeft}>
-          <Avatar />
+          <Avatar image={avatar} />
           <Text style={[styles.userName, { color: text }]}>
             {item?.author?.username}
           </Text>

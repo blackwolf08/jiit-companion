@@ -11,8 +11,9 @@ import {
 } from "react-native";
 import Carousel from "react-native-snap-carousel";
 import {
-  TimeTableDayContainer,
   NotificationsComponent,
+  TimeTableDayContainer,
+  UpdatesComponent,
 } from "../../../components";
 import { useDropDown, useTheme, useUser } from "../../../contexts";
 import { Mixins, Typography } from "../../../styles";
@@ -45,6 +46,7 @@ const TimeTable = () => {
   return (
     <>
       <NotificationsComponent />
+      <UpdatesComponent />
       <StatusBar
         barStyle={dark ? "light-content" : "dark-content"}
         backgroundColor={card}

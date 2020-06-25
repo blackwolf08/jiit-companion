@@ -2,6 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useHeaderHeight } from "@react-navigation/stack";
 import Constants from "expo-constants";
 import * as ImagePicker from "expo-image-picker";
+import * as firebase from "firebase";
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
@@ -11,19 +12,16 @@ import {
   Platform,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   Vibration,
   View,
 } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { addPostToDB } from "../../../api/requests";
 import { useDropDown, useTheme, useUser } from "../../../contexts";
 import { Mixins, Typography } from "../../../styles";
 
-export const AddPost = ({ navigation }) => {
+export const ChangeAvatar = ({ navigation }) => {
   const [image, setImage] = useState(null);
-  const [caption, setCaption] = useState("");
   const headerHeight = useHeaderHeight();
   const [isLoading, setisLoading] = useState(false);
   const [disabled, setDisabled] = useState(true);
@@ -60,7 +58,7 @@ export const AddPost = ({ navigation }) => {
     });
     if (!result.cancelled) {
       setDisabled(false);
-      setImage(result.base64);
+      setImage("data:image/jpeg;base64," + result.base64);
       Vibration.vibrate(100);
     }
   };
@@ -68,15 +66,21 @@ export const AddPost = ({ navigation }) => {
   const uploadImage = async () => {
     Keyboard.dismiss();
     setisLoading(true);
-    let res = await addPostToDB(user.enrollmentNumber, image, caption);
-    if (res.message == "success")
-      ref.current.alertWithType("success", "Image uploaded successfully", "");
-    if (res.message == "error")
-      ref.current.alertWithType("error", "Image upload error", "");
-
+    firebase
+      .database()
+      .ref("avatars/" + user?.enrollmentNumber)
+      .set({
+        avatar: image,
+      })
+      .then(() =>
+        ref.current.alertWithType("success", "Image uploaded successfully", "")
+      )
+      .catch(() =>
+        ref.current.alertWithType("error", "Image upload error", "")
+      );
     Vibration.vibrate(100);
     setisLoading(false);
-    navigation.navigate("jiitsocial");
+    navigation.goBack();
   };
 
   return (
@@ -94,7 +98,7 @@ export const AddPost = ({ navigation }) => {
             {image ? (
               <Image
                 source={{
-                  uri: "data:image/jpeg;base64," + image,
+                  uri: image,
                 }}
                 style={styles.image}
               />
@@ -117,13 +121,7 @@ export const AddPost = ({ navigation }) => {
               </>
             )}
           </TouchableOpacity>
-          <TextInput
-            placeholderTextColor={"gray"}
-            placeholder="Write a caption..."
-            style={styles.input}
-            numberOfLines={5}
-            onChangeText={(caption) => setCaption(caption)}
-          />
+
           <TouchableOpacity
             disabled={disabled}
             onPress={uploadImage}

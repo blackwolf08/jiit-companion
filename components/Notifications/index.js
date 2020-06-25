@@ -1,11 +1,11 @@
+import { useNavigation } from "@react-navigation/native";
 import { Notifications } from "expo";
 import Constants from "expo-constants";
 import * as Permissions from "expo-permissions";
 import React, { useEffect, useState } from "react";
+import { Vibration } from "react-native";
 import { useUser } from "../../contexts";
 import { setNotificationToken } from "../../firebase";
-import { Vibration } from "react-native";
-import { useNavigation } from "@react-navigation/native";
 
 export const NotificationsComponent = () => {
   const { user } = useUser();
@@ -45,12 +45,13 @@ export const NotificationsComponent = () => {
         name: "default",
         sound: true,
         priority: "max",
-        vibrate: [0, 250, 250, 250],
+        vibrate: [0, 100, 100, 100],
       });
     }
   };
 
   const _handleNotification = (_notification) => {
+    if (_notification?.origin !== "selected") return;
     Vibration.vibrate();
     let { drawer, screen, postId } = _notification.data.navigation;
     if (postId) navigation.navigate(drawer, { screen, params: { postId } });

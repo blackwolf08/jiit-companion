@@ -5,7 +5,13 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject"
+    "eject": "expo eject",
+    "publish:p": "expo publish --release-channel=production",
+    "publish:b": "expo publish --release-channel=beta",
+    "build:ap": "expo build:android --release-channel=production",
+    "build:ab": "expo build:android --release-channel=beta",
+    "build:apab": "expo build:android --release-channel=production -t app-bundle",
+    "build:abab": "expo build:android --release-channel=beta -t app-bundle"
   },
   "dependencies": {
     "@expo-google-fonts/montserrat": "^0.1.0",

@@ -5,14 +5,12 @@ import {
   FlatList,
   RefreshControl,
   StyleSheet,
-  View,
   Vibration,
+  View,
 } from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
 import { JIIT_SOCIAL_BASE_API } from "../../../api/constants";
 import { Card } from "../../../components";
 import { useTheme } from "../../../contexts";
-import { Mixins } from "../../../styles";
 
 const JIITSocial = ({ navigation }) => {
   const [loading, setLoading] = useState(false);

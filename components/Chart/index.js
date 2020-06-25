@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Dimensions } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 import { LineChart } from "react-native-chart-kit";
 import { useTheme } from "../../contexts";
 import { Mixins, Typography } from "../../styles";

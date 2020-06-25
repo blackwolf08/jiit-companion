@@ -13,6 +13,7 @@ import { WebkioskWebviewScreen } from "./WebkioskWebviewStack";
 import { PreviousYearPapersScreen } from "./PreviousYearPapersStack";
 import { AcademicCalendarScreen } from "./AcademicCalendarStack";
 import { CGPACalculatorScreen } from "./CGPACalculatorStack";
+import { RewardsScreen } from "./RewardsStack";
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -75,6 +76,7 @@ export default function AppNavigator() {
         name="Webkiosk Webview"
         component={WebkioskWebviewScreen}
       />
+      {/* <Drawer.Screen name="Rewards" component={RewardsScreen} /> */}
       <Drawer.Screen name="Settings" component={SettingsStackScreen} />
     </Drawer.Navigator>
   );

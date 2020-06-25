@@ -1,20 +1,19 @@
+import Axios from "axios";
+import * as Analytics from "expo-firebase-analytics";
 import React, { useEffect, useState } from "react";
 import {
+  ActivityIndicator,
+  Keyboard,
   StatusBar,
   StyleSheet,
   Text,
   TextInput,
   TouchableOpacity,
   View,
-  Keyboard,
-  ActivityIndicator,
 } from "react-native";
-import * as Analytics from "expo-firebase-analytics";
-
+import { JIIT_SOCIAL_BASE_API } from "../../../api/constants";
 import { useTheme } from "../../../contexts";
 import { Mixins, Typography } from "../../../styles";
-import Axios from "axios";
-import { JIIT_SOCIAL_BASE_API } from "../../../api/constants";
 
 const Login = ({ navigation }) => {
   const {

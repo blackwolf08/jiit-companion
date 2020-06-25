@@ -1,6 +1,6 @@
+import * as Updates from "expo-updates";
 import React, { useEffect } from "react";
 import { useDropDown, useUser } from "../../contexts";
-import * as Updates from "expo-updates";
 
 export const UpdatesComponent = () => {
   const { user } = useUser();
@@ -8,15 +8,16 @@ export const UpdatesComponent = () => {
 
   useEffect(() => {
     (async () => {
+      if (__DEV__) return;
       try {
-        let { isAvailable } = Updates.checkForUpdateAsync();
+        let { isAvailable } = await Updates.checkForUpdateAsync();
         if (isAvailable) {
           ref.current.alertWithType(
             "info",
             "Update Available",
             "Downloading update"
           );
-          let { isNew } = Updates.fetchUpdateAsync();
+          let { isNew } = await Updates.fetchUpdateAsync();
           if (isNew) {
             ref.current.alertWithType(
               "success",
@@ -26,7 +27,9 @@ export const UpdatesComponent = () => {
             await Updates.reloadAsync();
           }
         }
-      } catch (err) {}
+      } catch (err) {
+        console.log(err);
+      }
     })();
   }, []);
 

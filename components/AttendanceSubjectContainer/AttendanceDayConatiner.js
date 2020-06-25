@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableWithoutFeedback, View } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
 import { useBottomModal, useTheme } from "../../contexts";
@@ -40,7 +40,7 @@ const TimeTableClass = ({ classDetails, className, index }) => {
   }
 
   return (
-    <TouchableOpacity
+    <TouchableWithoutFeedback
       onPress={() =>
         setModalData({
           className,
@@ -141,7 +141,7 @@ const TimeTableClass = ({ classDetails, className, index }) => {
           )}
         </View>
       </Animatable.View>
-    </TouchableOpacity>
+    </TouchableWithoutFeedback>
   );
 };
 

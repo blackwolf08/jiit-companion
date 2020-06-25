@@ -1,7 +1,7 @@
+import { Ionicons } from "@expo/vector-icons";
 import { useHeaderHeight } from "@react-navigation/stack";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { Ionicons } from "@expo/vector-icons";
 import {
   ActivityIndicator,
   KeyboardAvoidingView,
@@ -17,8 +17,74 @@ import { JIIT_SOCIAL_BASE_API } from "../../../api/constants";
 import { Avatar } from "../../../components/Avatar";
 import { useTheme, useUser } from "../../../contexts";
 import { Mixins, Typography } from "../../../styles";
+import * as firebase from "firebase";
 
-const Comment = ({ item, navigation, route }) => {
+const CommentView = ({ item, _id, setcommentsArray, commentsArray }) => {
+  const {
+    theme: {
+      colors: { text },
+    },
+  } = useTheme();
+  const { user } = useUser();
+  const [isdeleteing, setIsdeleteing] = useState(false);
+  const [avatar, setAvatar] = useState(undefined);
+  useEffect(() => {
+    getAvatar(item?.author?.enrollment_number);
+  }, []);
+
+  const deleteComment = async (id) => {
+    setIsdeleteing(true);
+    let { data } = await new axios({
+      method: "post",
+      url: `${JIIT_SOCIAL_BASE_API}/post/${_id}/comment/${id}/delete`,
+      config: { headers: { "Content-Type": "multipart/form-data" } },
+    });
+    setIsdeleteing(false);
+    let _newCommentsArray = commentsArray.filter((el) => el._id != id);
+    setcommentsArray(_newCommentsArray);
+    Vibration.vibrate(100);
+  };
+
+  const getAvatar = async (enrollmentNumber) => {
+    let res = await firebase
+      .database()
+      .ref("avatars/" + enrollmentNumber)
+      .once("value");
+    res = JSON.parse(JSON.stringify(res));
+    setAvatar(res?.avatar);
+  };
+
+  return (
+    <View style={styles.commentContainer}>
+      <Avatar image={avatar} />
+      <Text style={[styles.commentText, { color: text }]}>
+        <Text style={{ fontFamily: Typography.FONT_FAMILY_BOLD }}>
+          {item?.author?.username}
+        </Text>
+        {"  "}
+        {item?.body}
+      </Text>
+      {item?.author?.enrollment_number == user?.enrollmentNumber && (
+        <TouchableOpacity
+          onPress={() => deleteComment(item?._id)}
+          style={styles.deleteButton}
+        >
+          {isdeleteing ? (
+            <ActivityIndicator size="small" color="#fff" />
+          ) : (
+            <Ionicons
+              size={Mixins.scaleSize(20)}
+              name="ios-trash"
+              color="#fff"
+            />
+          )}
+        </TouchableOpacity>
+      )}
+    </View>
+  );
+};
+
+const Comment = ({ route }) => {
   const {
     theme: {
       colors: { background, black, text, primary, card },
@@ -29,25 +95,11 @@ const Comment = ({ item, navigation, route }) => {
   const [comment, setComment] = useState("");
   const [commentsArray, setcommentsArray] = useState([]);
   const [loading, setloading] = useState(false);
-  const [isdeleteing, setIsdeleteing] = useState(false);
   const headerHeight = useHeaderHeight();
   const { _id, comments } = route.params;
   useEffect(() => {
     setcommentsArray(comments);
   }, []);
-
-  const deleteComment = async (id) => {
-    setIsdeleteing(true);
-    let { data } = await new axios({
-      method: "post",
-      url: `${JIIT_SOCIAL_BASE_API}/post/${_id}/comment/${id}/delete`,
-      config: { headers: { "Content-Type": "multipart/form-data" } },
-    });
-    console.log(data);
-    setIsdeleteing(false);
-    navigation.navigate("jiitsocial");
-    Vibration.vibrate(100);
-  };
 
   const postComment = async () => {
     setComment("");
@@ -85,32 +137,12 @@ const Comment = ({ item, navigation, route }) => {
         <FlatList
           data={commentsArray}
           renderItem={({ item }) => (
-            <View style={styles.commentContainer}>
-              <Avatar />
-              <Text style={[styles.commentText, { color: text }]}>
-                <Text style={{ fontFamily: Typography.FONT_FAMILY_BOLD }}>
-                  {item?.author?.username}
-                </Text>
-                {"  "}
-                {item?.body}
-              </Text>
-              {item?.author?.enrollment_number == user?.enrollmentNumber && (
-                <TouchableOpacity
-                  onPress={() => deleteComment(item?._id)}
-                  style={styles.deleteButton}
-                >
-                  {isdeleteing ? (
-                    <ActivityIndicator size="small" color="#fff" />
-                  ) : (
-                    <Ionicons
-                      size={Mixins.scaleSize(20)}
-                      name="ios-trash"
-                      color="#fff"
-                    />
-                  )}
-                </TouchableOpacity>
-              )}
-            </View>
+            <CommentView
+              setcommentsArray={setcommentsArray}
+              commentsArray={commentsArray}
+              _id={_id}
+              item={item}
+            />
           )}
           keyExtractor={(item) => item._id}
         />

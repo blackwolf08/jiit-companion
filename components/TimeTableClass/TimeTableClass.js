@@ -1,7 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import moment from "moment";
 import React from "react";
-import { StyleSheet, Text, View, TouchableWithoutFeedback } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import * as Animatable from "react-native-animatable";
 import { AnimatedCircularProgress } from "react-native-circular-progress";
 import { useTheme, useUser } from "../../contexts";

@@ -7,6 +7,13 @@ import { Card } from "./Card";
 import { Avatar } from "./Avatar";
 import Chart from "./Chart";
 import SubjectPicker from "./SubjectPicker";
+import {
+  BannerAdComponent,
+  PublisherAdComponent,
+  InterstitialAdComponent,
+  RewardAdComponent,
+} from "./Admob";
+import { UpdatesComponent } from "./Updates";
 import { NotificationsComponent } from "./Notifications";
 
 export {
@@ -20,4 +27,9 @@ export {
   NotificationsComponent,
   Chart,
   SubjectPicker,
+  UpdatesComponent,
+  BannerAdComponent,
+  PublisherAdComponent,
+  InterstitialAdComponent,
+  RewardAdComponent,
 };

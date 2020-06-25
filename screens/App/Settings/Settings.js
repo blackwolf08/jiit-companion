@@ -1,22 +1,23 @@
+import axios from "axios";
 import * as Analytics from "expo-firebase-analytics";
+import * as firebase from "firebase";
 import React, { useEffect, useState } from "react";
 import {
+  ActivityIndicator,
   AsyncStorage,
+  Keyboard,
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   TouchableOpacity,
   View,
-  TextInput,
-  ActivityIndicator,
-  Keyboard,
 } from "react-native";
-import axios from "axios";
-import { useAuth, useTheme, useUser } from "../../../contexts";
-import { Avatar } from "../../../components";
-import { Colors, Mixins, Typography } from "../../../styles";
 import Modal from "react-native-modal";
 import { JIIT_SOCIAL_BASE_API } from "../../../api/constants";
+import { Avatar } from "../../../components";
+import { useAuth, useTheme, useUser } from "../../../contexts";
+import { Colors, Mixins, Typography } from "../../../styles";
 
 const ThemeButtons = ({ item }) => {
   const {
@@ -50,7 +51,7 @@ const ThemeButtons = ({ item }) => {
   );
 };
 
-const Settings = () => {
+const Settings = ({ navigation }) => {
   const {
     theme: {
       colors: { background, card, text, primary, black },
@@ -63,6 +64,20 @@ const Settings = () => {
   const [error, setError] = useState(false);
   const { setisAuthenticated } = useAuth();
   const { user, setUser } = useUser();
+  const [avatar, setAvatar] = useState(undefined);
+
+  useEffect(() => {
+    _setAvatar();
+  }, []);
+
+  const _setAvatar = async () => {
+    let res = await firebase
+      .database()
+      .ref("avatars/" + user?.enrollmentNumber)
+      .once("value");
+    res = JSON.parse(JSON.stringify(res));
+    setAvatar(res?.avatar);
+  };
 
   return (
     <>
@@ -146,7 +161,7 @@ const Settings = () => {
           </TouchableOpacity>
         </Modal>
         <View style={styles.userDetailsContainer}>
-          <Avatar />
+          <Avatar image={avatar} />
           <Text style={[styles.title, { color: text }]}>
             Hello {user?.userName}
           </Text>
@@ -162,6 +177,14 @@ const Settings = () => {
         >
           <Text style={[styles.buttonText, { color: "#fff" }]}>
             Change username
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate("changeavatar")}
+          style={[styles.button, { backgroundColor: primary }]}
+        >
+          <Text style={[styles.buttonText, { color: "#fff" }]}>
+            Change Avatar
           </Text>
         </TouchableOpacity>
       </ScrollView>

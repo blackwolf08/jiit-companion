@@ -1,18 +1,17 @@
+import { Ionicons } from "@expo/vector-icons";
 import { createStackNavigator } from "@react-navigation/stack";
 import * as React from "react";
 import { HeaderTitle } from "../components";
-import { Typography, Mixins } from "../styles";
 import { useTheme } from "../contexts";
-import { Ionicons } from "@expo/vector-icons";
-import { Settings } from "../screens/App/Settings";
-import { ChangeAvatar } from "../screens/App/Settings/ChangeAvatar";
+import { Rewards } from "../screens/App/Rewards";
+import { Mixins, Typography } from "../styles";
 
-const SettingsStack = createStackNavigator();
+const RewardsScreenStack = createStackNavigator();
 
-function SettingsStackScreen({ navigation }) {
+function RewardsScreen({ navigation }) {
   const { theme } = useTheme();
   return (
-    <SettingsStack.Navigator
+    <RewardsScreenStack.Navigator
       screenOptions={{
         headerTitleAlign: "center",
         headerStyle: {
@@ -32,21 +31,9 @@ function SettingsStackScreen({ navigation }) {
         ),
       }}
     >
-      <SettingsStack.Screen
+      <RewardsScreenStack.Screen
         options={{
-          headerTitle: () => <HeaderTitle title="Settings" />,
-          headerRight: () => (
-            <Ionicons
-              onPress={() => {}}
-              name="ios-settings"
-              size={Typography.FONT_SIZE_28}
-              style={{
-                marginLeft: Mixins.scaleSize(10),
-                width: Mixins.scaleSize(40),
-              }}
-              color={theme.colors.text}
-            />
-          ),
+          headerTitle: () => <HeaderTitle title="Rewards" />,
           headerLeft: () => (
             <Ionicons
               onPress={() => navigation.toggleDrawer()}
@@ -60,16 +47,11 @@ function SettingsStackScreen({ navigation }) {
             />
           ),
         }}
-        name="settings"
-        component={Settings}
+        name="rewards"
+        component={Rewards}
       />
-      <SettingsStack.Screen
-        options={{ headerTitle: "Change Avatar" }}
-        name="changeavatar"
-        component={ChangeAvatar}
-      />
-    </SettingsStack.Navigator>
+    </RewardsScreenStack.Navigator>
   );
 }
 
-export { SettingsStackScreen };
+export { RewardsScreen };

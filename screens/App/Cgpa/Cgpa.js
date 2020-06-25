@@ -1,20 +1,19 @@
-import React, { useEffect, useState, useReducer } from "react";
+import * as Analytics from "expo-firebase-analytics";
+import React, { useEffect, useState } from "react";
 import {
+  ActivityIndicator,
+  AsyncStorage,
+  ScrollView,
   StyleSheet,
   Text,
   View,
-  ScrollView,
-  AsyncStorage,
-  ActivityIndicator,
-  RefreshControl,
 } from "react-native";
-import * as Analytics from "expo-firebase-analytics";
-
-import { useTheme, useUser } from "../../../contexts";
-import { Mixins, Typography } from "../../../styles";
 import { getCGPA, getExamMarks } from "../../../api/requests";
 import { Chart } from "../../../components";
+import { useTheme, useUser } from "../../../contexts";
+import { Mixins, Typography } from "../../../styles";
 import { toTitleCase } from "../../../utils";
+
 const Cgpa = () => {
   const {
     theme: {

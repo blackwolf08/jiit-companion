@@ -1,11 +1,10 @@
-import LottieView from "lottie-react-native";
-import React from "react";
-import { StyleSheet, View } from "react-native";
-import avatar5 from "../../assets/lottieFiles/avatars/ninja.json";
+import React, { useEffect, useState } from "react";
+import { Image, StyleSheet, View } from "react-native";
+import avatar from "../../assets/avatar.png";
 import { useTheme } from "../../contexts";
 import { Mixins } from "../../styles";
 
-export const Avatar = ({ item, navigation }) => {
+export const Avatar = ({ image }) => {
   const {
     theme: {
       colors: { background, black, text, primary, card },
@@ -14,11 +13,8 @@ export const Avatar = ({ item, navigation }) => {
 
   return (
     <View style={styles.container}>
-      <LottieView
-        hardwareAccelerationAndroid
-        source={avatar5}
-        autoPlay
-        loop
+      <Image
+        source={image ? { uri: image } : avatar}
         style={styles.lottieStyles}
       />
     </View>
@@ -27,8 +23,10 @@ export const Avatar = ({ item, navigation }) => {
 
 const styles = StyleSheet.create({
   lottieStyles: {
-    height: Mixins.scaleSize(40),
-    width: Mixins.scaleSize(40),
+    flex: 1,
+    height: null,
+    width: null,
+    resizeMode: "contain",
   },
   container: {
     overflow: "hidden",

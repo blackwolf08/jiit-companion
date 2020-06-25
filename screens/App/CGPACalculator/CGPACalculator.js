@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from "react";
 import {
-  StyleSheet,
-  Text,
-  View,
-  ScrollView,
   ActivityIndicator,
   AsyncStorage,
+  ScrollView,
+  StyleSheet,
+  Text,
   TouchableOpacity,
+  View,
 } from "react-native";
-import { useTheme, useUser, useDropDown } from "../../../contexts";
 import { getSubjects } from "../../../api/requests";
-import { Mixins, Typography } from "../../../styles";
 import { SubjectPicker } from "../../../components";
+import { useDropDown, useTheme, useUser } from "../../../contexts";
+import { Mixins, Typography } from "../../../styles";
 
 const CGPACalculator = ({ navigation }) => {
   const {

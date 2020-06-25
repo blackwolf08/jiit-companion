@@ -1,14 +1,6 @@
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
-import {
-  ActivityIndicator,
-  FlatList,
-  RefreshControl,
-  StyleSheet,
-  View,
-  Vibration,
-} from "react-native";
-import { useFocusEffect } from "@react-navigation/native";
+import { ActivityIndicator, StyleSheet, Vibration, View } from "react-native";
 import { JIIT_SOCIAL_BASE_API } from "../../../api/constants";
 import { Card } from "../../../components";
 import { useTheme } from "../../../contexts";
@@ -51,7 +43,6 @@ const ViewPost = ({ navigation, route }) => {
         <ActivityIndicator color={text} />
       </View>
     );
-  console.log(data);
 
   return (
     <View style={[styles.flexConatiner, { backgroundColor: black }]}>
@@ -65,7 +56,5 @@ export default ViewPost;
 const styles = StyleSheet.create({
   flexConatiner: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
   },
 });

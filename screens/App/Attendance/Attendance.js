@@ -1,17 +1,16 @@
+import * as Analytics from "expo-firebase-analytics";
 import React, { useEffect } from "react";
 import {
-  ScrollView,
-  StyleSheet,
   RefreshControl,
+  ScrollView,
   StatusBar,
+  StyleSheet,
   Vibration,
 } from "react-native";
-import * as Analytics from "expo-firebase-analytics";
-
 import { AttendanceDayConatiner } from "../../../components";
+import BottomModal from "../../../components/BottomModal";
 import { useTheme, useUser } from "../../../contexts";
 import { Mixins, Typography } from "../../../styles";
-import BottomModal from "../../../components/BottomModal";
 
 const Attendance = () => {
   const {
