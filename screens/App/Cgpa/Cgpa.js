@@ -44,6 +44,8 @@ const Cgpa = () => {
     let newCgpa = await getCGPA(user);
     let newExamMarks = await getExamMarks(user);
     user.cgpa = newCgpa;
+    setCgpa(newCgpa);
+    setExamMarks(newExamMarks);
     user.examMarks = newExamMarks;
     await AsyncStorage.setItem("user", JSON.stringify(user));
     setUser(user);

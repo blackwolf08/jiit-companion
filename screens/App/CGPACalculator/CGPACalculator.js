@@ -47,6 +47,7 @@ const CGPACalculator = ({ navigation }) => {
     }
     let newSubjects = await getSubjects(user);
     user.subjects = newSubjects;
+    setSubjects(newSubjects);
     let _totalCredits = 0;
     newSubjects?.data?.forEach((sub) => (_totalCredits += parseFloat(sub[1])));
     _totalCredits *= 10;
