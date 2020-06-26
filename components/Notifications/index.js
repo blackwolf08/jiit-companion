@@ -3,7 +3,7 @@ import { Notifications } from "expo";
 import Constants from "expo-constants";
 import * as Permissions from "expo-permissions";
 import React, { useEffect, useState } from "react";
-import { Vibration } from "react-native";
+import { Vibration, AsyncStorage } from "react-native";
 import { useUser } from "../../contexts";
 import { setNotificationToken } from "../../firebase";
 
@@ -19,36 +19,30 @@ export const NotificationsComponent = () => {
   }, []);
 
   const registerForPushNotificationsAsync = async () => {
-    if (Constants.isDevice) {
-      const { status: existingStatus } = await Permissions.getAsync(
-        Permissions.NOTIFICATIONS
-      );
-      let finalStatus = existingStatus;
-      if (existingStatus !== "granted") {
-        const { status } = await Permissions.askAsync(
-          Permissions.NOTIFICATIONS
-        );
-        finalStatus = status;
-      }
-      if (finalStatus !== "granted") {
-        return;
-      }
-      let expoPushToken = await Notifications.getExpoPushTokenAsync();
-      setToken(expoPushToken);
-      setNotificationToken(expoPushToken, user?.enrollmentNumber);
-    } else {
-      alert("Must use physical device for Push Notifications");
+    let existingStatus = await AsyncStorage.getItem("expoPushToken");
+    let finalStatus = "";
+    if (existingStatus !== "granted") {
+      console.log("Asking permission");
+      const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+      finalStatus = status;
     }
-
-    if (Platform.OS === "android") {
-      Notifications.createChannelAndroidAsync("default", {
-        name: "default",
-        sound: true,
-        priority: "max",
-        vibrate: [0, 100, 100, 100],
-      });
+    if (finalStatus !== "granted") {
+      return;
     }
+    await AsyncStorage.setItem("expoPushToken", finalStatus);
+    let expoPushToken = await Notifications.getExpoPushTokenAsync();
+    setToken(expoPushToken);
+    setNotificationToken(expoPushToken, user?.enrollmentNumber);
   };
+
+  if (Platform.OS === "android") {
+    Notifications.createChannelAndroidAsync("default", {
+      name: "default",
+      sound: true,
+      priority: "max",
+      vibrate: [0, 100, 100, 100],
+    });
+  }
 
   const _handleNotification = (_notification) => {
     if (_notification?.origin !== "selected") return;

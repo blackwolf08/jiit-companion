@@ -110,7 +110,7 @@ const Comment = ({ route }) => {
       formData.append("comment_body", comment);
       formData.append("enrollment_number", user.enrollmentNumber);
       formData.append("username", user.userName);
-
+      console.log(_id);
       let newComments = await new axios({
         method: "post",
         url: `${JIIT_SOCIAL_BASE_API}/post/${_id}/comment/new`,

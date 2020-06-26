@@ -77,6 +77,7 @@ const Settings = ({ navigation }) => {
 
   useEffect(() => {
     _setAvatar();
+    firebase.database().ref("avatars/").on("value", _setAvatar);
   }, []);
 
   const _setAvatar = async () => {

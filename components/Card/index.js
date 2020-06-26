@@ -47,6 +47,8 @@ export const Card = ({ item, navigation, getPosts }) => {
     });
     increaseView();
     setlikesLength(_likesLength);
+    setAvatar();
+    firebase.database().ref("avatars/").on("value", _setAvatar);
   }, []);
 
   const increaseLike = async () => {
@@ -73,14 +75,16 @@ export const Card = ({ item, navigation, getPosts }) => {
     setUpdating(false);
   };
 
+  const _setAvatar = async () => {
+    let res = await firebase
+      .database()
+      .ref("avatars/" + item?.author?.enrollment_number)
+      .once("value");
+    res = JSON.parse(JSON.stringify(res));
+    setAvatar(res?.avatar);
+  };
   const increaseView = async () => {
     try {
-      let res = await firebase
-        .database()
-        .ref("avatars/" + item?.author?.enrollment_number)
-        .once("value");
-      res = JSON.parse(JSON.stringify(res));
-      setAvatar(res?.avatar);
       await axios.get(`${JIIT_SOCIAL_BASE_API}/post/${item?._id}/view`);
       heartRef.current.play();
     } catch (err) {
