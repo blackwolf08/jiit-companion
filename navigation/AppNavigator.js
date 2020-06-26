@@ -14,6 +14,7 @@ import { PreviousYearPapersScreen } from "./PreviousYearPapersStack";
 import { AcademicCalendarScreen } from "./AcademicCalendarStack";
 import { CGPACalculatorScreen } from "./CGPACalculatorStack";
 import { RewardsScreen } from "./RewardsStack";
+import { Typography } from "../styles";
 
 const Tab = createBottomTabNavigator();
 const Drawer = createDrawerNavigator();
@@ -60,7 +61,10 @@ const TabNavigator = () => {
 
 export default function AppNavigator() {
   return (
-    <Drawer.Navigator drawerType="slide">
+    <Drawer.Navigator
+      drawerType="slide"
+      drawerContentOptions={{ labelStyle: { ...Typography.FONT_REGULAR } }}
+    >
       <Drawer.Screen name="Home" component={TabNavigator} />
       <Drawer.Screen name="JIIT Social" component={JIITSocialScreenStack} />
       <Drawer.Screen name="CGPA Calculator" component={CGPACalculatorScreen} />

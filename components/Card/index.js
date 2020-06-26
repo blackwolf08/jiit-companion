@@ -64,7 +64,7 @@ export const Card = ({ item, navigation, getPosts }) => {
       let newLikesLength = likesLength + 1;
       setlikesLength(newLikesLength);
       await axios.get(
-        `${JIIT_SOCIAL_BASE_API}/post/${item?._id}/like?enrollment_number=${user.enrollmentNumber}`
+        `${JIIT_SOCIAL_BASE_API}/post/${item?._id}/like?enrollment_number=${user.enrollmentNumber}&username=${user?.userName}`
       );
     } catch (err) {
       console.log("like failed");

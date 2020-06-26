@@ -68,7 +68,12 @@ export const AddPost = ({ navigation }) => {
   const uploadImage = async () => {
     Keyboard.dismiss();
     setisLoading(true);
-    let res = await addPostToDB(user.enrollmentNumber, image, caption);
+    let res = await addPostToDB(
+      user.enrollmentNumber,
+      image,
+      caption,
+      user?.userName
+    );
     if (res.message == "success")
       ref.current.alertWithType("success", "Image uploaded successfully", "");
     if (res.message == "error")

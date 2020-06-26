@@ -63,8 +63,10 @@ const BottomModal = () => {
     }
   };
 
-  const getPrettyDate = (date) =>
-    moment(date, "DD-MM-YYYY hh:mm a").format("Do MMM [(]ddd[)] h a");
+  const getPrettyDateFirstHalf = (date) =>
+    moment(date, "DD-MM-YYYY hh:mm a").format("Do MMM");
+  const getPrettyDateSecondHalf = (date) =>
+    moment(date, "DD-MM-YYYY hh:mm a").format("ddd h a");
 
   if (!modalData?.className) <></>;
 
@@ -172,39 +174,64 @@ const BottomModal = () => {
                 .map((key) => data[key])
                 .reverse()
                 .map((item, key) => (
-                  <View key={item[1]} style={styles.attendanceRow}>
-                    <Text
+                  <View key={item[1]}>
+                    <View style={[styles.attendanceRow, { borderWidth: 0 }]}>
+                      <Text
+                        style={[
+                          styles.text,
+                          {
+                            color: text,
+                            textAlign: "center",
+                            flex: 2,
+                          },
+                        ]}
+                      >
+                        {getPrettyDateFirstHalf(item[1])}
+                      </Text>
+                      <Text
+                        style={[
+                          styles.text,
+                          {
+                            color: text,
+                            textAlign: "center",
+                            flex: 4,
+                          },
+                        ]}
+                      >
+                        {toTitleCase(item[2])}
+                      </Text>
+                      <Text
+                        style={[
+                          styles.text,
+                          {
+                            color: text,
+                            textAlign: "center",
+                            flex: 2,
+                          },
+                        ]}
+                      >
+                        {getPrettyDateSecondHalf(item[1])}
+                      </Text>
+                    </View>
+                    <View
                       style={[
-                        styles.text,
-                        {
-                          color: text,
-                          textAlign: "left",
-                          flex: 3,
-                          paddingLeft: 4,
-                        },
+                        styles.attendanceRow,
+                        { borderBottomColor: `${text}70` },
                       ]}
                     >
-                      {getPrettyDate(item[1])}
-                    </Text>
-                    <Text
-                      style={[
-                        styles.text,
-                        { color: text, textAlign: "center", flex: 3 },
-                      ]}
-                    >
-                      {toTitleCase(item[2])?.substr(0, 13)}
-                    </Text>
-                    <Text
-                      style={[
-                        styles.text,
-                        {
-                          color: item[3] == "Absent" ? "#e74c3c" : "#2ecc71",
-                          flex: 1,
-                        },
-                      ]}
-                    >
-                      {item[3] == "Absent" ? "A" : "P"}
-                    </Text>
+                      <Text
+                        style={[
+                          styles.text,
+
+                          {
+                            color: item[3] == "Absent" ? "#e74c3c" : "#2ecc71",
+                            flex: 1,
+                          },
+                        ]}
+                      >
+                        {item[3] == "Absent" ? "A" : "P"}
+                      </Text>
+                    </View>
                   </View>
                 ))}
           </View>
@@ -254,7 +281,10 @@ const styles = StyleSheet.create({
   },
   attendanceRow: {
     flexDirection: "row",
-    marginBottom: Mixins.scaleSize(10),
+    alignItems: "center",
+    borderBottomWidth: StyleSheet.hairlineWidth,
+    ...Mixins.padding(10, 10, 10, 10),
+    position: "relative",
   },
   text: {
     fontFamily: Typography.FONT_FAMILY_REGULAR,

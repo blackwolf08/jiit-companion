@@ -109,7 +109,7 @@ const Comment = ({ route }) => {
       let formData = new FormData();
       formData.append("comment_body", comment);
       formData.append("enrollment_number", user.enrollmentNumber);
-      formData.append("username", user.enrollmentNumber);
+      formData.append("username", user.userName);
 
       let newComments = await new axios({
         method: "post",
@@ -200,10 +200,11 @@ const styles = StyleSheet.create({
     marginLeft: Mixins.scaleSize(20),
   },
   deleteButton: {
-    flex: 1,
     backgroundColor: "#eb4d4b",
-    paddingHorizontal: Mixins.scaleSize(20),
     alignItems: "center",
     justifyContent: "center",
+    height: Mixins.scaleSize(30),
+    width: Mixins.scaleSize(30),
+    borderRadius: Mixins.scaleSize(20),
   },
 });

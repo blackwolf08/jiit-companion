@@ -192,11 +192,17 @@ export const addUserToJIITSocialDB = async (enrollment_number) => {
   }
 };
 
-export const addPostToDB = async (enrollment_number, image_string, caption) => {
+export const addPostToDB = async (
+  enrollment_number,
+  image_string,
+  caption,
+  username
+) => {
   let formData = new FormData();
   formData.append("enrollment_number", enrollment_number);
   formData.append("image_string", image_string);
   formData.append("caption", caption);
+  formData.append("username", username);
   try {
     await axios({
       method: "post",

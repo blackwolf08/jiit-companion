@@ -35,18 +35,6 @@ function SettingsStackScreen({ navigation }) {
       <SettingsStack.Screen
         options={{
           headerTitle: () => <HeaderTitle title="Settings" />,
-          headerRight: () => (
-            <Ionicons
-              onPress={() => {}}
-              name="ios-settings"
-              size={Typography.FONT_SIZE_28}
-              style={{
-                marginLeft: Mixins.scaleSize(10),
-                width: Mixins.scaleSize(40),
-              }}
-              color={theme.colors.text}
-            />
-          ),
           headerLeft: () => (
             <Ionicons
               onPress={() => navigation.toggleDrawer()}

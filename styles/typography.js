@@ -1,15 +1,15 @@
-import { scaleFont } from './mixins';
+import { scaleFont } from "./mixins";
 
 // FONT FAMILY
-export const FONT_FAMILY_REGULAR = 'montserrat';
-export const FONT_FAMILY_BOLD = 'montserrat-bo';
+export const FONT_FAMILY_REGULAR = "montserrat";
+export const FONT_FAMILY_BOLD = "montserrat-bo";
 
-export const HEADER_FONT_FAMILY_REGULAR = 'oleo';
-export const HEADER_FONT_FAMILY_BOLD = 'oleo-bo';
+export const HEADER_FONT_FAMILY_REGULAR = "montserrat";
+export const HEADER_FONT_FAMILY_BOLD = "montserrat-bo";
 
 // FONT WEIGHT
-export const FONT_WEIGHT_REGULAR = '400';
-export const FONT_WEIGHT_BOLD = '800';
+export const FONT_WEIGHT_REGULAR = "400";
+export const FONT_WEIGHT_BOLD = "800";
 
 // FONT SIZE
 export const FONT_SIZE_28 = scaleFont(28);

@@ -18,6 +18,7 @@ import { JIIT_SOCIAL_BASE_API } from "../../../api/constants";
 import { Avatar } from "../../../components";
 import { useAuth, useTheme, useUser } from "../../../contexts";
 import { Colors, Mixins, Typography } from "../../../styles";
+import { isModerator } from "../../../constants";
 
 const ThemeButtons = ({ item }) => {
   const {
@@ -65,6 +66,14 @@ const Settings = ({ navigation }) => {
   const { setisAuthenticated } = useAuth();
   const { user, setUser } = useUser();
   const [avatar, setAvatar] = useState(undefined);
+  const [notificationBody, setNotificationBody] = useState("");
+  const [notificationTitle, setNotificationTitle] = useState("");
+  const [screen, setScreen] = useState("jiitsocial");
+  const [drawer, setDrawer] = useState("JIIT Social");
+  const [password, setPassword] = useState("");
+  const [isNotificationModalVisible, setisNotificationModalVisible] = useState(
+    false
+  );
 
   useEffect(() => {
     _setAvatar();
@@ -79,8 +88,68 @@ const Settings = ({ navigation }) => {
     setAvatar(res?.avatar);
   };
 
+  const changeUserName = async () => {
+    Keyboard.dismiss();
+    setLoading(true);
+    let formData = new FormData();
+    formData.append("enrollment_number", user?.enrollmentNumber);
+    formData.append("username", userName);
+    let res;
+    try {
+      res = await new axios({
+        method: "post",
+        url: `${JIIT_SOCIAL_BASE_API}/changeUsername`,
+        data: formData,
+        config: {
+          headers: { "Content-Type": "multipart/form-data" },
+        },
+      });
+    } catch (err) {
+      setError(true);
+      setLoading(false);
+      return;
+    }
+    setError(false);
+    setLoading(false);
+    let message = res.data.message;
+    console.log(message);
+    if (message == "Error Registering User") {
+      setError(true);
+      return;
+    }
+    user.userName = userName;
+    await AsyncStorage.setItem("user", JSON.stringify(user));
+    setUser(user);
+    setIsModalVisible(false);
+  };
+
+  const sendNotification = async () => {
+    Keyboard.dismiss();
+    setLoading(true);
+    let formData = new FormData();
+    formData.append("password", password);
+    formData.append("notificationTitle", notificationTitle);
+    formData.append("notificationBody", notificationBody);
+    formData.append("screen", screen);
+    formData.append("drawer", drawer);
+    try {
+      await new axios({
+        method: "post",
+        url: `${JIIT_SOCIAL_BASE_API}/appNotifications`,
+        data: formData,
+        config: {
+          headers: { "Content-Type": "multipart/form-data" },
+        },
+      });
+    } catch (err) {
+      console.log(err);
+    }
+    setisNotificationModalVisible(false);
+    setLoading(false);
+  };
+
   return (
-    <>
+    <View style={{ flex: 1 }}>
       <ScrollView style={[styles.container, { backgroundColor: black }]}>
         <Modal
           isVisible={isModalVisible}
@@ -117,40 +186,7 @@ const Settings = ({ navigation }) => {
             </Text>
           )}
           <TouchableOpacity
-            onPress={async () => {
-              Keyboard.dismiss();
-              setLoading(true);
-              let formData = new FormData();
-              formData.append("enrollment_number", user?.enrollmentNumber);
-              formData.append("username", userName);
-              let res;
-              try {
-                res = await new axios({
-                  method: "post",
-                  url: `${JIIT_SOCIAL_BASE_API}/changeUsername`,
-                  data: formData,
-                  config: {
-                    headers: { "Content-Type": "multipart/form-data" },
-                  },
-                });
-              } catch (err) {
-                setError(true);
-                setLoading(false);
-                return;
-              }
-              setError(false);
-              setLoading(false);
-              let message = res.data.message;
-              console.log(message);
-              if (message == "Error Registering User") {
-                setError(true);
-                return;
-              }
-              user.userName = userName;
-              await AsyncStorage.setItem("user", JSON.stringify(user));
-              setUser(user);
-              setIsModalVisible(false);
-            }}
+            onPress={changeUserName}
             style={[styles.button, { backgroundColor: primary, marginTop: 0 }]}
           >
             {loading ? (
@@ -167,10 +203,11 @@ const Settings = ({ navigation }) => {
           </Text>
         </View>
         <Text style={[styles.title, { color: text }]}>Theme</Text>
-
         {["dark", "light", "pink"].map((item, index) => (
           <ThemeButtons key={`key-button-${index}`} item={item} index={index} />
         ))}
+        <Text style={[styles.title, { color: text }]}>User Options</Text>
+
         <TouchableOpacity
           onPress={() => setIsModalVisible(true)}
           style={[styles.button, { backgroundColor: primary }]}
@@ -187,6 +224,123 @@ const Settings = ({ navigation }) => {
             Change Avatar
           </Text>
         </TouchableOpacity>
+        {/* MOD OPTIONS */}
+        {isModerator(user?.enrollmentNumber) ? (
+          <View>
+            <Modal
+              onBackdropPress={() => setisNotificationModalVisible(false)}
+              style={{
+                backgroundColor: black,
+                ...Mixins.padding(10, 10, 10, 10),
+              }}
+              isVisible={isNotificationModalVisible}
+            >
+              <TextInput
+                keyboardAppearance={"dark"}
+                placeholderTextColor={text}
+                style={[
+                  styles.notificationInput,
+                  {
+                    backgroundColor: background,
+                    borderColor: card,
+                    color: text,
+                  },
+                ]}
+                placeholder="Notification Title"
+                onChangeText={(title) => setNotificationTitle(title)}
+                value={notificationTitle}
+              />
+              <TextInput
+                keyboardAppearance={"dark"}
+                placeholderTextColor={text}
+                style={[
+                  styles.notificationInput,
+                  {
+                    backgroundColor: background,
+                    borderColor: card,
+                    color: text,
+                  },
+                ]}
+                placeholder="Notification Body"
+                onChangeText={(body) => setNotificationBody(body)}
+                value={notificationBody}
+              />
+              <TextInput
+                secureTextEntry
+                keyboardAppearance={"dark"}
+                placeholderTextColor={text}
+                style={[
+                  styles.notificationInput,
+                  {
+                    backgroundColor: background,
+                    borderColor: card,
+                    color: text,
+                  },
+                ]}
+                placeholder="Moderator Password"
+                onChangeText={(password) => setPassword(password)}
+                value={password}
+              />
+              <TextInput
+                keyboardAppearance={"dark"}
+                placeholderTextColor={text}
+                style={[
+                  styles.notificationInput,
+                  {
+                    backgroundColor: background,
+                    borderColor: card,
+                    color: text,
+                  },
+                ]}
+                placeholder="Screen"
+                onChangeText={(screen) => setScreen(screen)}
+                value={screen}
+              />
+              <TextInput
+                keyboardAppearance={"dark"}
+                placeholderTextColor={text}
+                style={[
+                  styles.notificationInput,
+                  {
+                    backgroundColor: background,
+                    borderColor: card,
+                    color: text,
+                  },
+                ]}
+                placeholder="Which Drawer"
+                onChangeText={(drawer) => setDrawer(drawer)}
+                value={drawer}
+              />
+              <TouchableOpacity
+                onPress={sendNotification}
+                style={[
+                  styles.button,
+                  { backgroundColor: primary, marginTop: Mixins.scaleSize(20) },
+                ]}
+              >
+                {loading ? (
+                  <ActivityIndicator color="#fff" size="small" />
+                ) : (
+                  <Text style={[styles.buttonText, { color: "#fff" }]}>
+                    Send Notification
+                  </Text>
+                )}
+              </TouchableOpacity>
+            </Modal>
+            <Text style={[styles.title, { color: text }]}>
+              Moderator Options
+            </Text>
+            <TouchableOpacity
+              onPress={() => setisNotificationModalVisible(true)}
+              style={[styles.button, { backgroundColor: primary }]}
+            >
+              <Text style={[styles.buttonText, { color: "#fff" }]}>
+                Send Notification
+              </Text>
+            </TouchableOpacity>
+          </View>
+        ) : null}
+        <View style={{ ...Mixins.padding(100, 0, 100, 0) }} />
       </ScrollView>
       <TouchableOpacity
         onPress={async () => {
@@ -198,7 +352,7 @@ const Settings = ({ navigation }) => {
       >
         <Text style={[styles.buttonText, { color: "#fff" }]}>Logout</Text>
       </TouchableOpacity>
-    </>
+    </View>
   );
 };
 
@@ -247,6 +401,15 @@ const styles = StyleSheet.create({
     width: Mixins.scaleSize(80),
   },
   input: {
+    height: Mixins.scaleSize(50),
+    marginTop: Mixins.scaleSize(15),
+    borderRadius: Mixins.scaleSize(4),
+    borderWidth: Mixins.scaleSize(1),
+    ...Mixins.padding(5, 0, 5, 10),
+    fontFamily: Typography.FONT_FAMILY_REGULAR,
+    fontSize: Typography.FONT_SIZE_12,
+  },
+  notificationInput: {
     height: Mixins.scaleSize(50),
     marginTop: Mixins.scaleSize(15),
     borderRadius: Mixins.scaleSize(4),
