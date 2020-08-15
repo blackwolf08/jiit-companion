@@ -1,5 +1,5 @@
-import * as Analytics from "expo-firebase-analytics";
-import React, { useEffect, useState } from "react";
+import * as Analytics from 'expo-firebase-analytics';
+import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   AsyncStorage,
@@ -7,12 +7,12 @@ import {
   StyleSheet,
   Text,
   View,
-} from "react-native";
-import { getCGPA, getExamMarks } from "../../../api/requests";
-import { Chart } from "../../../components";
-import { useTheme, useUser } from "../../../contexts";
-import { Mixins, Typography } from "../../../styles";
-import { toTitleCase } from "../../../utils";
+} from 'react-native';
+import { getCGPA, getExamMarks } from '../../../api/requests';
+import { Chart } from '../../../components';
+import { useTheme, useUser } from '../../../contexts';
+import { Mixins, Typography } from '../../../styles';
+import { toTitleCase } from '../../../utils';
 
 const Cgpa = () => {
   const {
@@ -28,46 +28,49 @@ const Cgpa = () => {
   const [cgpa, setCgpa] = useState(null);
 
   useEffect(() => {
-    Analytics.logEvent("cgpa_page_view");
+    Analytics.logEvent('cgpa_page_view');
     getUserCGPAExamMarks();
   }, []);
 
   const getUserCGPAExamMarks = async () => {
     setLoading(true);
     let cachedCgpa = user?.cgpa;
-    let cachedExamMarks = user?.examMarks;
-    if (cachedCgpa && cachedExamMarks) {
+    // let cachedExamMarks = user?.examMarks;
+    // if (cachedCgpa && cachedExamMarks) {
+    if (cachedCgpa) {
       setCgpa(cachedCgpa);
-      setExamMarks(cachedExamMarks);
+      // setExamMarks(cachedExamMarks);
     }
     let newCgpa = await getCGPA(user);
-    let newExamMarks = await getExamMarks(user);
+    // let newExamMarks = await getExamMarks(user);
     user.cgpa = newCgpa;
     setCgpa(newCgpa);
-    setExamMarks(newExamMarks);
-    user.examMarks = newExamMarks;
-    await AsyncStorage.setItem("user", JSON.stringify(user));
+    console.log(newCgpa);
+    // setExamMarks(newExamMarks);
+    // user.examMarks = newExamMarks;
+    await AsyncStorage.setItem('user', JSON.stringify(user));
     setUser(user);
     setLoading(false);
   };
 
   const getStatus = (cgpa) => {
     if (cgpa <= 10) return cgpa;
-    return "Not possible";
+    return 'Not possible';
   };
 
   return (
     <ScrollView style={styles.scrollView}>
       {loading && (
         <View style={[styles.loadingContainer]}>
-          <ActivityIndicator size="small" color="gray" />
+          <ActivityIndicator size='small' color='gray' />
           <Text style={[styles.loadingText, { color: text }]}>
-            {"  "}Refreshing
+            {'  '}Refreshing
           </Text>
         </View>
       )}
       <Text style={[styles.title, { color: text }]}>CGPA Trends</Text>
-      {examMarks && cgpa && (
+      {/* {examMarks && cgpa && ( */}
+      {cgpa && (
         <>
           <Text
             style={[
@@ -178,7 +181,7 @@ const Cgpa = () => {
                     styles.rowHeader,
                     {
                       color: text,
-                      textAlign: "center",
+                      textAlign: 'center',
                       marginBottom: Mixins.scaleSize(10),
                     },
                   ]}
@@ -190,10 +193,10 @@ const Cgpa = () => {
                     <Text
                       style={[
                         styles.rowHeader,
-                        { color: text, textAlign: "center" },
+                        { color: text, textAlign: 'center' },
                       ]}
                     >
-                      <Text style={{ ...Typography.FONT_BOLD }}>T1 {"  "}</Text>
+                      <Text style={{ ...Typography.FONT_BOLD }}>T1 {'  '}</Text>
                       {t1}
                     </Text>
                   )}
@@ -201,10 +204,10 @@ const Cgpa = () => {
                     <Text
                       style={[
                         styles.rowHeader,
-                        { color: text, textAlign: "center" },
+                        { color: text, textAlign: 'center' },
                       ]}
                     >
-                      <Text style={{ ...Typography.FONT_BOLD }}>T2 {"  "}</Text>
+                      <Text style={{ ...Typography.FONT_BOLD }}>T2 {'  '}</Text>
                       {t2}
                     </Text>
                   )}
@@ -212,10 +215,10 @@ const Cgpa = () => {
                     <Text
                       style={[
                         styles.rowHeader,
-                        { color: text, textAlign: "center" },
+                        { color: text, textAlign: 'center' },
                       ]}
                     >
-                      <Text style={{ ...Typography.FONT_BOLD }}>T3 {"  "}</Text>
+                      <Text style={{ ...Typography.FONT_BOLD }}>T3 {'  '}</Text>
                       {t3}
                     </Text>
                   )}
@@ -240,12 +243,12 @@ const styles = StyleSheet.create({
     fontSize: Typography.FONT_SIZE_28,
     ...Mixins.padding(10, 0, 10, 10),
     fontFamily: Typography.FONT_FAMILY_REGULAR,
-    textAlign: "center",
+    textAlign: 'center',
   },
   loadingContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
     paddingVertical: Mixins.scaleSize(20),
   },
   loadingText: {
@@ -253,9 +256,9 @@ const styles = StyleSheet.create({
     fontFamily: Typography.FONT_FAMILY_REGULAR,
   },
   row: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-around",
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
     paddingTop: Mixins.scaleSize(7),
     paddingBottom: Mixins.scaleSize(7),
   },
@@ -263,16 +266,16 @@ const styles = StyleSheet.create({
     ...Typography.FONT_REGULAR,
     fontSize: Typography.FONT_SIZE_18,
     flex: 1,
-    textAlign: "center",
+    textAlign: 'center',
   },
   card: {
     borderRadius: Mixins.scaleSize(20),
-    overflow: "hidden",
+    overflow: 'hidden',
   },
   marksCard: {
     borderRadius: Mixins.scaleSize(20),
     padding: Mixins.scaleSize(10),
-    overflow: "hidden",
+    overflow: 'hidden',
     ...Mixins.margin(10, 0, 10, 0),
   },
 });

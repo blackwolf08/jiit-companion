@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { AsyncStorage } from "react-native";
-import * as Analytics from "expo-firebase-analytics";
+import React, { useState } from 'react';
+import { AsyncStorage } from 'react-native';
+import * as Analytics from 'expo-firebase-analytics';
 
-import { getAttendance, getDateWiseAttendance } from "../api";
-import { useUser } from "./user";
-import { useDropDown } from "./dropdown";
-import { addUserToDB } from "../firebase";
-import { addUserToJIITSocialDB } from "../api/requests";
+import { getAttendance, getDateWiseAttendance } from '../api';
+import { useUser } from './user';
+import { useDropDown } from './dropdown';
+import { addUserToDB } from '../firebase';
+import { addUserToJIITSocialDB } from '../api/requests';
 
 const AuthContext = React.createContext();
 
@@ -43,25 +43,25 @@ export const AuthProvider = ({ children }) => {
       if (!attendance || !datewiseattendance || !isUserAddedToJIITSocial) {
         setisLoading(false);
         ref.current.alertWithType(
-          "error",
-          "Error",
-          "Invalid credentials or your account is blocked."
+          'error',
+          'Error',
+          'Invalid credentials or your account is blocked.'
         );
         return;
       }
-      ref.current.alertWithType("success", "Log in successfull.", "");
+      ref.current.alertWithType('success', 'Log in successfull.', '');
       user.loggedIn = true;
       user.userName = userName;
       user.attendance = attendance;
       user.datewiseattendance = datewiseattendance;
       user.jiitSocial = isUserAddedToJIITSocial;
       addUserToDB(user);
-      Analytics.logEvent("login_success");
-      await AsyncStorage.setItem("user", JSON.stringify(user));
+      Analytics.logEvent('login_success');
+      await AsyncStorage.setItem('user', JSON.stringify(user));
       setUser(user);
       setisAuthenticated(true);
     } catch (e) {
-      Analytics.logEvent("login_failed");
+      Analytics.logEvent('login_failed');
       console.log(e);
     }
   };
