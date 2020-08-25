@@ -1,7 +1,7 @@
-import axios from "axios";
-import * as Analytics from "expo-firebase-analytics";
-import * as firebase from "firebase";
-import React, { useEffect, useState } from "react";
+import axios from 'axios';
+import * as Analytics from 'expo-firebase-analytics';
+import * as firebase from 'firebase';
+import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   AsyncStorage,
@@ -12,13 +12,14 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-} from "react-native";
-import Modal from "react-native-modal";
-import { JIIT_SOCIAL_BASE_API } from "../../../api/constants";
-import { Avatar } from "../../../components";
-import { useAuth, useTheme, useUser } from "../../../contexts";
-import { Colors, Mixins, Typography } from "../../../styles";
-import { isModerator } from "../../../constants";
+  Alert,
+} from 'react-native';
+import Modal from 'react-native-modal';
+import { JIIT_SOCIAL_BASE_API } from '../../../api/constants';
+import { Avatar } from '../../../components';
+import { useAuth, useTheme, useUser } from '../../../contexts';
+import { Colors, Mixins, Typography } from '../../../styles';
+import { isModerator } from '../../../constants';
 
 const ThemeButtons = ({ item }) => {
   const {
@@ -29,17 +30,17 @@ const ThemeButtons = ({ item }) => {
   } = useTheme();
 
   useEffect(() => {
-    Analytics.logEvent("settings_page_view");
+    Analytics.logEvent('settings_page_view');
   }, []);
 
   const { setUser } = useUser();
   return (
     <TouchableOpacity
       onPress={async () => {
-        let user = await AsyncStorage.getItem("user");
+        let user = await AsyncStorage.getItem('user');
         user = JSON.parse(user);
         user.theme = item;
-        await AsyncStorage.setItem("user", JSON.stringify(user));
+        await AsyncStorage.setItem('user', JSON.stringify(user));
         setUser(user);
         // setTheme(Colors[item])
       }}
@@ -55,36 +56,38 @@ const ThemeButtons = ({ item }) => {
 const Settings = ({ navigation }) => {
   const {
     theme: {
-      colors: { background, card, text, primary, black },
+      colors: { background, card, text, primary, black, border },
     },
   } = useTheme();
 
-  const [userName, setUserName] = useState("");
+  const [userName, setUserName] = useState('');
+  const [year, setYear] = useState(user?.year);
   const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isYearModalVisible, setIsYearModalVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const { setisAuthenticated } = useAuth();
   const { user, setUser } = useUser();
   const [avatar, setAvatar] = useState(undefined);
-  const [notificationBody, setNotificationBody] = useState("");
-  const [notificationTitle, setNotificationTitle] = useState("");
-  const [screen, setScreen] = useState("jiitsocial");
-  const [drawer, setDrawer] = useState("JIIT Social");
-  const [password, setPassword] = useState("");
+  const [notificationBody, setNotificationBody] = useState('');
+  const [notificationTitle, setNotificationTitle] = useState('');
+  const [screen, setScreen] = useState('jiitsocial');
+  const [drawer, setDrawer] = useState('JIIT Social');
+  const [password, setPassword] = useState('');
   const [isNotificationModalVisible, setisNotificationModalVisible] = useState(
     false
   );
 
   useEffect(() => {
     _setAvatar();
-    firebase.database().ref("avatars/").on("value", _setAvatar);
+    firebase.database().ref('avatars/').on('value', _setAvatar);
   }, []);
 
   const _setAvatar = async () => {
     let res = await firebase
       .database()
-      .ref("avatars/" + user?.enrollmentNumber)
-      .once("value");
+      .ref('avatars/' + user?.enrollmentNumber)
+      .once('value');
     res = JSON.parse(JSON.stringify(res));
     setAvatar(res?.avatar);
   };
@@ -93,16 +96,16 @@ const Settings = ({ navigation }) => {
     Keyboard.dismiss();
     setLoading(true);
     let formData = new FormData();
-    formData.append("enrollment_number", user?.enrollmentNumber);
-    formData.append("username", userName);
+    formData.append('enrollment_number', user?.enrollmentNumber);
+    formData.append('username', userName);
     let res;
     try {
       res = await new axios({
-        method: "post",
+        method: 'post',
         url: `${JIIT_SOCIAL_BASE_API}/changeUsername`,
         data: formData,
         config: {
-          headers: { "Content-Type": "multipart/form-data" },
+          headers: { 'Content-Type': 'multipart/form-data' },
         },
       });
     } catch (err) {
@@ -114,12 +117,12 @@ const Settings = ({ navigation }) => {
     setLoading(false);
     let message = res.data.message;
     console.log(message);
-    if (message == "Error Registering User") {
+    if (message == 'Error Registering User') {
       setError(true);
       return;
     }
     user.userName = userName;
-    await AsyncStorage.setItem("user", JSON.stringify(user));
+    await AsyncStorage.setItem('user', JSON.stringify(user));
     setUser(user);
     setIsModalVisible(false);
   };
@@ -128,18 +131,18 @@ const Settings = ({ navigation }) => {
     Keyboard.dismiss();
     setLoading(true);
     let formData = new FormData();
-    formData.append("password", password);
-    formData.append("notificationTitle", notificationTitle);
-    formData.append("notificationBody", notificationBody);
-    formData.append("screen", screen);
-    formData.append("drawer", drawer);
+    formData.append('password', password);
+    formData.append('notificationTitle', notificationTitle);
+    formData.append('notificationBody', notificationBody);
+    formData.append('screen', screen);
+    formData.append('drawer', drawer);
     try {
       await new axios({
-        method: "post",
+        method: 'post',
         url: `${JIIT_SOCIAL_BASE_API}/appNotifications`,
         data: formData,
         config: {
-          headers: { "Content-Type": "multipart/form-data" },
+          headers: { 'Content-Type': 'multipart/form-data' },
         },
       });
     } catch (err) {
@@ -158,7 +161,7 @@ const Settings = ({ navigation }) => {
           onBackdropPress={() => setIsModalVisible(false)}
         >
           <TextInput
-            keyboardAppearance={"dark"}
+            keyboardAppearance={'dark'}
             placeholderTextColor={text}
             style={[
               styles.input,
@@ -168,7 +171,7 @@ const Settings = ({ navigation }) => {
                 color: text,
               },
             ]}
-            placeholder="Enter your username"
+            placeholder='Enter your username'
             onChangeText={(userName) => setUserName(userName)}
             value={userName}
           />
@@ -178,7 +181,7 @@ const Settings = ({ navigation }) => {
                 styles.muted,
                 {
                   fontSize: Typography.FONT_SIZE_14,
-                  color: "red",
+                  color: 'red',
                   backgroundColor: background,
                 },
               ]}
@@ -191,9 +194,9 @@ const Settings = ({ navigation }) => {
             style={[styles.button, { backgroundColor: primary, marginTop: 0 }]}
           >
             {loading ? (
-              <ActivityIndicator color="#fff" size="small" />
+              <ActivityIndicator color='#fff' size='small' />
             ) : (
-              <Text style={[styles.buttonText, { color: "#fff" }]}>Done</Text>
+              <Text style={[styles.buttonText, { color: '#fff' }]}>Done</Text>
             )}
           </TouchableOpacity>
         </Modal>
@@ -204,7 +207,7 @@ const Settings = ({ navigation }) => {
           </Text>
         </View>
         <Text style={[styles.title, { color: text }]}>Theme</Text>
-        {["dark", "light", "pink"].map((item, index) => (
+        {['dark', 'light', 'pink'].map((item, index) => (
           <ThemeButtons key={`key-button-${index}`} item={item} index={index} />
         ))}
         <Text style={[styles.title, { color: text }]}>User Options</Text>
@@ -213,15 +216,182 @@ const Settings = ({ navigation }) => {
           onPress={() => setIsModalVisible(true)}
           style={[styles.button, { backgroundColor: primary }]}
         >
-          <Text style={[styles.buttonText, { color: "#fff" }]}>
+          <Text style={[styles.buttonText, { color: '#fff' }]}>
             Change username
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => navigation.navigate("changeavatar")}
+          onPress={() => setIsYearModalVisible(true)}
+          style={[
+            styles.text,
+            {
+              backgroundColor: background,
+              borderColor: card,
+            },
+          ]}
+        >
+          <Text
+            style={{
+              color: text,
+              fontFamily: Typography.FONT_FAMILY_REGULAR,
+            }}
+          >
+            Set Year
+          </Text>
+        </TouchableOpacity>
+        <Modal
+          style={styles.modal}
+          onBackdropPress={() => setIsYearModalVisible(false)}
+          isVisible={isYearModalVisible}
+        >
+          <View>
+            <TouchableOpacity
+              style={[
+                styles.option,
+                {
+                  backgroundColor: card,
+                  borderColor: border,
+                },
+              ]}
+              onPress={async () => {
+                user.year = '1';
+                setUser(user);
+                await AsyncStorage.setItem('user', JSON.stringify(user));
+                setIsYearModalVisible(false);
+                setYear('1');
+              }}
+            >
+              <Text
+                style={{
+                  color: text,
+                  fontFamily: Typography.FONT_FAMILY_REGULAR,
+                }}
+              >
+                1
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.option,
+                {
+                  backgroundColor: card,
+                  borderColor: border,
+                },
+              ]}
+              onPress={async () => {
+                user.year = '2';
+                setUser(user);
+                await AsyncStorage.setItem('user', JSON.stringify(user));
+                setIsYearModalVisible(false);
+                setYear('2');
+              }}
+            >
+              <Text
+                style={{
+                  color: text,
+                  fontFamily: Typography.FONT_FAMILY_REGULAR,
+                }}
+              >
+                2
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.option,
+                {
+                  backgroundColor: card,
+                  borderColor: border,
+                },
+              ]}
+              onPress={async () => {
+                user.year = '3';
+                setUser(user);
+                await AsyncStorage.setItem('user', JSON.stringify(user));
+                setIsYearModalVisible(false);
+                setYear('3');
+              }}
+            >
+              <Text
+                style={{
+                  color: text,
+                  fontFamily: Typography.FONT_FAMILY_REGULAR,
+                }}
+              >
+                3
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.option,
+                {
+                  backgroundColor: card,
+                  borderColor: border,
+                },
+              ]}
+              onPress={async () => {
+                user.year = '4';
+                setUser(user);
+                await AsyncStorage.setItem('user', JSON.stringify(user));
+                setIsYearModalVisible(false);
+                setYear('4');
+              }}
+            >
+              <Text
+                style={{
+                  color: text,
+                  fontFamily: Typography.FONT_FAMILY_REGULAR,
+                }}
+              >
+                4
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[
+                styles.option,
+                {
+                  backgroundColor: card,
+                  borderColor: border,
+                },
+              ]}
+              onPress={async () => {
+                user.year = '5';
+                setUser(user);
+                await AsyncStorage.setItem('user', JSON.stringify(user));
+                setIsYearModalVisible(false);
+                setYear('5');
+              }}
+            >
+              <Text
+                style={{
+                  color: text,
+                  fontFamily: Typography.FONT_FAMILY_REGULAR,
+                }}
+              >
+                5
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </Modal>
+        <TouchableOpacity
+          onPress={async () => {
+            await AsyncStorage.removeItem('timetable');
+            user.timetable = null;
+            user.attendance = null;
+            await AsyncStorage.setItem('user', JSON.stringify(user));
+            setUser(user);
+            Alert.alert('Timetable successfully resetted. Restart App.');
+          }}
           style={[styles.button, { backgroundColor: primary }]}
         >
-          <Text style={[styles.buttonText, { color: "#fff" }]}>
+          <Text style={[styles.buttonText, { color: '#fff' }]}>
+            Reset Timetable
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('changeavatar')}
+          style={[styles.button, { backgroundColor: primary }]}
+        >
+          <Text style={[styles.buttonText, { color: '#fff' }]}>
             Change Avatar
           </Text>
         </TouchableOpacity>
@@ -237,7 +407,7 @@ const Settings = ({ navigation }) => {
               isVisible={isNotificationModalVisible}
             >
               <TextInput
-                keyboardAppearance={"dark"}
+                keyboardAppearance={'dark'}
                 placeholderTextColor={text}
                 style={[
                   styles.notificationInput,
@@ -247,12 +417,12 @@ const Settings = ({ navigation }) => {
                     color: text,
                   },
                 ]}
-                placeholder="Notification Title"
+                placeholder='Notification Title'
                 onChangeText={(title) => setNotificationTitle(title)}
                 value={notificationTitle}
               />
               <TextInput
-                keyboardAppearance={"dark"}
+                keyboardAppearance={'dark'}
                 placeholderTextColor={text}
                 style={[
                   styles.notificationInput,
@@ -262,13 +432,13 @@ const Settings = ({ navigation }) => {
                     color: text,
                   },
                 ]}
-                placeholder="Notification Body"
+                placeholder='Notification Body'
                 onChangeText={(body) => setNotificationBody(body)}
                 value={notificationBody}
               />
               <TextInput
                 secureTextEntry
-                keyboardAppearance={"dark"}
+                keyboardAppearance={'dark'}
                 placeholderTextColor={text}
                 style={[
                   styles.notificationInput,
@@ -278,12 +448,12 @@ const Settings = ({ navigation }) => {
                     color: text,
                   },
                 ]}
-                placeholder="Moderator Password"
+                placeholder='Moderator Password'
                 onChangeText={(password) => setPassword(password)}
                 value={password}
               />
               <TextInput
-                keyboardAppearance={"dark"}
+                keyboardAppearance={'dark'}
                 placeholderTextColor={text}
                 style={[
                   styles.notificationInput,
@@ -293,12 +463,12 @@ const Settings = ({ navigation }) => {
                     color: text,
                   },
                 ]}
-                placeholder="Screen"
+                placeholder='Screen'
                 onChangeText={(screen) => setScreen(screen)}
                 value={screen}
               />
               <TextInput
-                keyboardAppearance={"dark"}
+                keyboardAppearance={'dark'}
                 placeholderTextColor={text}
                 style={[
                   styles.notificationInput,
@@ -308,7 +478,7 @@ const Settings = ({ navigation }) => {
                     color: text,
                   },
                 ]}
-                placeholder="Which Drawer"
+                placeholder='Which Drawer'
                 onChangeText={(drawer) => setDrawer(drawer)}
                 value={drawer}
               />
@@ -320,9 +490,9 @@ const Settings = ({ navigation }) => {
                 ]}
               >
                 {loading ? (
-                  <ActivityIndicator color="#fff" size="small" />
+                  <ActivityIndicator color='#fff' size='small' />
                 ) : (
-                  <Text style={[styles.buttonText, { color: "#fff" }]}>
+                  <Text style={[styles.buttonText, { color: '#fff' }]}>
                     Send Notification
                   </Text>
                 )}
@@ -335,7 +505,7 @@ const Settings = ({ navigation }) => {
               onPress={() => setisNotificationModalVisible(true)}
               style={[styles.button, { backgroundColor: primary }]}
             >
-              <Text style={[styles.buttonText, { color: "#fff" }]}>
+              <Text style={[styles.buttonText, { color: '#fff' }]}>
                 Send Notification
               </Text>
             </TouchableOpacity>
@@ -351,7 +521,7 @@ const Settings = ({ navigation }) => {
         }}
         style={[styles.logoutButton]}
       >
-        <Text style={[styles.buttonText, { color: "#fff" }]}>Logout</Text>
+        <Text style={[styles.buttonText, { color: '#fff' }]}>Logout</Text>
       </TouchableOpacity>
     </View>
   );
@@ -374,8 +544,8 @@ const styles = StyleSheet.create({
   },
   button: {
     ...Mixins.padding(20, 20, 20, 20),
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
     marginTop: Mixins.scaleSize(10),
     borderRadius: 2,
   },
@@ -383,19 +553,19 @@ const styles = StyleSheet.create({
     height: Mixins.scaleSize(60),
   },
   logoutButton: {
-    backgroundColor: "#eb4d4b",
+    backgroundColor: '#eb4d4b',
     ...Mixins.padding(30, 0, 30, 0),
-    alignItems: "center",
+    alignItems: 'center',
     marginTop: Mixins.scaleSize(30),
-    position: "absolute",
+    position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
   },
   userDetailsContainer: {
-    flexDirection: "row",
+    flexDirection: 'row',
     marginTop: Mixins.scaleSize(20),
-    alignItems: "center",
+    alignItems: 'center',
   },
   avatar: {
     height: Mixins.scaleSize(80),
@@ -420,7 +590,25 @@ const styles = StyleSheet.create({
     fontSize: Typography.FONT_SIZE_12,
   },
   muted: {
-    color: "gray",
+    color: 'gray',
     ...Mixins.padding(10, 10, 10, 10),
+  },
+  option: {
+    ...Mixins.padding(20, 10, 20, 10),
+    borderBottomWidth: 1,
+    width: Mixins.WINDOW_WIDTH - Mixins.scaleSize(20),
+    margin: 'auto',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  text: {
+    height: Mixins.scaleSize(50),
+    marginTop: Mixins.scaleSize(15),
+    borderRadius: Mixins.scaleSize(4),
+    borderWidth: Mixins.scaleSize(1),
+    fontFamily: Typography.FONT_FAMILY_REGULAR,
+    fontSize: Typography.FONT_SIZE_12,
+    justifyContent: 'center',
+    ...Mixins.padding(5, 0, 5, 10),
   },
 });

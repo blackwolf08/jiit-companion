@@ -1,8 +1,8 @@
-import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { useTheme, useUser } from "../../contexts";
-import { Mixins, Typography } from "../../styles";
-import { TimeTableClass } from "../TimeTableClass";
+import React, { useEffect } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { useTheme, useUser } from '../../contexts';
+import { Mixins, Typography } from '../../styles';
+import { TimeTableClass } from '../TimeTableClass';
 
 const TimeTableDayContainer = ({ item: dayWiseTimeTableArray }) => {
   const {
@@ -12,6 +12,16 @@ const TimeTableDayContainer = ({ item: dayWiseTimeTableArray }) => {
   } = useTheme();
   const { updateTimeTable } = useUser();
   let dayName = Object.keys(dayWiseTimeTableArray)[0];
+  console.log(dayWiseTimeTableArray);
+  useEffect(() => {
+    if (
+      Object.keys(dayWiseTimeTableArray).length == 0 ||
+      dayWiseTimeTableArray.length == 0
+    ) {
+      console.log('REQ new timetable');
+      updateTimeTable();
+    }
+  }, []);
 
   return (
     <View style={[styles.conatiner, { backgroundColor: background }]}>
@@ -19,7 +29,7 @@ const TimeTableDayContainer = ({ item: dayWiseTimeTableArray }) => {
         {dayName?.toUpperCase()}
       </Text>
       <View>
-        {dayWiseTimeTableArray[dayName].map((item, key) => (
+        {dayWiseTimeTableArray[dayName]?.map((item, key) => (
           <TimeTableClass
             dayName={dayName}
             classArray={item}
@@ -36,7 +46,7 @@ export default TimeTableDayContainer;
 const styles = StyleSheet.create({
   title: {
     fontSize: Typography.FONT_SIZE_24,
-    textAlign: "center",
+    textAlign: 'center',
   },
   conatiner: {
     minHeight: Mixins.WINDOW_HEIGHT + Mixins.scaleSize(120),

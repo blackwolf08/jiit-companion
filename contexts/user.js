@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import * as Analytics from 'expo-firebase-analytics';
 import { getSubjectString, getDayNumber } from '../utils';
 import { getTimeTable, getAttendance } from '../api';
-import { AsyncStorage } from 'react-native';
+import { AsyncStorage, Alert } from 'react-native';
 import { firebaseLogin } from '../firebase';
 
 const UserContext = React.createContext();
@@ -18,12 +18,18 @@ export const UserProvider = ({ children }) => {
     // if no user
     if (!user) return;
     // if timtable cached
+    let ODD_SEM_2020 = await AsyncStorage.getItem('ODD_SEM_2020');
+    if (!ODD_SEM_2020) {
+      await AsyncStorage.removeItem('timetable');
+      await AsyncStorage.setItem('ODD_SEM_2020', 'true');
+      Alert.alert('Please wait while we update your timetable.');
+    }
     let cachedTimeTable = await AsyncStorage.getItem('timetable');
     cachedTimeTable = JSON.parse(cachedTimeTable);
     // if no refresh request and has cache timetable
+    // console.log(cachedTimeTable);
     if (cachedTimeTable && !refresh) {
       settimeTable(cachedTimeTable);
-      return;
     }
 
     // if timetable not cached
@@ -76,13 +82,8 @@ export const UserProvider = ({ children }) => {
     setLoading(false);
   };
 
-  const updateTimeTable = async ({ data, dayName }) => {
-    let newTimeTable = [...timeTable];
-    newTimeTable[getDayNumber(dayName)] = {
-      [dayName]: data,
-    };
-    settimeTable(newTimeTable);
-    await AsyncStorage.setItem('timetable', JSON.stringify(newTimeTable));
+  const updateTimeTable = async () => {
+    _getTimeTable();
   };
 
   addPost = () => {};
