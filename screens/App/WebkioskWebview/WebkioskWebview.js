@@ -36,6 +36,9 @@ const WebkioskWebview = () => {
           }
           let captcha = document.querySelector('s')
           cap.value = captcha.innerText
+          let btn = document.getElementById('BTNSubmit')
+          setTimeout(function(){ btn.click() }, 1000);
+        
           }catch(err){
           }
       `}

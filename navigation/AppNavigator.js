@@ -51,7 +51,8 @@ const TabNavigator = () => {
         },
       }}
     >
-      <Tab.Screen name="timetable" component={TimeTableStackScreen} />
+      {/* uncomment these screens when these are avaiable */}
+      {/* <Tab.Screen name="timetable" component={TimeTableStackScreen} /> */}
       <Tab.Screen name="attendance" component={AttendanceStackScreen} />
       <Tab.Screen name="fileserver" component={FileServerStackScreen} />
       <Tab.Screen name="cgpa" component={CgpaStackScreen} />

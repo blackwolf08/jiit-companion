@@ -1,5 +1,5 @@
-import * as Analytics from 'expo-firebase-analytics';
-import React, { useEffect, useState } from 'react';
+import * as Analytics from "expo-firebase-analytics";
+import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   AsyncStorage,
@@ -7,12 +7,12 @@ import {
   StyleSheet,
   Text,
   View,
-} from 'react-native';
-import { getCGPA, getExamMarks } from '../../../api/requests';
-import { Chart } from '../../../components';
-import { useTheme, useUser } from '../../../contexts';
-import { Mixins, Typography } from '../../../styles';
-import { toTitleCase } from '../../../utils';
+} from "react-native";
+import { getCGPA, getExamMarks } from "../../../api/requests";
+import { Chart } from "../../../components";
+import { useTheme, useUser } from "../../../contexts";
+import { Mixins, Typography } from "../../../styles";
+import { toTitleCase } from "../../../utils";
 
 const Cgpa = () => {
   const {
@@ -28,43 +28,41 @@ const Cgpa = () => {
   const [cgpa, setCgpa] = useState(null);
 
   useEffect(() => {
-    Analytics.logEvent('cgpa_page_view');
+    Analytics.logEvent("cgpa_page_view");
     getUserCGPAExamMarks();
   }, []);
 
   const getUserCGPAExamMarks = async () => {
     setLoading(true);
     let cachedCgpa = user?.cgpa;
-    // let cachedExamMarks = user?.examMarks;
-    // if (cachedCgpa && cachedExamMarks) {
+    let cachedExamMarks = user?.examMarks;
     if (cachedCgpa) {
       setCgpa(cachedCgpa);
-      // setExamMarks(cachedExamMarks);
+      setExamMarks(cachedExamMarks);
     }
     let newCgpa = await getCGPA(user);
-    // let newExamMarks = await getExamMarks(user);
+    let newExamMarks = await getExamMarks(user);
     user.cgpa = newCgpa;
     setCgpa(newCgpa);
-    console.log(newCgpa);
-    // setExamMarks(newExamMarks);
-    // user.examMarks = newExamMarks;
-    await AsyncStorage.setItem('user', JSON.stringify(user));
+    setExamMarks(newExamMarks);
+    user.examMarks = newExamMarks;
+    await AsyncStorage.setItem("user", JSON.stringify(user));
     setUser(user);
     setLoading(false);
   };
 
   const getStatus = (cgpa) => {
     if (cgpa <= 10) return cgpa;
-    return 'Not possible';
+    return "Not possible";
   };
 
   return (
     <ScrollView style={styles.scrollView}>
       {loading && (
         <View style={[styles.loadingContainer]}>
-          <ActivityIndicator size='small' color='gray' />
+          <ActivityIndicator size="small" color="gray" />
           <Text style={[styles.loadingText, { color: text }]}>
-            {'  '}Refreshing
+            {"  "}Refreshing
           </Text>
         </View>
       )}
@@ -168,71 +166,83 @@ const Cgpa = () => {
             >
               Exam Marks
             </Text>
-            {examMarks?.data.map(([seq, name, t1, t2, t3], index) => (
-              <View
-                style={[
-                  styles.marksCard,
-                  { backgroundColor: card, ...Mixins.boxShadow(card) },
-                ]}
-                key={`marks-${index}`}
-              >
-                <Text
+            {examMarks?.data.map((exam_marks, index) => {
+              let __exam_marks = exam_marks?.filter((text) => text !== "  ");
+              let name = __exam_marks[1];
+              let t1 = __exam_marks[2];
+              let t2 = __exam_marks[3];
+              let t3 = __exam_marks[4];
+
+              return (
+                <View
                   style={[
-                    styles.rowHeader,
-                    {
-                      color: text,
-                      textAlign: 'center',
-                      marginBottom: Mixins.scaleSize(10),
-                    },
+                    styles.marksCard,
+                    { backgroundColor: card, ...Mixins.boxShadow(card) },
                   ]}
+                  key={`marks-${index}`}
                 >
-                  {toTitleCase(name)}
-                </Text>
-                <View style={styles.row}>
-                  {t1 && (
-                    <Text
-                      style={[
-                        styles.rowHeader,
-                        { color: text, textAlign: 'center' },
-                      ]}
-                    >
-                      <Text style={{ ...Typography.FONT_BOLD }}>T1 {'  '}</Text>
-                      {t1}
-                    </Text>
-                  )}
-                  {t2 && (
-                    <Text
-                      style={[
-                        styles.rowHeader,
-                        { color: text, textAlign: 'center' },
-                      ]}
-                    >
-                      <Text style={{ ...Typography.FONT_BOLD }}>T2 {'  '}</Text>
-                      {t2}
-                    </Text>
-                  )}
-                  {t3 && (
-                    <Text
-                      style={[
-                        styles.rowHeader,
-                        { color: text, textAlign: 'center' },
-                      ]}
-                    >
-                      <Text style={{ ...Typography.FONT_BOLD }}>T3 {'  '}</Text>
-                      {t3}
-                    </Text>
-                  )}
+                  <Text
+                    style={[
+                      styles.rowHeader,
+                      {
+                        color: text,
+                        textAlign: "center",
+                        marginBottom: Mixins.scaleSize(10),
+                      },
+                    ]}
+                  >
+                    {toTitleCase(name)}
+                  </Text>
+                  <View style={styles.row}>
+                    {t1 && (
+                      <Text
+                        style={[
+                          styles.rowHeader,
+                          { color: text, textAlign: "center" },
+                        ]}
+                      >
+                        <Text style={{ ...Typography.FONT_BOLD }}>
+                          T1 {"  "}
+                        </Text>
+                        {t1}
+                      </Text>
+                    )}
+                    {t2 && (
+                      <Text
+                        style={[
+                          styles.rowHeader,
+                          { color: text, textAlign: "center" },
+                        ]}
+                      >
+                        <Text style={{ ...Typography.FONT_BOLD }}>
+                          T2 {"  "}
+                        </Text>
+                        {t2}
+                      </Text>
+                    )}
+                    {t3 && (
+                      <Text
+                        style={[
+                          styles.rowHeader,
+                          { color: text, textAlign: "center" },
+                        ]}
+                      >
+                        <Text style={{ ...Typography.FONT_BOLD }}>
+                          T3 {"  "}
+                        </Text>
+                        {t3}
+                      </Text>
+                    )}
+                  </View>
                 </View>
-              </View>
-            ))}
+              );
+            })}
           </View>
         </>
       )}
     </ScrollView>
   );
 };
-
-export default Cgpa;
 
 const styles = StyleSheet.create({
   scrollView: {
@@ -243,12 +253,12 @@ const styles = StyleSheet.create({
     fontSize: Typography.FONT_SIZE_28,
     ...Mixins.padding(10, 0, 10, 10),
     fontFamily: Typography.FONT_FAMILY_REGULAR,
-    textAlign: 'center',
+    textAlign: "center",
   },
   loadingContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'center',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
     paddingVertical: Mixins.scaleSize(20),
   },
   loadingText: {
@@ -256,9 +266,9 @@ const styles = StyleSheet.create({
     fontFamily: Typography.FONT_FAMILY_REGULAR,
   },
   row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-around',
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-around",
     paddingTop: Mixins.scaleSize(7),
     paddingBottom: Mixins.scaleSize(7),
   },
@@ -266,16 +276,17 @@ const styles = StyleSheet.create({
     ...Typography.FONT_REGULAR,
     fontSize: Typography.FONT_SIZE_18,
     flex: 1,
-    textAlign: 'center',
+    textAlign: "center",
   },
   card: {
     borderRadius: Mixins.scaleSize(20),
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   marksCard: {
     borderRadius: Mixins.scaleSize(20),
     padding: Mixins.scaleSize(10),
-    overflow: 'hidden',
+    overflow: "hidden",
     ...Mixins.margin(10, 0, 10, 0),
   },
 });
+export default Cgpa;
