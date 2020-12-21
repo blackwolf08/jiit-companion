@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import * as Analytics from 'expo-firebase-analytics';
-import { getSubjectString, getDayNumber } from '../utils';
-import { getTimeTable, getAttendance } from '../api';
-import { AsyncStorage, Alert } from 'react-native';
-import { firebaseLogin } from '../firebase';
+import React, { useState, useEffect } from "react";
+import * as Analytics from "expo-firebase-analytics";
+import { getSubjectString, getDayNumber } from "../utils";
+import { getTimeTable, getAttendance } from "../api";
+import { Alert } from "react-native";
+import { firebaseLogin } from "../firebase";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const UserContext = React.createContext();
 
@@ -13,18 +14,18 @@ export const UserProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
 
   const _getTimeTable = async (refresh) => {
-    Analytics.logEvent('get_timetable_called');
+    Analytics.logEvent("get_timetable_called");
 
     // if no user
     if (!user) return;
     // if timtable cached
-    let ODD_SEM_2020 = await AsyncStorage.getItem('ODD_SEM_2020');
+    let ODD_SEM_2020 = await AsyncStorage.getItem("ODD_SEM_2020");
     if (!ODD_SEM_2020) {
-      await AsyncStorage.removeItem('timetable');
-      await AsyncStorage.setItem('ODD_SEM_2020', 'true');
-      Alert.alert('Please wait while we update your timetable.');
+      await AsyncStorage.removeItem("timetable");
+      await AsyncStorage.setItem("ODD_SEM_2020", "true");
+      Alert.alert("Please wait while we update your timetable.");
     }
-    let cachedTimeTable = await AsyncStorage.getItem('timetable');
+    let cachedTimeTable = await AsyncStorage.getItem("timetable");
     cachedTimeTable = JSON.parse(cachedTimeTable);
     // if no refresh request and has cache timetable
     // console.log(cachedTimeTable);
@@ -36,14 +37,14 @@ export const UserProvider = ({ children }) => {
     let attendance = getSubjectString(user.attendance);
     let res = await getTimeTable(attendance, user.batch, user.year);
     let timetable = [
-      { monday: res['monday'] },
-      { tuesday: res['tuesday'] },
-      { wednesday: res['wednesday'] },
-      { thursday: res['thursday'] },
-      { friday: res['friday'] },
-      { saturday: res['saturday'] },
+      { monday: res["monday"] },
+      { tuesday: res["tuesday"] },
+      { wednesday: res["wednesday"] },
+      { thursday: res["thursday"] },
+      { friday: res["friday"] },
+      { saturday: res["saturday"] },
     ];
-    await AsyncStorage.setItem('timetable', JSON.stringify(timetable));
+    await AsyncStorage.setItem("timetable", JSON.stringify(timetable));
 
     // set timetable
     settimeTable(timetable);
@@ -57,7 +58,7 @@ export const UserProvider = ({ children }) => {
   };
 
   const refreshAttendance = async () => {
-    Analytics.logEvent('refresh_attendance_called');
+    Analytics.logEvent("refresh_attendance_called");
 
     if (!user) return;
 
@@ -69,7 +70,7 @@ export const UserProvider = ({ children }) => {
       return;
     }
     await AsyncStorage.setItem(
-      'user',
+      "user",
       JSON.stringify({
         ...user,
         attendance,

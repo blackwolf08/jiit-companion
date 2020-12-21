@@ -79,8 +79,13 @@ const JIITSocial = ({ navigation }) => {
           />
         }
         data={data}
-        renderItem={({ item }) => (
-          <Card getPosts={getPosts} navigation={navigation} item={item} />
+        renderItem={({ item, index }) => (
+          <Card
+            index={index}
+            getPosts={getPosts}
+            navigation={navigation}
+            item={item}
+          />
         )}
         keyExtractor={(item) => item?._id}
       />

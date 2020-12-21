@@ -15,7 +15,7 @@ import {
   OleoScript_700Bold,
 } from "@expo-google-fonts/oleo-script";
 import { useFonts } from "@use-expo/font";
-import { AppLoading } from "expo";
+import AppLoading from "expo-app-loading";
 import React from "react";
 import { AppearanceProvider } from "react-native-appearance";
 import {

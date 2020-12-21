@@ -15,7 +15,7 @@ const REWARD_ID = "ca-app-pub-1528058450389133/2162817344";
 export const BannerAdComponent = () => {
   return (
     <AdMobBanner
-      bannerSize="leaderboard"
+      bannerSize='leaderboard'
       adUnitID={
         __DEV__ ? "ca-app-pub-3940256099942544/6300978111" : ADMOB_BANNER_ID
       }
@@ -33,7 +33,7 @@ export const PublisherAdComponent = () => {
 
   return (
     <PublisherBanner
-      bannerSize="smartBannerPortrait"
+      bannerSize='smartBannerPortrait'
       adUnitID={
         __DEV__ ? "ca-app-pub-3940256099942544/6300978111" : ADMOB_BANNER_ID
       }
@@ -50,6 +50,7 @@ export const InterstitialAdComponent = ({ show }) => {
 
   const showAd = async () => {
     try {
+      console.log("req add");
       await AdMobInterstitial.setAdUnitID(
         __DEV__
           ? "ca-app-pub-3940256099942544/1033173712"

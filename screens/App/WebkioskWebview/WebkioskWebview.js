@@ -1,24 +1,26 @@
 import React from "react";
 import { StyleSheet } from "react-native";
 import { WebView } from "react-native-webview";
+import { InterstitialAdComponent } from "../../../components";
 import { useUser } from "../../../contexts";
 
 const WebkioskWebview = () => {
   const { user } = useUser();
   return (
-    <WebView
-      source={{
-        uri:
-          user.college == "JUET"
-            ? "https://webkiosk.juet.ac.in"
-            : "https://webkiosk.jiit.ac.in",
-      }}
-      thirdPartyCookiesEnabled={true}
-      mixedContentMode={"compatibility"}
-      style={{
-        flex: 1,
-      }}
-      injectedJavaScript={`
+    <>
+      <WebView
+        source={{
+          uri:
+            user.college == "JUET"
+              ? "https://webkiosk.juet.ac.in"
+              : "https://webkiosk.jiit.ac.in",
+        }}
+        thirdPartyCookiesEnabled={true}
+        mixedContentMode={"compatibility"}
+        style={{
+          flex: 1,
+        }}
+        injectedJavaScript={`
           try{
           let enrll = document.getElementById('MemberCode')
           let cap = document.getElementById('txtcap')
@@ -37,15 +39,17 @@ const WebkioskWebview = () => {
           let captcha = document.querySelector('s')
           cap.value = captcha.innerText
           let btn = document.getElementById('BTNSubmit')
-          setTimeout(function(){ btn.click() }, 1000);
+          btn.click();
         
           }catch(err){
           }
       `}
-      onLoadEnd={() => {}}
-      onLoadStart={() => {}}
-      onError={() => {}}
-    />
+        onLoadEnd={() => {}}
+        onLoadStart={() => {}}
+        onError={() => {}}
+      />
+      <InterstitialAdComponent show />
+    </>
   );
 };
 

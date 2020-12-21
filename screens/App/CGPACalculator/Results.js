@@ -1,11 +1,12 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
+import { InterstitialAdComponent } from "../../../components";
 import { useDropDown, useTheme, useUser } from "../../../contexts";
 import { Mixins, Typography } from "../../../styles";
 
 const Results = ({ naigation, route }) => {
   const { calculatedSGPA, prevCGPA, calculatedCGPA } = route.params;
-  console.log(calculatedSGPA);
+  console.log(calculatedSGPA.toFixed(2));
   const {
     theme: {
       colors: { background, card, text, primary, black },
@@ -18,11 +19,14 @@ const Results = ({ naigation, route }) => {
   return (
     <View style={styles.container}>
       <Text style={[styles.title, { color: text }]}>Calculated SGPA</Text>
-      <Text style={[styles.text, { color: text }]}>{calculatedSGPA}</Text>
+      <Text style={[styles.text, { color: text }]}>
+        {calculatedSGPA.toFixed(2)}
+      </Text>
       <Text style={[styles.title, { color: text }]}>Previous CGPA</Text>
       <Text style={[styles.text, { color: text }]}>{prevCGPA}</Text>
       <Text style={[styles.title, { color: text }]}>Calculated CGPA</Text>
       <Text style={[styles.text, { color: text }]}>{calculatedCGPA}</Text>
+      <InterstitialAdComponent show />
     </View>
   );
 };

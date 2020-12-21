@@ -53,9 +53,9 @@ const TabNavigator = () => {
     >
       {/* uncomment these screens when these are avaiable */}
       {/* <Tab.Screen name="timetable" component={TimeTableStackScreen} /> */}
-      <Tab.Screen name="attendance" component={AttendanceStackScreen} />
-      <Tab.Screen name="fileserver" component={FileServerStackScreen} />
-      <Tab.Screen name="cgpa" component={CgpaStackScreen} />
+      <Tab.Screen name='attendance' component={AttendanceStackScreen} />
+      <Tab.Screen name='fileserver' component={FileServerStackScreen} />
+      <Tab.Screen name='cgpa' component={CgpaStackScreen} />
     </Tab.Navigator>
   );
 };
@@ -63,26 +63,26 @@ const TabNavigator = () => {
 export default function AppNavigator() {
   return (
     <Drawer.Navigator
-      drawerType="slide"
+      drawerType='slide'
       drawerContentOptions={{ labelStyle: { ...Typography.FONT_REGULAR } }}
     >
-      <Drawer.Screen name="Home" component={TabNavigator} />
-      <Drawer.Screen name="JIIT Social" component={JIITSocialScreenStack} />
-      <Drawer.Screen name="CGPA Calculator" component={CGPACalculatorScreen} />
+      <Drawer.Screen name='Home' component={TabNavigator} />
+      <Drawer.Screen name='JIIT Social' component={JIITSocialScreenStack} />
+      <Drawer.Screen name='CGPA Calculator' component={CGPACalculatorScreen} />
       <Drawer.Screen
-        name="Previous Year Papers"
+        name='Previous Year Papers'
         component={PreviousYearPapersScreen}
       />
       <Drawer.Screen
-        name="Academic Calendar"
+        name='Academic Calendar'
         component={AcademicCalendarScreen}
       />
       <Drawer.Screen
-        name="Webkiosk Webview"
+        name='Webkiosk Webview'
         component={WebkioskWebviewScreen}
       />
       {/* <Drawer.Screen name="Rewards" component={RewardsScreen} /> */}
-      <Drawer.Screen name="Settings" component={SettingsStackScreen} />
+      <Drawer.Screen name='Settings' component={SettingsStackScreen} />
     </Drawer.Navigator>
   );
 }

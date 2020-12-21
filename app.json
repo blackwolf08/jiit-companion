@@ -3,7 +3,7 @@
     "name": "JIIT Companion",
     "slug": "jiit-linked",
     "platforms": ["ios", "android", "web"],
-    "version": "2.0.0",
+    "version": "3.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "scheme": "jiitcompanion",
@@ -50,7 +50,8 @@
     "android": {
       "googleServicesFile": "./firebase/google-services.json",
       "package": "me.sunnydhama.jiitcompanion",
-      "versionCode": 23,
+      "versionCode": 24,
+      "useNextNotificationsApi": true,
       "playStoreUrl": "https://play.google.com/store/apps/details?id=me.sunnydhama.jiitcompanion",
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-1528058450389133~3396166750"

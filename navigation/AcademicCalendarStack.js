@@ -20,7 +20,7 @@ function AcademicCalendarScreen({ navigation }) {
         headerBackTitleVisible: false,
         headerBackImage: () => (
           <Ionicons
-            name="ios-arrow-back"
+            name='ios-arrow-back'
             size={Typography.FONT_SIZE_28}
             style={{
               marginLeft: Mixins.scaleSize(10),
@@ -33,11 +33,11 @@ function AcademicCalendarScreen({ navigation }) {
     >
       <AcademicCalendarStack.Screen
         options={{
-          headerTitle: () => <HeaderTitle title="Academic Calendar" />,
+          headerTitle: () => <HeaderTitle title='Academic Calendar' />,
           headerLeft: () => (
             <Ionicons
               onPress={() => navigation.toggleDrawer()}
-              name="ios-more"
+              name='ios-menu'
               size={Typography.FONT_SIZE_28}
               style={{
                 marginLeft: Mixins.scaleSize(10),
@@ -47,7 +47,7 @@ function AcademicCalendarScreen({ navigation }) {
             />
           ),
         }}
-        name="academiccalendar"
+        name='academiccalendar'
         component={AcademicCalendar}
       />
     </AcademicCalendarStack.Navigator>

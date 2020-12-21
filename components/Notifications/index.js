@@ -1,9 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
-import { Notifications } from "expo";
+import * as Notifications from "expo-notifications";
 import Constants from "expo-constants";
 import * as Permissions from "expo-permissions";
 import React, { useEffect, useState } from "react";
-import { Vibration, AsyncStorage } from "react-native";
+import { Vibration } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { useUser } from "../../contexts";
 import { setNotificationToken } from "../../firebase";
 

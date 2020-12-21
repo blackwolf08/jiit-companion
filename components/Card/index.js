@@ -14,13 +14,14 @@ import {
   View,
 } from "react-native";
 import Modal from "react-native-modal";
+import { BannerAdComponent } from "..";
 import { JIIT_SOCIAL_BASE_API } from "../../api/constants";
 import heartLottie from "../../assets/lottieFiles/heart.json";
 import { useDropDown, useTheme, useUser } from "../../contexts";
 import { Mixins, Typography } from "../../styles";
 import { Avatar } from "../Avatar";
 
-export const Card = ({ item, navigation, getPosts }) => {
+export const Card = ({ item, navigation, getPosts, index }) => {
   const {
     theme: {
       colors: { background, black, text, primary, card },
@@ -164,7 +165,7 @@ export const Card = ({ item, navigation, getPosts }) => {
         {item?.author?.enrollment_number == user?.enrollmentNumber ? (
           <TouchableOpacity onPress={deletePost} style={[styles.logoutButton]}>
             {isDeleting ? (
-              <ActivityIndicator size="small" color="#fff" />
+              <ActivityIndicator size='small' color='#fff' />
             ) : (
               <Text style={[styles.buttonText, { color: "#fff" }]}>
                 Delete Post
@@ -195,7 +196,11 @@ export const Card = ({ item, navigation, getPosts }) => {
           onPress={() => postActions()}
           style={styles.headerRight}
         >
-          <Ionicons name="ios-more" color={text} size={Mixins.scaleSize(20)} />
+          <Ionicons
+            name='ios-ellipsis-vertical'
+            color={text}
+            size={Mixins.scaleSize(20)}
+          />
         </TouchableOpacity>
       </View>
       <TouchableWithoutFeedback onPress={handleDoubleTap}>
@@ -222,9 +227,9 @@ export const Card = ({ item, navigation, getPosts }) => {
             >
               {item?.views}{" "}
               <Ionicons
-                name="ios-eye"
+                name='ios-eye'
                 size={Mixins.scaleSize(16)}
-                color="white"
+                color='white'
               />
             </Text>
           </View>
@@ -239,7 +244,7 @@ export const Card = ({ item, navigation, getPosts }) => {
         {isLiked ? (
           <TouchableOpacity onPress={decreaseLike}>
             <Ionicons
-              name="ios-heart"
+              name='ios-heart'
               color={"#c0392b"}
               size={Mixins.scaleSize(30)}
             />
@@ -247,14 +252,14 @@ export const Card = ({ item, navigation, getPosts }) => {
         ) : (
           <TouchableOpacity onPress={increaseLike}>
             <Ionicons
-              name="ios-heart-empty"
+              name='ios-heart-outline'
               color={text}
               size={Mixins.scaleSize(30)}
             />
           </TouchableOpacity>
         )}
         <EvilIcons
-          name="comment"
+          name='comment'
           color={text}
           style={{ marginLeft: Mixins.scaleSize(20) }}
           size={Mixins.scaleSize(35)}
@@ -341,6 +346,8 @@ export const Card = ({ item, navigation, getPosts }) => {
           )}
         </View>
       </TouchableWithoutFeedback>
+      {/* show add after every 3rd post */}
+      {index % 3 === 0 && index !== 0 && <BannerAdComponent show />}
     </View>
   );
 };

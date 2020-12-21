@@ -16,7 +16,7 @@ function JIITSocialScreenStack({ navigation }) {
   const { theme } = useTheme();
   return (
     <JIITSocialStack.Navigator
-      initialRouteName="jiitsocial"
+      initialRouteName='jiitsocial'
       screenOptions={{
         headerTitleAlign: "center",
         headerStyle: {
@@ -25,7 +25,7 @@ function JIITSocialScreenStack({ navigation }) {
         headerBackTitleVisible: false,
         headerBackImage: () => (
           <Ionicons
-            name="ios-arrow-back"
+            name='ios-arrow-back'
             size={Typography.FONT_SIZE_28}
             style={{
               marginLeft: Mixins.scaleSize(10),
@@ -38,13 +38,13 @@ function JIITSocialScreenStack({ navigation }) {
     >
       <JIITSocialStack.Screen
         options={{
-          headerTitle: () => <HeaderTitle title="JIIT Social" />,
+          headerTitle: () => <HeaderTitle title='JIIT Social' />,
           headerRight: () => (
             <Ionicons
               onPress={() => {
                 navigation.navigate("addpost");
               }}
-              name="ios-camera"
+              name='ios-camera'
               size={Typography.FONT_SIZE_28}
               style={{
                 marginLeft: Mixins.scaleSize(10),
@@ -56,7 +56,7 @@ function JIITSocialScreenStack({ navigation }) {
           headerLeft: () => (
             <Ionicons
               onPress={() => navigation.toggleDrawer()}
-              name="ios-more"
+              name='ios-menu'
               size={Typography.FONT_SIZE_28}
               style={{
                 marginLeft: Mixins.scaleSize(10),
@@ -66,27 +66,27 @@ function JIITSocialScreenStack({ navigation }) {
             />
           ),
         }}
-        name="jiitsocial"
+        name='jiitsocial'
         component={JIITSocial}
       />
       <JIITSocialStack.Screen
         options={{ headerTitle: "Add Post" }}
-        name="addpost"
+        name='addpost'
         component={AddPost}
       />
       <JIITSocialStack.Screen
         options={{ headerTitle: "Comments" }}
-        name="comments"
+        name='comments'
         component={Comment}
       />
       <JIITSocialStack.Screen
         options={{ headerTitle: "Likes" }}
-        name="likes"
+        name='likes'
         component={Likes}
       />
       <JIITSocialStack.Screen
         options={{ headerTitle: "Post" }}
-        name="viewpost"
+        name='viewpost'
         component={ViewPost}
       />
     </JIITSocialStack.Navigator>
