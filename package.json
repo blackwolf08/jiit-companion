@@ -11,7 +11,9 @@
     "build:ap": "expo build:android --release-channel=production",
     "build:ab": "expo build:android --release-channel=beta",
     "build:apab": "expo build:android --release-channel=production -t app-bundle",
-    "build:abab": "expo build:android --release-channel=beta -t app-bundle"
+    "build:abab": "expo build:android --release-channel=beta -t app-bundle",
+    "eas:submit-ios": "eas submit -p ios",
+    "eas:build": "eas build"
   },
   "dependencies": {
     "@expo-google-fonts/montserrat": "^0.1.0",

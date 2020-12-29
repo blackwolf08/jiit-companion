@@ -38,7 +38,7 @@
       "infoPlist": {
         "NSFaceIDUsageDescription": "Requires FaceID To protect your CGPA Info"
       },
-      "supportsTablet": true,
+      "supportsTablet": false,
       "requireFullScreen": false,
       "bundleIdentifier": "com.sunnydhama.jiitcompanion",
       "buildNumber": "1.1.0",
