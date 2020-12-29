@@ -42,7 +42,7 @@
       "supportsTablet": false,
       "requireFullScreen": false,
       "bundleIdentifier": "com.sunnydhama.jiitcompanion",
-      "buildNumber": "3.0.0",
+      "buildNumber": "3.0.1",
       "googleServicesFile": "./firebase/GoogleService-Info.plist",
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-1528058450389133~3396166750"
