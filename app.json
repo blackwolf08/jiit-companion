@@ -36,12 +36,13 @@
     },
     "ios": {
       "infoPlist": {
-        "NSFaceIDUsageDescription": "Requires FaceID To protect your CGPA Info"
+        "NSFaceIDUsageDescription": "Requires FaceID To protect your CGPA Info",
+        "NSPhotoLibraryUsageDescription": "Requires Photo Library for uploading photos to JIIT Social."
       },
       "supportsTablet": false,
       "requireFullScreen": false,
       "bundleIdentifier": "com.sunnydhama.jiitcompanion",
-      "buildNumber": "1.1.0",
+      "buildNumber": "3.0.0",
       "googleServicesFile": "./firebase/GoogleService-Info.plist",
       "config": {
         "googleMobileAdsAppId": "ca-app-pub-1528058450389133~3396166750"
