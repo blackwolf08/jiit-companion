@@ -39,6 +39,10 @@ const TimeTableClass = ({ classDetails, className, index }) => {
       break;
   }
 
+  if (!attendancePercentage) {
+    attendancePercentage = 100;
+    classType = false;
+  }
   return (
     <TouchableWithoutFeedback
       onPress={() =>
@@ -55,9 +59,9 @@ const TimeTableClass = ({ classDetails, className, index }) => {
     >
       <Animatable.View
         useNativeDriver
-        animation="fadeInUp"
+        animation='fadeInUp'
         duration={200}
-        easing="linear"
+        easing='linear'
         style={[
           styles.container,
           {
@@ -81,8 +85,8 @@ const TimeTableClass = ({ classDetails, className, index }) => {
               fill={attendancePercentage}
               tintColor={primary}
               delay={500 * index}
-              backgroundColor="#3d5875"
-              lineCap="round"
+              backgroundColor='#3d5875'
+              lineCap='round'
               backgroundColor={black}
               rotation={0}
               duration={200}

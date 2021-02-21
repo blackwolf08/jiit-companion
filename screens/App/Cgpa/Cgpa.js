@@ -2,14 +2,15 @@ import * as Analytics from "expo-firebase-analytics";
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
-  AsyncStorage,
   ScrollView,
   StyleSheet,
   Text,
   View,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { getCGPA, getExamMarks } from "../../../api/requests";
-import { Chart } from "../../../components";
+import { Chart, InterstitialAdComponent } from "../../../components";
 import { useTheme, useUser } from "../../../contexts";
 import { Mixins, Typography } from "../../../styles";
 import { toTitleCase } from "../../../utils";
@@ -240,6 +241,7 @@ const Cgpa = () => {
           </View>
         </>
       )}
+      <InterstitialAdComponent show />
     </ScrollView>
   );
 };

@@ -50,6 +50,7 @@ export const InterstitialAdComponent = ({ show }) => {
 
   const showAd = async () => {
     try {
+      console.log("req add");
       await AdMobInterstitial.setAdUnitID(
         __DEV__
           ? "ca-app-pub-3940256099942544/1033173712"

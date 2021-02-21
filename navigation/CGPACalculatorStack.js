@@ -22,7 +22,7 @@ function CGPACalculatorScreen({ navigation }) {
         headerBackTitleVisible: false,
         headerBackImage: () => (
           <Ionicons
-            name="ios-arrow-back"
+            name='ios-arrow-back'
             size={Typography.FONT_SIZE_28}
             style={{
               marginLeft: Mixins.scaleSize(10),
@@ -35,11 +35,11 @@ function CGPACalculatorScreen({ navigation }) {
     >
       <CGPACalculatorStack.Screen
         options={{
-          headerTitle: () => <HeaderTitle title="CGPA Calculator" />,
+          headerTitle: () => <HeaderTitle title='CGPA Calculator' />,
           headerLeft: () => (
             <Ionicons
               onPress={() => navigation.toggleDrawer()}
-              name="ios-more"
+              name='ios-menu'
               size={Typography.FONT_SIZE_28}
               style={{
                 marginLeft: Mixins.scaleSize(10),
@@ -49,12 +49,12 @@ function CGPACalculatorScreen({ navigation }) {
             />
           ),
         }}
-        name="cgpacalculator"
+        name='cgpacalculator'
         component={CGPACalculator}
       />
       <CGPACalculatorStack.Screen
         options={{ headerTitle: "Results" }}
-        name="results"
+        name='results'
         component={Results}
       />
     </CGPACalculatorStack.Navigator>

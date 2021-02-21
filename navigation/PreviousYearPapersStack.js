@@ -20,7 +20,7 @@ function PreviousYearPapersScreen({ navigation }) {
         headerBackTitleVisible: false,
         headerBackImage: () => (
           <Ionicons
-            name="ios-arrow-back"
+            name='ios-arrow-back'
             size={Typography.FONT_SIZE_28}
             style={{
               marginLeft: Mixins.scaleSize(10),
@@ -33,11 +33,11 @@ function PreviousYearPapersScreen({ navigation }) {
     >
       <PreviousYearPapersStack.Screen
         options={{
-          headerTitle: () => <HeaderTitle title="Previous Year Papers" />,
+          headerTitle: () => <HeaderTitle title='Previous Year Papers' />,
           headerLeft: () => (
             <Ionicons
               onPress={() => navigation.toggleDrawer()}
-              name="ios-more"
+              name='ios-menu'
               size={Typography.FONT_SIZE_28}
               style={{
                 marginLeft: Mixins.scaleSize(10),
@@ -47,7 +47,7 @@ function PreviousYearPapersScreen({ navigation }) {
             />
           ),
         }}
-        name="previousyearpapers"
+        name='previousyearpapers'
         component={PreviousYearPapers}
       />
     </PreviousYearPapersStack.Navigator>

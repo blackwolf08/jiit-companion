@@ -1,14 +1,14 @@
-import { Ionicons } from '@expo/vector-icons';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import React, { useEffect, useState, useRef } from 'react';
-import { AsyncStorage } from 'react-native';
-import { HeaderTitle } from '../components';
-import { useAuth, useTheme, useUser } from '../contexts';
-import { Login, MoreDetails } from '../screens/Auth/Login';
-import { Mixins, Typography } from '../styles';
-import AppNavigator from './AppNavigator';
-import useLinking from './useLinking';
+import { Ionicons } from "@expo/vector-icons";
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+import React, { useEffect, useState, useRef } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { HeaderTitle } from "../components";
+import { useAuth, useTheme, useUser } from "../contexts";
+import { Login, MoreDetails } from "../screens/Auth/Login";
+import { Mixins, Typography } from "../styles";
+import AppNavigator from "./AppNavigator";
+import useLinking from "./useLinking";
 const Stack = createStackNavigator();
 
 export default ({ children, ...restProps }) => {
@@ -23,7 +23,7 @@ export default ({ children, ...restProps }) => {
 
   useEffect(() => {
     (async () => {
-      let user = await AsyncStorage.getItem('user');
+      let user = await AsyncStorage.getItem("user");
       if (!user) {
         setisAuthenticated(false);
         setloading(false);
@@ -51,7 +51,7 @@ export default ({ children, ...restProps }) => {
       ) : (
         <Stack.Navigator
           screenOptions={{
-            headerTitleAlign: 'center',
+            headerTitleAlign: "center",
             headerStyle: {
               backgroundColor: theme.colors.black,
             },

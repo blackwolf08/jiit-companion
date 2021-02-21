@@ -35,7 +35,7 @@ function AttendanceStackScreen({ navigation }) {
         headerBackTitleVisible: false,
         headerBackImage: () => (
           <Ionicons
-            name="ios-arrow-back"
+            name='ios-arrow-back'
             size={Typography.FONT_SIZE_28}
             style={{
               marginLeft: Mixins.scaleSize(10),
@@ -48,13 +48,13 @@ function AttendanceStackScreen({ navigation }) {
     >
       <AttendanceStack.Screen
         options={{
-          headerTitle: () => <HeaderTitle title="JIIT Companion" />,
+          headerTitle: () => <HeaderTitle title='JIIT Companion' />,
           headerRight: CookingLottie,
 
           headerLeft: () => (
             <Ionicons
               onPress={() => navigation.toggleDrawer()}
-              name="ios-more"
+              name='ios-menu'
               size={Typography.FONT_SIZE_28}
               style={{
                 marginLeft: Mixins.scaleSize(10),
@@ -64,7 +64,7 @@ function AttendanceStackScreen({ navigation }) {
             />
           ),
         }}
-        name="attendance"
+        name='attendance'
         component={Attendance}
       />
     </AttendanceStack.Navigator>

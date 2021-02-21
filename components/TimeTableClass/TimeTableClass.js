@@ -33,12 +33,15 @@ const TimeTableClass = ({ classArray, dayName }) => {
     isClassCompleted(classTime) && today == dayName
       ? "ios-done-all"
       : "ios-checkmark";
+  if (!attendancePercentage) {
+    attendancePercentage = 100;
+  }
   return (
     <Animatable.View
       useNativeDriver
-      animation="fadeInUp"
+      animation='fadeInUp'
       duration={200}
-      easing="linear"
+      easing='linear'
       style={[
         styles.container,
         {
@@ -50,7 +53,7 @@ const TimeTableClass = ({ classArray, dayName }) => {
       ]}
     >
       <View style={styles.timeConatiner}>
-        <Ionicons name={isCompleted} color="gray" size={Mixins.scaleSize(24)} />
+        <Ionicons name={isCompleted} color='gray' size={Mixins.scaleSize(24)} />
         <Text style={[styles.className, { color: text }]}>{classTime}</Text>
       </View>
       <View style={styles.classNameConatiner}>
@@ -68,8 +71,8 @@ const TimeTableClass = ({ classArray, dayName }) => {
           width={5}
           fill={attendancePercentage}
           tintColor={primary}
-          backgroundColor="#3d5875"
-          lineCap="round"
+          backgroundColor='#3d5875'
+          lineCap='round'
           backgroundColor={black}
           rotation={0}
           duration={1000}

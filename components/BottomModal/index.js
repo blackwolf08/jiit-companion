@@ -2,12 +2,13 @@ import moment from "moment";
 import React, { useEffect, useRef, useState } from "react";
 import {
   ActivityIndicator,
-  AsyncStorage,
   ScrollView,
   StyleSheet,
   Text,
   View,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { AnimatedCircularProgress } from "react-native-circular-progress";
 import Modal from "react-native-modal";
 import { getSubjectAttendance } from "../../api/requests";
@@ -90,7 +91,7 @@ const BottomModal = () => {
         <View style={styles.grayBar} />
         {loading && (
           <View style={[styles.loadingContainer]}>
-            <ActivityIndicator size="small" color="gray" />
+            <ActivityIndicator size='small' color='gray' />
             <Text style={[styles.loadingText, { color: text }]}>
               Refreshing
             </Text>
@@ -102,10 +103,14 @@ const BottomModal = () => {
         <AnimatedCircularProgress
           size={Mixins.scaleSize(60)}
           width={Mixins.scaleSize(5)}
-          fill={modalData?.attendancePercentage}
+          fill={
+            modalData?.attendancePercentage === undefined
+              ? 100
+              : modalData?.attendancePercentage
+          }
           tintColor={primary}
-          backgroundColor="#3d5875"
-          lineCap="round"
+          backgroundColor='#3d5875'
+          lineCap='round'
           backgroundColor={black}
           rotation={0}
           duration={200}

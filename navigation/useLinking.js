@@ -1,32 +1,31 @@
-import { useLinking } from '@react-navigation/native';
-import { Linking } from 'expo';
-
+import { useLinking } from "@react-navigation/native";
+import * as Linking from "expo-linking";
 export default function (containerRef) {
   return useLinking(containerRef, {
-    prefixes: [Linking.makeUrl('/')],
+    prefixes: [Linking.makeUrl("/")],
     config: {
       login: {
-        path: '/login',
+        path: "/login",
       },
       Home: {
-        path: '/home',
+        path: "/home",
         screens: {
           timetable: {
-            path: '/',
+            path: "/",
           },
           attendance: {
-            path: '/',
+            path: "/",
           },
           cgpa: {
-            path: '/',
+            path: "/",
           },
           fileserver: {
-            path: '/',
+            path: "/",
           },
         },
       },
       Settings: {
-        path: '/',
+        path: "/",
       },
     },
   });

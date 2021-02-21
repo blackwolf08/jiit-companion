@@ -15,6 +15,7 @@ import {
 } from "./Admob";
 import { UpdatesComponent } from "./Updates";
 import { NotificationsComponent } from "./Notifications";
+import ErrorBoundary from "./ErrorBoundary";
 
 export {
   HeaderTitle,
@@ -32,4 +33,5 @@ export {
   PublisherAdComponent,
   InterstitialAdComponent,
   RewardAdComponent,
+  ErrorBoundary,
 };

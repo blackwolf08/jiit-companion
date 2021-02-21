@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
-  AsyncStorage,
   ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 import { getSubjects } from "../../../api/requests";
 import { SubjectPicker } from "../../../components";
 import { useDropDown, useTheme, useUser } from "../../../contexts";
@@ -104,7 +105,7 @@ const CGPACalculator = ({ navigation }) => {
       <ScrollView>
         {loading && (
           <View style={[styles.loadingContainer]}>
-            <ActivityIndicator size="small" color="gray" />
+            <ActivityIndicator size='small' color='gray' />
             <Text style={[styles.loadingText, { color: text }]}>
               {"  "}Refreshing
             </Text>

@@ -20,7 +20,7 @@ function WebkioskWebviewScreen({ navigation }) {
         headerBackTitleVisible: false,
         headerBackImage: () => (
           <Ionicons
-            name="ios-arrow-back"
+            name='ios-arrow-back'
             size={Typography.FONT_SIZE_28}
             style={{
               marginLeft: Mixins.scaleSize(10),
@@ -33,11 +33,11 @@ function WebkioskWebviewScreen({ navigation }) {
     >
       <WebkioskWebviewStack.Screen
         options={{
-          headerTitle: () => <HeaderTitle title="Webkiosk Webview" />,
+          headerTitle: () => <HeaderTitle title='Webkiosk Webview' />,
           headerLeft: () => (
             <Ionicons
               onPress={() => navigation.toggleDrawer()}
-              name="ios-more"
+              name='ios-menu'
               size={Typography.FONT_SIZE_28}
               style={{
                 marginLeft: Mixins.scaleSize(10),
@@ -47,7 +47,7 @@ function WebkioskWebviewScreen({ navigation }) {
             />
           ),
         }}
-        name="webkioskwebview"
+        name='webkioskwebview'
         component={WebkioskWebview}
       />
     </WebkioskWebviewStack.Navigator>
