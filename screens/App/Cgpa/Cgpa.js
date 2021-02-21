@@ -61,7 +61,7 @@ const Cgpa = () => {
     <ScrollView style={styles.scrollView}>
       {loading && (
         <View style={[styles.loadingContainer]}>
-          <ActivityIndicator size='small' color='gray' />
+          <ActivityIndicator size="small" color="gray" />
           <Text style={[styles.loadingText, { color: text }]}>
             {"  "}Refreshing
           </Text>

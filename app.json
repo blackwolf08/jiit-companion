@@ -51,7 +51,7 @@
     "android": {
       "googleServicesFile": "./firebase/google-services.json",
       "package": "me.sunnydhama.jiitcompanion",
-      "versionCode": 24,
+      "versionCode": 25,
       "useNextNotificationsApi": true,
       "playStoreUrl": "https://play.google.com/store/apps/details?id=me.sunnydhama.jiitcompanion",
       "config": {

@@ -20,8 +20,8 @@ const AcademicCalendar = () => {
       source={{
         uri:
           user?.college == "JUET"
-            ? "https://drive.google.com/viewerng/viewer?embedded=true&url=https://www.juet.ac.in/Download/JUET-ES19-20.pdf"
-            : "https://drive.google.com/viewerng/viewer?embedded=true&url=http://www.jiit.ac.in/sites/default/files/AC%202019-20_200120.pdf",
+            ? "https://drive.google.com/viewerng/viewer?embedded=true&url=https://www.juet.ac.in/Download/JUET-ACEvenSem2021r.pdf"
+            : "https://drive.google.com/viewerng/viewer?embedded=true&url=http://www.jiit.ac.in/sites/default/files/AC%202020-21_EVEN_311220_0.pdf",
       }}
       thirdPartyCookiesEnabled={true}
       cacheEnabled

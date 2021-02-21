@@ -27,6 +27,7 @@ import {
 import { firebaseInit } from "./firebase";
 import NavigationConatiner from "./navigation";
 import { BottomDrawerProvider } from "./contexts";
+import { ErrorBoundary } from "./components";
 
 // init firebase app
 firebaseInit();
@@ -49,18 +50,20 @@ export default function App() {
     return <AppLoading />;
   }
   return (
-    <DropDownComponentProvider>
-      <UserProvider>
-        <AuthProvider>
-          <AppearanceProvider>
-            <ThemeProvider>
-              <BottomDrawerProvider>
-                <NavigationConatiner />
-              </BottomDrawerProvider>
-            </ThemeProvider>
-          </AppearanceProvider>
-        </AuthProvider>
-      </UserProvider>
-    </DropDownComponentProvider>
+    <ErrorBoundary>
+      <DropDownComponentProvider>
+        <UserProvider>
+          <AuthProvider>
+            <AppearanceProvider>
+              <ThemeProvider>
+                <BottomDrawerProvider>
+                  <NavigationConatiner />
+                </BottomDrawerProvider>
+              </ThemeProvider>
+            </AppearanceProvider>
+          </AuthProvider>
+        </UserProvider>
+      </DropDownComponentProvider>
+    </ErrorBoundary>
   );
 }
